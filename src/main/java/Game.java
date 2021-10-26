@@ -64,12 +64,22 @@ public class Game
         //Udgange fra vand1
         vand1.setExit("øst",værksted);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
+        //Udgange fra sol1
+        sol1.setExit("nord",værksted);
+        sol1.setExit("vest",sol2);
+        sol1.setExit("syd",sol3);
 
-        office.setExit("west", lab);
+        //Udgang fra sol2
+        sol2.setExit("øst",sol1);
 
-        currentRoom = outside;
+        //Udgange fra sol3
+        sol3.setExit("nord",sol1);
+        sol3.setExit("vest",sol4);
+
+        //Udgang fra sol4
+        sol4.setExit("øst",sol3);
+
+        currentRoom = start;
     }
 
     public void play() 
