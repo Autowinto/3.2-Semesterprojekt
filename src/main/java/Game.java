@@ -1,4 +1,6 @@
-public class Game 
+package worldofzuul;
+
+public class Game
 {
     private Parser parser;
     private Room currentRoom;
