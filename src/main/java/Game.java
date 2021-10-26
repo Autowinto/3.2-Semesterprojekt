@@ -63,11 +63,20 @@ public class Game
 
         //Udgange fra vand1
         vand1.setExit("øst",værksted);
+        vand1.setExit("nord",vand2);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
+        //Udgange fra vand2
+        vand2.setExit("vest",vand3);
+        vand2.setExit("syd",vand1);
 
-        office.setExit("west", lab);
+        //udgange fra vand3
+        vand3.setExit("øst",vand2);
+        vand4.setExit("syd",vand4);
+
+        //Udgang fra vand4
+        vand4.setExit("nord",vand3);
+
+
 
         currentRoom = outside;
     }
