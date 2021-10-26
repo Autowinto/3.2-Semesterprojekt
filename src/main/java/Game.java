@@ -37,7 +37,7 @@ public class Game
         start.setExit("øst", kul);
         start.setExit("vest", værksted);
 
-        //Udagnge fra kul
+        //Udgang fra kul
         kul.setExit("vest", start);
 
         //Udgange fra værksted
@@ -54,7 +54,7 @@ public class Game
         //Udgang fra vind2
         vind2.setExit("vest",vind1);
 
-        //Udgang fra vind3
+        //Udgange fra vind3
         vind3.setExit("syd",vind1);
         vind3.setExit("vest",vind4);
 
@@ -63,6 +63,18 @@ public class Game
 
         //Udgange fra vand1
         vand1.setExit("øst",værksted);
+        vand1.setExit("nord",vand2);
+
+        //Udgange fra vand2
+        vand2.setExit("vest",vand3);
+        vand2.setExit("syd",vand1);
+
+        //udgange fra vand3
+        vand3.setExit("øst",vand2);
+        vand3.setExit("syd",vand4);
+
+        //Udgang fra vand4
+        vand4.setExit("nord",vand3);
 
         //Udgange fra sol1
         sol1.setExit("nord",værksted);
