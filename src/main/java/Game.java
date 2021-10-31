@@ -4,14 +4,18 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+
+    Power power = new Power();
+    Item solCelle = new Product("solCelle", EnergyType.SOL);
+    Item vindMølle = new Product("vindMølle", EnergyType.VIND);
+    Item vandMølle = new Product("vandMølle", EnergyType.VAND);
+    Inventory inventory = new Inventory();
 
     public Game() 
     {
         createRooms();
         parser = new Parser();
     }
-
 
     private void createRooms()
     {
@@ -21,17 +25,17 @@ public class Game
         kul = new Room("i et rum med kul");
         værksted = new Room("i et værksted med tre arbejdsborde");
         vind1 = new Room("i vind1");
-        vind2 = new Room("i vind2");
-        vind3 = new Room("i vind3");
-        vind4 = new Room("i vind4");
+        vind2 = new Room("i vind2 med et dropOff point","vindMølle","vind2");
+        vind3 = new Room("i vind3 med et dropOff point","vindMølle","vind3");
+        vind4 = new Room("i vind4 med et dropOff point","vindMølle","vind4");
         vand1 = new Room("i vand1");
-        vand2 = new Room("i vand2");
-        vand3 = new Room("i vand3");
-        vand4 = new Room("i vand4");
+        vand2 = new Room("i vand2 med et dropOff point","vandMølle","vand2");
+        vand3 = new Room("i vand3 med et dropOff point","vandMølle","vand3");
+        vand4 = new Room("i vand4 med et dropOff point","vandMølle","vand4");
         sol1 = new Room("i sol1");
-        sol2 = new Room("i sol2");
-        sol3 = new Room("i sol3");
-        sol4 = new Room("i sol4");
+        sol2 = new Room("i sol2 med et dropOff point","solCelle","sol2");
+        sol3 = new Room("i sol3 med et dropOff point","solCelle","sol3");
+        sol4 = new Room("i sol4 med et dropOff point","solCelle","sol4");
 
         //Udgange fra start
         start.setExit("øst", kul);
@@ -98,7 +102,8 @@ public class Game
     {            
         printWelcome();
 
-                
+        inventory.addItem(vindMølle);
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -136,6 +141,30 @@ public class Game
         }
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
+        }
+        else if (commandWord == CommandWord.PLACE) {
+            if (currentRoom.getDropoff() == inventory.getName())
+            {
+                if (currentRoom.getDropoff() == "solCelle") {
+                    power.setRoomSol(currentRoom);
+                    inventory.removeItem(solCelle);
+                }
+                else if (currentRoom.getDropoff() == "vindMølle") {
+                    power.setRoomVind(currentRoom);
+                    inventory.removeItem(vindMølle);
+                }
+                else if (currentRoom.getDropoff() == "vandMølle") {
+                    power.setRoomVand(currentRoom);
+                    inventory.removeItem(vandMølle);
+                }
+            }
+            else {
+                System.out.println("Unable to place down item. \n ~~~");
+                System.out.println("The current room's drop off is: ");
+                currentRoom.getDropoff();
+                System.out.println("Your inventory is: ");
+                inventory.show();
+            }
         }
         return wantToQuit;
     }
@@ -179,4 +208,5 @@ public class Game
             return true;
         }
     }
+
 }
