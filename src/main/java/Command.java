@@ -16,9 +16,7 @@
  * @author  Michael Kolling and David J. Barnes
  * @version 2006.03.30
  */
-
 package worldofzuul;
-
 public class Command
 {
     private CommandWord commandWord;

@@ -1,5 +1,4 @@
 package worldofzuul;
-
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,7 +27,7 @@ public class Room
 
     public String getLongDescription()
     {
-        return "You are " + description + ".\n" + getExitString();
+        return "Du er " + description + ".\n" + getExitString();
     }
 
     private String getExitString()

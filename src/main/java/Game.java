@@ -1,6 +1,6 @@
 package worldofzuul;
 
-public class Game 
+public class Game
 {
     private Parser parser;
     private Room currentRoom;
@@ -15,28 +15,87 @@ public class Game
 
     private void createRooms()
     {
-        Room outside, theatre, pub, lab, office;
+        Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, vand5, sol1, sol2, sol3, sol4;
       
-        outside = new Room("outside the main entrance of the university");
-        theatre = new Room("in a lecture theatre");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-        
-        outside.setExit("east", theatre);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner strømkilden er mod øst.");
+        kul = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul.");
+        værksted = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor.");
+        vind1 = new Room("udenfor i et område, hvor du kan mærke det blæser.");
+        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden.");
+        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden.");
+        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind.");
+        vand1 = new Room("udenfor i et område, hvor du ser et vandfald.");
+        vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af.");
+        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området.");
+        vand4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet.");
+        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod.");
+        sol1 = new Room("udenfor i et varm område, med meget sollys.");
+        sol2 = new Room("på en flad mark med meget sol.");
+        sol3 = new Room("i en skov, hvor træerne dækker for solen.");
+        sol4 = new Room("i et område med en bakke, der er meget sol.");
 
-        theatre.setExit("west", outside);
+        //Udgange fra start
+        start.setExit("øst", kul);
+        start.setExit("vest", værksted);
 
-        pub.setExit("east", outside);
+        //Udgang fra kul
+        kul.setExit("vest", start);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
+        //Udgange fra værksted
+        værksted.setExit("nord", vind1);
+        værksted.setExit("vest", vand1);
+        værksted.setExit("syd", sol1);
+        værksted.setExit("øst", start);
 
-        office.setExit("west", lab);
+        //Udgange fra vind1
+        vind1.setExit("øst",vind2);
+        vind1.setExit("nord",vind3);
+        vind1.setExit("syd",værksted);
 
-        currentRoom = outside;
+        //Udgang fra vind2
+        vind2.setExit("vest",vind1);
+
+        //Udgange fra vind3
+        vind3.setExit("syd",vind1);
+        vind3.setExit("vest",vind4);
+
+        //Udgang fra vind4
+        vind4.setExit("øst",vind3);
+
+        //Udgange fra vand1
+        vand1.setExit("øst",værksted);
+        vand1.setExit("nord",vand2);
+
+        //Udgange fra vand2
+        vand2.setExit("vest",vand3);
+        vand2.setExit("syd",vand1);
+
+        //udgange fra vand3
+        vand3.setExit("øst",vand2);
+        vand3.setExit("syd",vand4);
+
+        //Udgang fra vand4
+        vand4.setExit("nord",vand3);
+
+        //Udgang fra vand5
+        vand5.setExit("syd",vand3);
+
+        //Udgange fra sol1
+        sol1.setExit("nord",værksted);
+        sol1.setExit("vest",sol2);
+        sol1.setExit("syd",sol3);
+
+        //Udgang fra sol2
+        sol2.setExit("øst",sol1);
+
+        //Udgange fra sol3
+        sol3.setExit("nord",sol1);
+        sol3.setExit("vest",sol4);
+
+        //Udgang fra sol4
+        sol4.setExit("øst",sol3);
+
+        currentRoom = start;
     }
 
     public void play() 
