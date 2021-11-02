@@ -10,7 +10,7 @@ public class Room
     private String name;
     private String dropOff;
     private HashMap<String, Room> exits;
-    private ArrayList<Item> items;
+    private ArrayList<Item> items = new ArrayList<>();
 
     public Room(String description, Item[] items) {
         this.description = description;
@@ -20,7 +20,6 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<String, Room>();
-        this.items = new ArrayList<>();
     }
 
     public Room(String description,String dropOff,String name)
@@ -69,6 +68,7 @@ public class Room
 
     public String getDropoff() {
         return this.dropOff;
+    }
 
     //Samle ting op fra rummet
     public Item getItem(String itemName)

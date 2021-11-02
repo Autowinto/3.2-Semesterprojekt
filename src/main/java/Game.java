@@ -13,8 +13,7 @@ public class Game
     Item vandMølle = new Product("vandMølle", EnergyType.VAND);
 
     Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, sol1, sol2, sol3, sol4;
-    ArrayList<Item> inventar = new ArrayList<>();
-
+    Inventory inventory = new Inventory();
 
     public Game()
     {
@@ -39,7 +38,7 @@ public class Game
         vand4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet");
         vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod","vandMølle","vand5");
         sol1 = new Room("udenfor i et varm område, med meget sollys");
-        sol2 = new Room("på en flad mark med meget sol","solCelle","sol2"));
+        sol2 = new Room("på en flad mark med meget sol","solCelle","sol2");
         sol3 = new Room("i en skov, hvor træerne dækker for solen","solCelle","sol3");
         sol4 = new Room("i et område med en bakke, der er meget sol","solCelle","sol4");
 
@@ -173,29 +172,25 @@ public class Game
         }
 
         else if (commandWord == CommandWord.PLACE) {
-            if (currentRoom.getDropoff() == inventory.getName())
-            {
+            if (currentRoom.getDropoff() == inventory.getName()) {
                 if (currentRoom.getDropoff() == "solCelle") {
                     power.setRoomSol(currentRoom);
                     inventory.removeItem(solCelle);
-                }
-                else if (currentRoom.getDropoff() == "vindMølle") {
+                } else if (currentRoom.getDropoff() == "vindMølle") {
                     power.setRoomVind(currentRoom);
                     inventory.removeItem(vindMølle);
-                }
-                else if (currentRoom.getDropoff() == "vandMølle") {
+                } else if (currentRoom.getDropoff() == "vandMølle") {
                     power.setRoomVand(currentRoom);
                     inventory.removeItem(vandMølle);
                 }
-            }
-            else {
+            } else {
                 System.out.println("Unable to place down item. \n ~~~");
                 System.out.println("The current room's drop off is: ");
                 currentRoom.getDropoff();
                 System.out.println("Your inventory is: ");
                 inventory.show();
             }
-
+        }
         else if (commandWord == CommandWord.TAG)
         {
             getItem(command);
@@ -219,7 +214,7 @@ public class Game
             System.out.println("Det er ikke her!");
         }
         else {
-            inventar.add(newItem);
+            inventory.addItem(newItem);
             currentRoom.removeItem(item);
             System.out.println("Du har samlet " + item + " op");
         }
@@ -227,8 +222,8 @@ public class Game
 
     private void printInventory() {
         String output = "";
-        for (int i = 0; i < inventar.size(); i++) {
-            output += inventar.get(i).getName() + " ";
+        for (int i = 0; i < inventory.getItems().size(); i++) {
+            output += inventory.getItems().get(i).getName() + " ";
         }
         System.out.println("Dit inventar indholder:");
         System.out.println("-----------------------");
