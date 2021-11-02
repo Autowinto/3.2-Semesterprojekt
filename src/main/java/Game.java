@@ -1,5 +1,7 @@
 package worldofzuul;
 
+import java.util.ArrayList;
+
 public class Game
 {
     private Parser parser;
@@ -9,9 +11,12 @@ public class Game
     Item solCelle = new Product("solCelle", EnergyType.SOL);
     Item vindMølle = new Product("vindMølle", EnergyType.VIND);
     Item vandMølle = new Product("vandMølle", EnergyType.VAND);
-    Inventory inventory = new Inventory();
 
-    public Game() 
+    Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, sol1, sol2, sol3, sol4;
+    ArrayList<Item> inventar = new ArrayList<>();
+
+
+    public Game()
     {
         createRooms();
         parser = new Parser();
@@ -19,23 +24,24 @@ public class Game
 
     private void createRooms()
     {
-        Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, sol1, sol2, sol3, sol4;
-      
-        start = new Room("i et rum med en lyskilde");
-        kul = new Room("i et rum med kul");
-        værksted = new Room("i et værksted med tre arbejdsborde");
-        vind1 = new Room("i vind1");
-        vind2 = new Room("i vind2 med et dropOff point","vindMølle","vind2");
-        vind3 = new Room("i vind3 med et dropOff point","vindMølle","vind3");
-        vind4 = new Room("i vind4 med et dropOff point","vindMølle","vind4");
-        vand1 = new Room("i vand1");
-        vand2 = new Room("i vand2 med et dropOff point","vandMølle","vand2");
-        vand3 = new Room("i vand3 med et dropOff point","vandMølle","vand3");
-        vand4 = new Room("i vand4 med et dropOff point","vandMølle","vand4");
-        sol1 = new Room("i sol1");
-        sol2 = new Room("i sol2 med et dropOff point","solCelle","sol2");
-        sol3 = new Room("i sol3 med et dropOff point","solCelle","sol3");
-        sol4 = new Room("i sol4 med et dropOff point","solCelle","sol4");
+        Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, vand5, sol1, sol2, sol3, sol4;
+
+        start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner strømkilden er mod øst");
+        kul = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul");
+        værksted = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor");
+        vind1 = new Room("udenfor i et område, hvor du kan mærke det blæser");
+        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden","vindMølle","vind2");
+        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden","vindMølle","vind3");
+        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind","vindMølle","vind4");
+        vand1 = new Room("udenfor i et område, hvor du ser et vandfald");
+        vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af","vandMølle","vand2");
+        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området","vandMølle","vand3");
+        vand4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet");
+        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod","vandMølle","vand5");
+        sol1 = new Room("udenfor i et varm område, med meget sollys");
+        sol2 = new Room("på en flad mark med meget sol","solCelle","sol2"));
+        sol3 = new Room("i en skov, hvor træerne dækker for solen","solCelle","sol3");
+        sol4 = new Room("i et område med en bakke, der er meget sol","solCelle","sol4");
 
         //Udgange fra start
         start.setExit("øst", kul);
@@ -76,9 +82,13 @@ public class Game
         //udgange fra vand3
         vand3.setExit("øst",vand2);
         vand3.setExit("syd",vand4);
+        vand3.setExit("nord",vand5);
 
         //Udgang fra vand4
         vand4.setExit("nord",vand3);
+
+        //Udgang fra vand5
+        vand5.setExit("syd",vand3);
 
         //Udgange fra sol1
         sol1.setExit("nord",værksted);
@@ -96,6 +106,22 @@ public class Game
         sol4.setExit("øst",sol3);
 
         currentRoom = start;
+
+        //vind items placering i rum
+        vind1.addItem(new Material("generator",EnergyType.VIND));
+        vind2.addItem(new Material("vinger",EnergyType.VIND));
+        vind4.addItem(new Material("tårn",EnergyType.VIND));
+
+        //Vand items placering i rum
+
+        vand2.addItem(new Material("turbine",EnergyType.VAND));
+        vand3.addItem(new Material("vandrør",EnergyType.VAND));
+        vand4.addItem(new Material("kabel",EnergyType.VAND));
+
+        //Sol items placering i rum
+        sol1.addItem(new Material("solpanel",EnergyType.SOL));
+        sol2.addItem(new Material("inverter",EnergyType.SOL));
+        sol3.addItem(new Material("stativ",EnergyType.SOL));
     }
 
     public void play() 
@@ -109,15 +135,15 @@ public class Game
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Tak fordi du deltog. Hav en god dag.");
     }
 
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
+        System.out.println("Velkommen til spillet for bæredygtig energi!");
+        System.out.println("Dette er et spil som vil lære dig om forskellige energi løsninger.");
+        System.out.println("Skriv '" + CommandWord.HJÆLP + "' hvis du har brug for hjælp.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
     }
@@ -128,20 +154,24 @@ public class Game
 
         CommandWord commandWord = command.getCommandWord();
 
-        if(commandWord == CommandWord.UNKNOWN) {
-            System.out.println("I don't know what you mean...");
+        if(commandWord == CommandWord.UKENDT) {
+            System.out.println("Jeg er ikke helt med på hvad du mener...");
             return false;
         }
 
-        if (commandWord == CommandWord.HELP) {
+        if (commandWord == CommandWord.HJÆLP) {
             printHelp();
         }
-        else if (commandWord == CommandWord.GO) {
+        else if (commandWord == CommandWord.GÅ) {
             goRoom(command);
+        }
+        else if (commandWord == CommandWord.INVENTAR) {
+            printInventory();
         }
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
+
         else if (commandWord == CommandWord.PLACE) {
             if (currentRoom.getDropoff() == inventory.getName())
             {
@@ -165,23 +195,58 @@ public class Game
                 System.out.println("Your inventory is: ");
                 inventory.show();
             }
+
+        else if (commandWord == CommandWord.TAG)
+        {
+            getItem(command);
         }
+          
         return wantToQuit;
+          
+    }
+    private void getItem(Command command)
+    {
+        if(!command.hasSecondWord()) {
+            System.out.println("Hvad skal jeg tage?");
+            return;
+        }
+
+        String item = command.getSecondWord();
+
+        Item newItem = currentRoom.getItem(item);
+
+        if (newItem == null) {
+            System.out.println("Det er ikke her!");
+        }
+        else {
+            inventar.add(newItem);
+            currentRoom.removeItem(item);
+            System.out.println("Du har samlet " + item + " op");
+        }
+    }
+
+    private void printInventory() {
+        String output = "";
+        for (int i = 0; i < inventar.size(); i++) {
+            output += inventar.get(i).getName() + " ";
+        }
+        System.out.println("Dit inventar indholder:");
+        System.out.println("-----------------------");
+        System.out.println(output);
     }
 
     private void printHelp() 
     {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("Tak fordi du spørger om hjælp");
         System.out.println();
-        System.out.println("Your command words are:");
+        System.out.println("Dine muligheder er følgende:");
         parser.showCommands();
     }
 
     private void goRoom(Command command) 
     {
         if(!command.hasSecondWord()) {
-            System.out.println("Go where?");
+            System.out.println("Hvorhen?");
             return;
         }
 
@@ -190,7 +255,7 @@ public class Game
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("Det er ikke muligt!");
         }
         else {
             currentRoom = nextRoom;
@@ -201,7 +266,7 @@ public class Game
     private boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
+            System.out.println("Giver du op?");
             return false;
         }
         else {
