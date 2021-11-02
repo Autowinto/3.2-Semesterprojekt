@@ -1,23 +1,21 @@
 package worldofzuul;
-import java.util.Set;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 
-public class Room 
+public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
     private ArrayList<Item> items;
 
-    public Room(String description, Item[] items) 
+    public Room(String description, Item[] items)
     {
         this.description = description;
-        this.items = new ArrayList<>(items);
+        this.items = new ArrayList<Item>(Arrays.asList((items)));
         exits = new HashMap<String, Room>();
     }
 
-    public void setExit(String direction, Room neighbor) 
+    public void setExit(String direction, Room neighbor)
     {
         exits.put(direction, neighbor);
     }
@@ -42,7 +40,7 @@ public class Room
         return returnString;
     }
 
-    public Room getExit(String direction) 
+    public Room getExit(String direction)
     {
         return exits.get(direction);
     }
