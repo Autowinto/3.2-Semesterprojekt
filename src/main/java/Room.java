@@ -7,6 +7,8 @@ import java.util.HashMap;
 public class Room
 {
     private String description;
+    private String name;
+    private String dropOff;
     private HashMap<String, Room> exits;
     private ArrayList<Item> items;
 
@@ -21,7 +23,16 @@ public class Room
         this.items = new ArrayList<>();
     }
 
-    public void setExit(String direction, Room neighbor)
+    public Room(String description,String dropOff,String name)
+    {
+        this.description = description;
+        this.dropOff = dropOff;
+        exits = new HashMap<String, Room>();
+        this.name = name;
+    }
+
+    public void setExit(String direction, Room neighbor) 
+
     {
         exits.put(direction, neighbor);
     }
@@ -35,6 +46,8 @@ public class Room
     {
         return "Du er " + description + ".\n" + getExitString();
     }
+
+    public String getName() { return name; }
 
     private String getExitString()
     {
@@ -53,6 +66,9 @@ public class Room
     {
         return exits.get(direction);
     }
+
+    public String getDropoff() {
+        return this.dropOff;
 
     //Samle ting op fra rummet
     public Item getItem(String itemName)

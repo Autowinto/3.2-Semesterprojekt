@@ -6,8 +6,15 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+
+    Power power = new Power();
+    Item solCelle = new Product("solCelle", EnergyType.SOL);
+    Item vindMølle = new Product("vindMølle", EnergyType.VIND);
+    Item vandMølle = new Product("vandMølle", EnergyType.VAND);
+
     Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, sol1, sol2, sol3, sol4;
     ArrayList<Item> inventar = new ArrayList<>();
+
 
     public Game()
     {
@@ -15,27 +22,26 @@ public class Game
         parser = new Parser();
     }
 
-
     private void createRooms()
     {
         Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, vand5, sol1, sol2, sol3, sol4;
-      
+
         start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner strømkilden er mod øst");
         kul = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul");
         værksted = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor");
         vind1 = new Room("udenfor i et område, hvor du kan mærke det blæser");
-        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden");
-        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden");
-        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind");
+        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden","vindMølle","vind2");
+        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden","vindMølle","vind3");
+        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind","vindMølle","vind4");
         vand1 = new Room("udenfor i et område, hvor du ser et vandfald");
-        vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af");
-        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området");
+        vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af","vandMølle","vand2");
+        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området","vandMølle","vand3");
         vand4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet");
-        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod");
+        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod","vandMølle","vand5");
         sol1 = new Room("udenfor i et varm område, med meget sollys");
-        sol2 = new Room("på en flad mark med meget sol");
-        sol3 = new Room("i en skov, hvor træerne dækker for solen");
-        sol4 = new Room("i et område med en bakke, der er meget sol");
+        sol2 = new Room("på en flad mark med meget sol","solCelle","sol2"));
+        sol3 = new Room("i en skov, hvor træerne dækker for solen","solCelle","sol3");
+        sol4 = new Room("i et område med en bakke, der er meget sol","solCelle","sol4");
 
         //Udgange fra start
         start.setExit("øst", kul);
@@ -122,7 +128,8 @@ public class Game
     {            
         printWelcome();
 
-                
+        inventory.addItem(vindMølle);
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -164,16 +171,43 @@ public class Game
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
+
+        else if (commandWord == CommandWord.PLACE) {
+            if (currentRoom.getDropoff() == inventory.getName())
+            {
+                if (currentRoom.getDropoff() == "solCelle") {
+                    power.setRoomSol(currentRoom);
+                    inventory.removeItem(solCelle);
+                }
+                else if (currentRoom.getDropoff() == "vindMølle") {
+                    power.setRoomVind(currentRoom);
+                    inventory.removeItem(vindMølle);
+                }
+                else if (currentRoom.getDropoff() == "vandMølle") {
+                    power.setRoomVand(currentRoom);
+                    inventory.removeItem(vandMølle);
+                }
+            }
+            else {
+                System.out.println("Unable to place down item. \n ~~~");
+                System.out.println("The current room's drop off is: ");
+                currentRoom.getDropoff();
+                System.out.println("Your inventory is: ");
+                inventory.show();
+            }
+
         else if (commandWord == CommandWord.TAG)
         {
             getItem(command);
         }
+          
         return wantToQuit;
+          
     }
     private void getItem(Command command)
     {
         if(!command.hasSecondWord()) {
-            System.out.println("Hvad skal jeg tag ?");
+            System.out.println("Hvad skal jeg tage?");
             return;
         }
 
@@ -203,7 +237,7 @@ public class Game
 
     private void printHelp() 
     {
-        System.out.println("Tak fordi du spøger om hjælp");
+        System.out.println("Tak fordi du spørger om hjælp");
         System.out.println();
         System.out.println("Dine muligheder er følgende:");
         parser.showCommands();
@@ -212,7 +246,7 @@ public class Game
     private void goRoom(Command command) 
     {
         if(!command.hasSecondWord()) {
-            System.out.println("Hvor hen ?");
+            System.out.println("Hvorhen?");
             return;
         }
 
@@ -239,4 +273,5 @@ public class Game
             return true;
         }
     }
+
 }
