@@ -2,7 +2,6 @@ package worldofzuul;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
-import java.util.Iterator;
 
 
 public class Room
@@ -51,10 +50,6 @@ public class Room
     }
 
     //Samle ting op fra rummet
-    public Item getItem(int index)
-    {
-        return items.get(index);
-    }
     public Item getItem(String itemName)
     {
         for (int i = 0; i < items.size(); i++) {
@@ -74,7 +69,7 @@ public class Room
             }
         }
     }
-    public void setItem(Item newitem)
+    public void addItem(Item newitem)
     {
         items.add(newitem);
     }
