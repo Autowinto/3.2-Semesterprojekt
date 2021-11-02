@@ -134,7 +134,7 @@ public class Game
         System.out.println();
         System.out.println("Velkommen til spillet for bæredygtig energi!");
         System.out.println("Dette er et spil som vil lære dig om forskellige energi løsninger.");
-        System.out.println("skriv '" + CommandWord.HJÆLP + "' hvis du har brug for hjælp.");
+        System.out.println("Skriv '" + CommandWord.HJÆLP + "' hvis du har brug for hjælp.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
     }
@@ -157,7 +157,7 @@ public class Game
             goRoom(command);
         }
         else if (commandWord == CommandWord.INVENTAR) {
-            printInventar();
+            printInventory();
         }
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
@@ -185,23 +185,25 @@ public class Game
         else {
             inventar.add(newItem);
             currentRoom.removeItem(item);
-            System.out.println("du har samlet " + item + " op");
+            System.out.println("Du har samlet " + item + " op");
         }
     }
 
-    private void printInventar() {
+    private void printInventory() {
         String output = "";
         for (int i = 0; i < inventar.size(); i++) {
             output += inventar.get(i).getName() + " ";
         }
-        System.out.println("Inventar indholder: " + output);
+        System.out.println("Dit inventar indholder:");
+        System.out.println("-----------------------");
+        System.out.println(output);
     }
 
     private void printHelp() 
     {
         System.out.println("Tak fordi du spøger om hjælp");
         System.out.println();
-        System.out.println("dine muligheder er følgende:");
+        System.out.println("Dine muligheder er følgende:");
         parser.showCommands();
     }
 
@@ -228,7 +230,7 @@ public class Game
     private boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {
-            System.out.println("giver du op?");
+            System.out.println("Giver du op?");
             return false;
         }
         else {

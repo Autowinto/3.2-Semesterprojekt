@@ -38,13 +38,13 @@ public class Room
 
     private String getExitString()
     {
-        String returnString = "Exits:";
+        String returnString = "Udgange:";
         Set<String> keys = exits.keySet();
         for(String exit : keys) {
             returnString += " " + exit;
         }
         //Udskriv hvad der kan samles i et rum
-        returnString += "\nfølgende ting kan samles op:";
+        returnString += "\nFølgende ting kan samles op:\n";
         returnString += getRoomItems();
         return returnString;
     }
@@ -85,7 +85,7 @@ public class Room
     {
         String output = "";
         for (int i = 0; i < items.size(); i++) {
-            output += items.get(i).getName() + " ";
+            output += items.get(i).getName() + ", ";
         }
         return output;
     }
