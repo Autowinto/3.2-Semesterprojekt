@@ -127,8 +127,6 @@ public class Game
     {            
         printWelcome();
 
-        inventory.addItem(vindmølle);
-
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();

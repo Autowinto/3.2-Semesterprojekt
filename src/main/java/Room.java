@@ -48,17 +48,22 @@ public class Room
 
     public String getName() { return name; }
 
-    private String getExitString()
-    {
+    private String getExitString() {
         String returnString = "Udgange:";
         Set<String> keys = exits.keySet();
-        for(String exit : keys) {
+        for (String exit : keys) {
             returnString += " " + exit;
         }
-        //Udskriv hvad der kan samles i et rum
-        returnString += "\nFølgende ting kan samles op:\n";
-        returnString += getRoomItems();
-        return returnString;
+        //Udskriv hvad der kan samles i et rum hvis der er noget
+        if (items.size() == 0){
+            return returnString;
+        }else{
+            returnString += "\nFølgende ting kan samles op:\n";
+            returnString += getRoomItems();
+            return returnString;
+        }
+
+
     }
 
     public Room getExit(String direction)
