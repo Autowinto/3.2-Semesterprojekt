@@ -43,7 +43,7 @@ public class Room
 
     public String getLongDescription()
     {
-        return "Du er " + description + ".\n" + getExitString();
+        return "Du er " + description + ".\n" + getExitString() + getDropOffString();
     }
 
     public String getName() { return name; }
@@ -59,6 +59,13 @@ public class Room
         returnString += "\nFølgende ting kan samles op:\n";
         returnString += getRoomItems();
         return returnString;
+    }
+
+    public String getDropOffString(){
+        if (getDropoff() != null) {
+            return "Du kan placere et produkt i dette rum";
+        }
+        return "";
     }
 
     public Room getExit(String direction)
