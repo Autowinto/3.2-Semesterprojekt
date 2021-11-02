@@ -37,7 +37,7 @@ public class Game
         vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området","vandMølle","vand3");
         vand4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet");
         vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod","vandMølle","vand5");
-        sol1 = new Room("udenfor i et varm område, med meget sollys");
+        sol1 = new Room("udenfor i et varmt område med meget sollys");
         sol2 = new Room("på en flad mark med meget sol","solCelle","sol2");
         sol3 = new Room("i en skov, hvor træerne dækker for solen","solCelle","sol3");
         sol4 = new Room("i et område med en bakke, der er meget sol","solCelle","sol4");
@@ -171,8 +171,8 @@ public class Game
             wantToQuit = quit(command);
         }
 
-        else if (commandWord == CommandWord.PLACE) {
-            if (currentRoom.getDropoff() == inventory.getName()) {
+        else if (commandWord == CommandWord.SÆT) {
+            if (currentRoom.getDropoff() == inventory.getName() && (currentRoom.getDropoff() != null)) {
                 if (currentRoom.getDropoff() == "solCelle") {
                     power.setRoomSol(currentRoom);
                     inventory.removeItem(solCelle);
@@ -183,12 +183,17 @@ public class Game
                     power.setRoomVand(currentRoom);
                     inventory.removeItem(vandMølle);
                 }
-            } else {
-                System.out.println("Unable to place down item. \n ~~~");
-                System.out.println("The current room's drop off is: ");
-                currentRoom.getDropoff();
-                System.out.println("Your inventory is: ");
-                inventory.show();
+            }
+            else if (currentRoom.getDropoff() != inventory.getName() && (currentRoom.getDropoff() != null)
+                    && (inventory.getName() != null)) {
+                System.out.println("Du kan ikke sætte det produkt som du har i den inventory her.");
+            }
+
+            else if (currentRoom.getDropoff() == null) {
+                System.out.println("Du kan ikke sætte noget produkt her.");
+            }
+            else if (inventory.getName() == null) {
+                System.out.println("Du har ikke nogen produkter på dig.");
             }
         }
         else if (commandWord == CommandWord.TAG)
