@@ -113,7 +113,7 @@ public class Room
     {
         String output = "";
         for (int i = 0; i < items.size(); i++) {
-            output += items.get(i).getName() + ", ";
+            output += items.get(i).getName() + " ";
         }
         return output;
     }
