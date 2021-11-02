@@ -101,19 +101,19 @@ public class Game
         currentRoom = start;
 
         //vind items placering i rum
-        vind1.setItem(new Material("generator",EnergyType.VIND));
-        vind2.setItem(new Material("vinger",EnergyType.VIND));
-        vind4.setItem(new Material("tårn",EnergyType.VIND));
+        vind1.addItem(new Material("generator",EnergyType.VIND));
+        vind2.addItem(new Material("vinger",EnergyType.VIND));
+        vind4.addItem(new Material("tårn",EnergyType.VIND));
 
         //Vand items placering i rum
-        vand2.setItem(new Material("Turbine",EnergyType.VAND));
-        vand3.setItem(new Material("vandrør",EnergyType.VAND));
-        vand4.setItem(new Material("kabel",EnergyType.VAND));
+        vand2.addItem(new Material("Turbine",EnergyType.VAND));
+        vand3.addItem(new Material("vandrør",EnergyType.VAND));
+        vand4.addItem(new Material("kabel",EnergyType.VAND));
 
         //Sol items placering i rum
-        sol1.setItem(new Material("solpanel",EnergyType.SOL));
-        sol2.setItem(new Material("inverter",EnergyType.SOL));
-        sol3.setItem(new Material("stativ",EnergyType.SOL));
+        sol1.addItem(new Material("solpanel",EnergyType.SOL));
+        sol2.addItem(new Material("inverter",EnergyType.SOL));
+        sol3.addItem(new Material("stativ",EnergyType.SOL));
     }
 
     public void play() 

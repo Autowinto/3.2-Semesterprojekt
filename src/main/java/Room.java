@@ -18,6 +18,7 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<String, Room>();
+        this.items = new ArrayList<>();
     }
 
     public void setExit(String direction, Room neighbor)
