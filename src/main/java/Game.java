@@ -216,6 +216,9 @@ public class Game
         if (newItem == null) {
             System.out.println("Det er ikke her!");
         }
+        else if (newItem.getWeight() + inventory.getCurrentWeight() > inventory.getWeightLimit()){
+            System.out.println("Du har ikke plads til at samle denne ting op");
+        }
         else {
             inventory.addItem(newItem);
             currentRoom.removeItem(item);
