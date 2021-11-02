@@ -8,9 +8,9 @@ public class Game
     private Room currentRoom;
 
     Power power = new Power();
-    Item solCelle = new Product("solCelle", EnergyType.SOL);
-    Item vindMølle = new Product("vindMølle", EnergyType.VIND);
-    Item vandMølle = new Product("vandMølle", EnergyType.VAND);
+    Item solcelle = new Product("solcelle", EnergyType.SOL);
+    Item vindmølle = new Product("vindmølle", EnergyType.VIND);
+    Item vandmølle = new Product("vandmølle", EnergyType.VAND);
 
     Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, sol1, sol2, sol3, sol4;
     Inventory inventory = new Inventory();
@@ -29,18 +29,18 @@ public class Game
         kul = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul");
         værksted = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor");
         vind1 = new Room("udenfor i et område, hvor du kan mærke det blæser");
-        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden","vindMølle","vind2");
-        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden","vindMølle","vind3");
-        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind","vindMølle","vind4");
+        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden","vindmølle","vind2");
+        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden","vindmølle","vind3");
+        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind","vindmølle","vind4");
         vand1 = new Room("udenfor i et område, hvor du ser et vandfald");
-        vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af","vandMølle","vand2");
-        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området","vandMølle","vand3");
+        vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af","vandmølle","vand2");
+        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området","vandmølle","vand3");
         vand4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet");
-        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod","vandMølle","vand5");
+        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod","vandmølle","vand5");
         sol1 = new Room("udenfor i et varmt område med meget sollys");
-        sol2 = new Room("på en flad mark med meget sol","solCelle","sol2");
-        sol3 = new Room("i en skov, hvor træerne dækker for solen","solCelle","sol3");
-        sol4 = new Room("i et område med en bakke, der er meget sol","solCelle","sol4");
+        sol2 = new Room("på en flad mark med meget sol","solcelle","sol2");
+        sol3 = new Room("i en skov, hvor træerne dækker for solen","solcelle","sol3");
+        sol4 = new Room("i et område med en bakke, der er meget sol","solcelle","sol4");
 
         //Udgange fra start
         start.setExit("øst", kul);
@@ -127,7 +127,7 @@ public class Game
     {            
         printWelcome();
 
-        inventory.addItem(vindMølle);
+        inventory.addItem(vindmølle);
 
         boolean finished = false;
         while (! finished) {
@@ -173,15 +173,15 @@ public class Game
 
         else if (commandWord == CommandWord.SÆT) {
             if (currentRoom.getDropoff() == inventory.getName() && (currentRoom.getDropoff() != null)) {
-                if (currentRoom.getDropoff() == "solCelle") {
+                if (currentRoom.getDropoff() == "solcelle") {
                     power.setRoomSol(currentRoom);
-                    inventory.removeItem(solCelle);
-                } else if (currentRoom.getDropoff() == "vindMølle") {
+                    inventory.removeItem(solcelle);
+                } else if (currentRoom.getDropoff() == "vindmølle") {
                     power.setRoomVind(currentRoom);
-                    inventory.removeItem(vindMølle);
-                } else if (currentRoom.getDropoff() == "vandMølle") {
+                    inventory.removeItem(vindmølle);
+                } else if (currentRoom.getDropoff() == "vandmølle") {
                     power.setRoomVand(currentRoom);
-                    inventory.removeItem(vandMølle);
+                    inventory.removeItem(vandmølle);
                 }
             }
             else if (currentRoom.getDropoff() != inventory.getName() && (currentRoom.getDropoff() != null)
