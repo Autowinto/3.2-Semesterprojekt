@@ -1,23 +1,23 @@
 package worldofzuul;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
 
 
-public class Room 
+public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
-    private ArrayList<Item> items;
+    ArrayList<Item> items = new ArrayList<>();
 
-    public Room(String description, Item[] items) 
+    public Room(String description)
     {
         this.description = description;
-        this.items = new ArrayList<>(items);
         exits = new HashMap<String, Room>();
     }
 
-    public void setExit(String direction, Room neighbor) 
+    public void setExit(String direction, Room neighbor)
     {
         exits.put(direction, neighbor);
     }
@@ -39,20 +39,55 @@ public class Room
         for(String exit : keys) {
             returnString += " " + exit;
         }
+        //Udskriv hvad der kan samles i et rum
+        returnString += "\nfølgende ting kan samles op:";
+        returnString += getRoomItems();
         return returnString;
     }
 
-    public Room getExit(String direction) 
+    public Room getExit(String direction)
     {
         return exits.get(direction);
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
+    //Samle ting op fra rummet
+    public Item getItem(int index)
+    {
+        return items.get(index);
+    }
+    public Item getItem(String itemName)
+    {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getName().equals(itemName))
+            {
+                return items.get(i);
+            }
+        }
+        return null;
+    }
+    public void removeItem(String itemName)
+    {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getName().equals(itemName))
+            {
+                items.remove(i);
+            }
+        }
+    }
+    public void setItem(Item newitem)
+    {
+        items.add(newitem);
     }
 
-    public void removeItem(Item item) {
-        items.remove(item);
+    //En beskrivelse af hvad der er i et rum
+
+    public String getRoomItems()
+    {
+        String output = "";
+        for (int i = 0; i < items.size(); i++) {
+            output += items.get(i).getName() + " ";
+        }
+        return output;
     }
 }
 
