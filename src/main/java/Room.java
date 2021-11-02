@@ -18,7 +18,11 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<String, Room>();
+<<<<<<< Updated upstream
         this.items = new ArrayList<>();
+=======
+        items = new ArrayList<>();
+>>>>>>> Stashed changes
     }
 
     public void setExit(String direction, Room neighbor)
