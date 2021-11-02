@@ -13,7 +13,7 @@ public class Room
     public Room(String description, Item[] items) 
     {
         this.description = description;
-        this.items = items;
+        this.items = new ArrayList<>(items);
         exits = new HashMap<String, Room>();
     }
 
