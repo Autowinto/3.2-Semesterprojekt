@@ -30,6 +30,18 @@ public class Inventory {
         return null;
     }
 
+    public double getWeightLimit(){
+        return this.weightLimit;
+    }
+
+    public double getCurrentWeight(){
+        for (Item item : items){
+            this.currentWeight += item.getWeight();
+        }
+        return this.currentWeight;
+
+    }
+
     public void show() {
         for (Item item : items) {
             System.out.println(item.getName());
