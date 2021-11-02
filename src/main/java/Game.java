@@ -107,11 +107,8 @@ public class Game
         vind4.addItem(new Material("tårn",EnergyType.VIND));
 
         //Vand items placering i rum
-<<<<<<< Updated upstream
-        vand2.addItem(new Material("Turbine",EnergyType.VAND));
-=======
+
         vand2.addItem(new Material("turbine",EnergyType.VAND));
->>>>>>> Stashed changes
         vand3.addItem(new Material("vandrør",EnergyType.VAND));
         vand4.addItem(new Material("kabel",EnergyType.VAND));
 
