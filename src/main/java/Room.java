@@ -8,10 +8,12 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
+    private ArrayList<Item> items;
 
-    public Room(String description) 
+    public Room(String description, Item[] items) 
     {
         this.description = description;
+        this.items = new ArrayList<>(items);
         exits = new HashMap<String, Room>();
     }
 
@@ -43,6 +45,14 @@ public class Room
     public Room getExit(String direction) 
     {
         return exits.get(direction);
+    }
+
+    public ArrayList<Item> getItems() {
+        return items;
+    }
+
+    public void removeItem(Item item) {
+        items.remove(item);
     }
 }
 
