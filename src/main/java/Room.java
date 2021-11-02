@@ -1,6 +1,8 @@
 package worldofzuul;
 import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashMap;
 
 public class Room
 {
@@ -8,10 +10,13 @@ public class Room
     private HashMap<String, Room> exits;
     private ArrayList<Item> items;
 
-    public Room(String description, Item[] items)
-    {
+    public Room(String description, Item[] items) {
         this.description = description;
         this.items = new ArrayList<Item>(Arrays.asList((items)));
+    }
+    public Room(String description)
+    {
+        this.description = description;
         exits = new HashMap<String, Room>();
     }
 
@@ -37,6 +42,9 @@ public class Room
         for(String exit : keys) {
             returnString += " " + exit;
         }
+        //Udskriv hvad der kan samles i et rum
+        returnString += "\nfølgende ting kan samles op:";
+        returnString += getRoomItems();
         return returnString;
     }
 
@@ -45,12 +53,40 @@ public class Room
         return exits.get(direction);
     }
 
-    public ArrayList<Item> getItems() {
-        return items;
+    //Samle ting op fra rummet
+    public Item getItem(String itemName)
+    {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getName().equals(itemName))
+            {
+                return items.get(i);
+            }
+        }
+        return null;
+    }
+    public void removeItem(String itemName)
+    {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getName().equals(itemName))
+            {
+                items.remove(i);
+            }
+        }
+    }
+    public void addItem(Item newitem)
+    {
+        items.add(newitem);
     }
 
-    public void removeItem(Item item) {
-        items.remove(item);
+    //En beskrivelse af hvad der er i et rum
+
+    public String getRoomItems()
+    {
+        String output = "";
+        for (int i = 0; i < items.size(); i++) {
+            output += items.get(i).getName() + " ";
+        }
+        return output;
     }
 }
 
