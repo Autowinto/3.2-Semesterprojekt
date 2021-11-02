@@ -43,7 +43,7 @@ public class Room
 
     public String getLongDescription()
     {
-        return "Du er " + description + ".\n" + getExitString() + getDropOffString();
+        return "Du er " + description + ".\n" + getExitString() + ".\n" + getDropOffString();
     }
 
     public String getName() { return name; }
