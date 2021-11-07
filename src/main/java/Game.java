@@ -32,8 +32,8 @@ public class Game
         vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden","vindmølle","vind2");
         vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden","vindmølle","vind3");
         vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind","vindmølle","vind4");
-        vand1 = new Room("udenfor i et område, hvor du ser et vandfald");
-        vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af","vandmølle","vand2");
+        vand1 = new Room("udenfor i et område, hvor du ser et vandfald","vandmølle","vand1");
+        vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af");
         vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området","vandmølle","vand3");
         vand4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet");
         vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod","vandmølle","vand5");
@@ -197,6 +197,10 @@ public class Game
         else if (commandWord == CommandWord.TAG)
         {
             getItem(command);
+        }
+
+        else if (commandWord == CommandWord.STRØM) {
+            Power.getPower();
         }
           
         return wantToQuit;
