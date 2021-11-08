@@ -29,18 +29,18 @@ public class Game
         kul = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul");
         værksted = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor");
         vind1 = new Room("udenfor i et område, hvor du kan mærke det blæser");
-        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden","vindmølle","vind2");
-        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden","vindmølle","vind3");
-        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind","vindmølle","vind4");
-        vand1 = new Room("udenfor i et område, hvor du ser et vandfald","vandmølle","vand1");
+        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden",EnergyType.VIND,"middle");
+        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden",EnergyType.VIND,"best");
+        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind",EnergyType.VIND,"worst");
+        vand1 = new Room("udenfor i et område, hvor du ser et vandfald",EnergyType.VAND,"best");
         vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af");
-        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området","vandmølle","vand3");
+        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området",EnergyType.VAND,"middle");
         vand4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet");
-        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod","vandmølle","vand5");
+        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod",EnergyType.VAND,"worst");
         sol1 = new Room("udenfor i et varmt område med meget sollys");
-        sol2 = new Room("på en flad mark med meget sol","solcelle","sol2");
-        sol3 = new Room("i en skov, hvor træerne dækker for solen","solcelle","sol3");
-        sol4 = new Room("i et område med en bakke, der er meget sol","solcelle","sol4");
+        sol2 = new Room("på en flad mark med meget sol",EnergyType.SOL,"middle");
+        sol3 = new Room("i en skov, hvor træerne dækker for solen",EnergyType.SOL,"worst");
+        sol4 = new Room("i et område med en bakke, der er meget sol",EnergyType.SOL,"best");
 
         //Udgange fra start
         start.setExit("øst", kul);
