@@ -178,11 +178,10 @@ public class Game
         }
 
         else if (commandWord == CommandWord.SÆT) {
-            tryDropOff(command);
+            placeOnDropOff(command);
         }
 
-        else if (commandWord == CommandWord.TAG)
-        {
+        else if (commandWord == CommandWord.TAG) {
             getItem(command);
         }
 
@@ -214,6 +213,9 @@ public class Game
             inventory.addItem(newItem);
             currentRoom.removeItem(item);
             System.out.println("Du har samlet " + item + " op");
+            if(newItem instanceof Product){
+                power.removePower((Product) newItem, currentRoom);
+            }
         }
     }
 
@@ -266,7 +268,7 @@ public class Game
         }
     }
 
-    private void tryDropOff(Command command) {
+    private void placeOnDropOff(Command command) {
         if (currentRoom.getDropOffEffect() != null){
             if(!command.hasSecondWord()) {
                 System.out.println("Hvad skal jeg sætte?");
@@ -288,14 +290,15 @@ public class Game
                 System.out.println("Du har ikke det nævnte produkt i dit inventory");
             } else {
                 inventory.removeItem(product);
+                currentRoom.addItem(product);
                 System.out.println("Du har sat "+product.getName()+" i det nuværende rum");
                 power.addPower((Product) product, currentRoom);
-                System.out.println(currentRoom.getDropOffText());
             }
         } else {
             System.out.println("Der er ikke noget sted at placerer produkter i dette rum");
         }
     }
+
     public void printPower(){
         System.out.println("Du har "+power.getPower()+"% strøm");
     }
