@@ -1,5 +1,7 @@
 package worldofzuul;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Game
@@ -8,9 +10,15 @@ public class Game
     private Room currentRoom;
 
     Power power = new Power();
-    Item solcelle = new Product("solcelle", EnergyType.SOL);
-    Item vindmølle = new Product("vindmølle", EnergyType.VIND);
-    Item vandmølle = new Product("vandmølle", EnergyType.VAND);
+    Item[] allItems = {
+            new Material("generator",EnergyType.VIND), new Material("vinger",EnergyType.VIND), new Material("tårn",EnergyType.VIND),
+            new Material("turbine",EnergyType.VAND), new Material("vandrør",EnergyType.VAND), new Material("kabel",EnergyType.VAND),
+            new Material("solpanel",EnergyType.SOL), new Material("inverter",EnergyType.SOL), new Material("stativ",EnergyType.SOL),
+            new Product("vindmølle", EnergyType.VIND), new Product("vandmølle", EnergyType.VAND), new Product("solcelle", EnergyType.SOL)};
+
+    Item vindmølle = allItems[9];
+    Item vandmølle = allItems[10];
+    Item solcelle = allItems[11];
 
     Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, sol1, sol2, sol3, sol4;
     Inventory inventory = new Inventory();
@@ -105,12 +113,6 @@ public class Game
         sol4.setExit("øst",sol3);
 
         currentRoom = start;
-
-        Item[] allItems = {
-                new Material("generator",EnergyType.VIND), new Material("vinger",EnergyType.VIND), new Material("tårn",EnergyType.VIND),
-                new Material("turbine",EnergyType.VAND), new Material("vandrør",EnergyType.VAND), new Material("kabel",EnergyType.VAND),
-                new Material("solpanel",EnergyType.SOL), new Material("inverter",EnergyType.SOL), new Material("stativ",EnergyType.SOL),
-                new Product("vindmølle", EnergyType.VIND), new Product("vandmølle", EnergyType.VAND), new Product("solcelle", EnergyType.SOL)};
 
         //vind items placering i rum
         vind1.addItem(allItems[0]);
@@ -269,13 +271,25 @@ public class Game
                 System.out.println("Hvad skal jeg sætte?");
                 return;
             }
-            String product = command.getSecondWord();
+            String productName = command.getSecondWord();
+            Item product = null;
 
-            if(!inventory.getItems().contains(product)){
-                System.out.println("Du har ikke det nævnte produkt i dit inventory");
+            for (int i = 0; i < allItems.length; i++) {
+                if (allItems[i].getName().equals(productName)) {
+                    product = allItems[i];
+                }
             }
-            //product in inventory
+            if (product == null){
+                System.out.println("Genstanden blev ikke genkendt");
+            }
 
+            if (product instanceof Material){
+                System.out.println("Du kan ikke sætte materialer, kun produkter");
+            } else if (!inventory.getItems().contains(product)){
+                System.out.println("Du har ikke det nævnte produkt i dit inventory");
+            } else {
+                
+            }
         } else {
             System.out.println("Der er ikke noget sted at placerer produkter i dette rum");
         }
