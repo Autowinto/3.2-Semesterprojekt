@@ -106,21 +106,26 @@ public class Game
 
         currentRoom = start;
 
+        Item[] allItems = {
+                new Material("generator",EnergyType.VIND), new Material("vinger",EnergyType.VIND), new Material("tårn",EnergyType.VIND),
+                new Material("turbine",EnergyType.VAND), new Material("vandrør",EnergyType.VAND), new Material("kabel",EnergyType.VAND),
+                new Material("solpanel",EnergyType.SOL), new Material("inverter",EnergyType.SOL), new Material("stativ",EnergyType.SOL),
+                new Product("vindmølle", EnergyType.VIND), new Product("vandmølle", EnergyType.VAND), new Product("solcelle", EnergyType.SOL)};
+
         //vind items placering i rum
-        vind1.addItem(new Material("generator",EnergyType.VIND));
-        vind2.addItem(new Material("vinger",EnergyType.VIND));
-        vind4.addItem(new Material("tårn",EnergyType.VIND));
+        vind1.addItem(allItems[0]);
+        vind2.addItem(allItems[1]);
+        vind4.addItem(allItems[2]);
 
         //Vand items placering i rum
-
-        vand2.addItem(new Material("turbine",EnergyType.VAND));
-        vand3.addItem(new Material("vandrør",EnergyType.VAND));
-        vand4.addItem(new Material("kabel",EnergyType.VAND));
+        vand2.addItem(allItems[3]);
+        vand3.addItem(allItems[4]);
+        vand4.addItem(allItems[5]);
 
         //Sol items placering i rum
-        sol1.addItem(new Material("solpanel",EnergyType.SOL));
-        sol2.addItem(new Material("inverter",EnergyType.SOL));
-        sol3.addItem(new Material("stativ",EnergyType.SOL));
+        sol1.addItem(allItems[6]);
+        sol2.addItem(allItems[7]);
+        sol3.addItem(allItems[8]);
     }
 
     public void play() 
@@ -170,7 +175,7 @@ public class Game
         }
 
         else if (commandWord == CommandWord.SÆT) {
-            tryDropOff();
+            tryDropOff(command);
         }
 
         else if (commandWord == CommandWord.TAG)
@@ -258,8 +263,24 @@ public class Game
         }
     }
 
-    private void tryDropOff() {
-        if (currentRoom.getDropoff() == inventory.getName() && (currentRoom.getDropoff() != null)) {
+    private void tryDropOff(Command command) {
+        if (currentRoom.getDropOffEffect() != null){
+            if(!command.hasSecondWord()) {
+                System.out.println("Hvad skal jeg sætte?");
+                return;
+            }
+            String product = command.getSecondWord();
+
+            if(!inventory.getItems().contains(product)){
+                System.out.println("Du har ikke det nævnte produkt i dit inventory");
+            }
+            //product in inventory
+
+        } else {
+            System.out.println("Der er ikke noget sted at placerer produkter i dette rum");
+        }
+
+        /*if (currentRoom.getDropoff() == inventory.getName() && (currentRoom.getDropoff() != null)) {
             if (currentRoom.getDropoff() == "solcelle") {
                 power.setRoomSol(currentRoom);
                 inventory.removeItem(solcelle);
@@ -278,7 +299,7 @@ public class Game
         } else if (inventory.getName() == null) {
             System.out.println("Du har ikke nogen produkter på dig.");
 
-        }
+        }*/
     }
 
 }

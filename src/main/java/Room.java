@@ -8,7 +8,6 @@ import java.util.HashMap;
 public class Room {
     private String description;
     private String dropOffEffect;
-    private String dropOff;
     private EnergyType energyType;
     private HashMap<String, Room> exits;
     private ArrayList<Item> items = new ArrayList<>();
@@ -43,10 +42,6 @@ public class Room {
                 (getDropOffString().length() == 0 ? "" : ".\n" + getDropOffString());
     }
 
-    public String getName() {
-        return name;
-    }
-
     private String getExitString() {
         String returnString = "Udgange:";
         Set<String> keys = exits.keySet();
@@ -62,9 +57,12 @@ public class Room {
             return returnString;
         }
     }
+    public String getDropOffEffect(){
+        return this.dropOffEffect;
+    }
 
     public String getDropOffString() {
-        if (getDropoff() != null) {
+        if (dropOffEffect != null) {
             return "Du kan placere et produkt i dette rum";
         }
         return "";
@@ -72,10 +70,6 @@ public class Room {
 
     public Room getExit(String direction) {
         return exits.get(direction);
-    }
-
-    public String getDropoff() {
-        return this.dropOff;
     }
 
     //Samle ting op fra rummet
