@@ -27,6 +27,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        inventory.addItem(allItems[11]);
     }
 
     private void createRooms()
@@ -37,18 +38,18 @@ public class Game
         kul = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul");
         værksted = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor");
         vind1 = new Room("udenfor i et område, hvor du kan mærke det blæser");
-        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden",EnergyType.VIND,"middle");
-        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden",EnergyType.VIND,"best");
-        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind",EnergyType.VIND,"worst");
-        vand1 = new Room("udenfor i et område, hvor du ser et vandfald",EnergyType.VAND,"best");
+        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden",EnergyType.VIND,"middle","Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.");
+        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden",EnergyType.VIND,"best","Din vindmølle genererer en rigtig god mængde energi, da det blæser og der ikke er noget som dækker.");
+        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind",EnergyType.VIND,"worst", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da vinden er for stærk.");
+        vand1 = new Room("udenfor i et område, hvor du ser et vandfald",EnergyType.VAND,"best", "Din vandmølle genererer en rigtig god mængde energi, da der er en masse energi fra vandet der falder.");
         vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af");
-        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området",EnergyType.VAND,"middle");
+        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området",EnergyType.VAND,"middle", "Din vandmølle genererer en god mængde energi, men det er ikke optimalt, da en flod ikke er hvor der er mest energi.");
         vand4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet");
-        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod",EnergyType.VAND,"worst");
+        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod",EnergyType.VAND,"worst","Din vandmølle genererer lidt energi, men det er ikke optimalt, da der ikke er meget energi i stilleliggende vand.");
         sol1 = new Room("udenfor i et varmt område med meget sollys");
-        sol2 = new Room("på en flad mark med meget sol",EnergyType.SOL,"middle");
-        sol3 = new Room("i en skov, hvor træerne dækker for solen",EnergyType.SOL,"worst");
-        sol4 = new Room("i et område med en bakke, der er meget sol",EnergyType.SOL,"best");
+        sol2 = new Room("på en flad mark med meget sol",EnergyType.SOL,"middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.");
+        sol3 = new Room("i en skov, hvor træerne dækker for solen",EnergyType.SOL,"worst","Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.");
+        sol4 = new Room("i et område med en bakke, der er meget sol",EnergyType.SOL,"best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ");
 
         //Udgange fra start
         start.setExit("øst", kul);
@@ -186,7 +187,7 @@ public class Game
         }
 
         else if (commandWord == CommandWord.STRØM) {
-            Power.getPower();
+            printPower();
         }
           
         return wantToQuit;
@@ -281,39 +282,22 @@ public class Game
             }
             if (product == null){
                 System.out.println("Genstanden blev ikke genkendt");
-            }
-
-            if (product instanceof Material){
+            } else if (product instanceof Material){
                 System.out.println("Du kan ikke sætte materialer, kun produkter");
             } else if (!inventory.getItems().contains(product)){
                 System.out.println("Du har ikke det nævnte produkt i dit inventory");
             } else {
-                
+                inventory.removeItem(product);
+                System.out.println("Du har sat "+product.getName()+" i det nuværende rum");
+                power.addPower((Product) product, currentRoom);
+                System.out.println(currentRoom.getDropOffText());
             }
         } else {
             System.out.println("Der er ikke noget sted at placerer produkter i dette rum");
         }
-
-        /*if (currentRoom.getDropoff() == inventory.getName() && (currentRoom.getDropoff() != null)) {
-            if (currentRoom.getDropoff() == "solcelle") {
-                power.setRoomSol(currentRoom);
-                inventory.removeItem(solcelle);
-            } else if (currentRoom.getDropoff() == "vindmølle") {
-                power.setRoomVind(currentRoom);
-                inventory.removeItem(vindmølle);
-            } else if (currentRoom.getDropoff() == "vandmølle") {
-                power.setRoomVand(currentRoom);
-                inventory.removeItem(vandmølle);
-            }
-        } else if (currentRoom.getDropoff() != inventory.getName() && (currentRoom.getDropoff() != null)
-                && (inventory.getName() != null)) {
-            System.out.println("Du kan ikke sætte det produkt som du har i den inventory her.");
-        } else if (currentRoom.getDropoff() == null) {
-            System.out.println("Du kan ikke sætte noget produkt her.");
-        } else if (inventory.getName() == null) {
-            System.out.println("Du har ikke nogen produkter på dig.");
-
-        }*/
+    }
+    public void printPower(){
+        System.out.println("Du har "+power.getPower()+"% strøm");
     }
 
 }

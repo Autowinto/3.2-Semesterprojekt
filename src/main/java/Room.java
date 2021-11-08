@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class Room {
     private String description;
     private String dropOffEffect;
+    private String dropOffText;
     private EnergyType energyType;
     private HashMap<String, Room> exits;
     private ArrayList<Item> items = new ArrayList<>();
@@ -22,10 +23,11 @@ public class Room {
         exits = new HashMap<String, Room>();
     }
 
-    public Room(String description, EnergyType energyType, String dropOffEffect) {
+    public Room(String description, EnergyType energyType, String dropOffEffect, String dropOffText) {
         this.description = description;
         this.energyType = energyType;
         this.dropOffEffect = dropOffEffect;
+        this.dropOffText = dropOffText;
         exits = new HashMap<String, Room>();
     }
 
@@ -57,8 +59,17 @@ public class Room {
             return returnString;
         }
     }
+
+    public EnergyType getEnergyType() {
+        return energyType;
+    }
+
     public String getDropOffEffect(){
         return this.dropOffEffect;
+    }
+
+    public String getDropOffText(){
+        return this.dropOffText;
     }
 
     public String getDropOffString() {
