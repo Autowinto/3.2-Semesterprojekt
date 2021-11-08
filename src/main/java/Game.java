@@ -170,30 +170,9 @@ public class Game
         }
 
         else if (commandWord == CommandWord.SÆT) {
-            if (currentRoom.getDropoff() == inventory.getName() && (currentRoom.getDropoff() != null)) {
-                if (currentRoom.getDropoff() == "solcelle") {
-                    power.setRoomSol(currentRoom);
-                    inventory.removeItem(solcelle);
-                } else if (currentRoom.getDropoff() == "vindmølle") {
-                    power.setRoomVind(currentRoom);
-                    inventory.removeItem(vindmølle);
-                } else if (currentRoom.getDropoff() == "vandmølle") {
-                    power.setRoomVand(currentRoom);
-                    inventory.removeItem(vandmølle);
-                }
-            }
-            else if (currentRoom.getDropoff() != inventory.getName() && (currentRoom.getDropoff() != null)
-                    && (inventory.getName() != null)) {
-                System.out.println("Du kan ikke sætte det produkt som du har i den inventory her.");
-            }
-
-            else if (currentRoom.getDropoff() == null) {
-                System.out.println("Du kan ikke sætte noget produkt her.");
-            }
-            else if (inventory.getName() == null) {
-                System.out.println("Du har ikke nogen produkter på dig.");
-            }
+            tryDropOff();
         }
+
         else if (commandWord == CommandWord.TAG)
         {
             getItem(command);
@@ -276,6 +255,29 @@ public class Game
         }
         else {
             return true;
+        }
+    }
+
+    private void tryDropOff() {
+        if (currentRoom.getDropoff() == inventory.getName() && (currentRoom.getDropoff() != null)) {
+            if (currentRoom.getDropoff() == "solcelle") {
+                power.setRoomSol(currentRoom);
+                inventory.removeItem(solcelle);
+            } else if (currentRoom.getDropoff() == "vindmølle") {
+                power.setRoomVind(currentRoom);
+                inventory.removeItem(vindmølle);
+            } else if (currentRoom.getDropoff() == "vandmølle") {
+                power.setRoomVand(currentRoom);
+                inventory.removeItem(vandmølle);
+            }
+        } else if (currentRoom.getDropoff() != inventory.getName() && (currentRoom.getDropoff() != null)
+                && (inventory.getName() != null)) {
+            System.out.println("Du kan ikke sætte det produkt som du har i den inventory her.");
+        } else if (currentRoom.getDropoff() == null) {
+            System.out.println("Du kan ikke sætte noget produkt her.");
+        } else if (inventory.getName() == null) {
+            System.out.println("Du har ikke nogen produkter på dig.");
+
         }
     }
 
