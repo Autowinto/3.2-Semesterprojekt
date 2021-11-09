@@ -22,12 +22,6 @@ public class Inventory {
         items.remove(item);
     }
 
-    public String getName() {
-        for (Item item : items) {
-            return item.getName();
-        }
-        return null;
-    }
 
     public double getWeightLimit(){
         return this.weightLimit;
@@ -41,11 +35,4 @@ public class Inventory {
         return currentWeight;
 
     }
-
-    public void show() {
-        for (Item item : items) {
-            System.out.println(item.getName());
-        }
-    }
-
 }

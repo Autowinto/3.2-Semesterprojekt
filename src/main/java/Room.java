@@ -13,11 +13,6 @@ public class Room {
     private HashMap<String, Room> exits;
     private ArrayList<Item> items = new ArrayList<>();
 
-    public Room(String description, Item[] items) {
-        this.description = description;
-        this.items = new ArrayList<Item>(Arrays.asList((items)));
-    }
-
     public Room(String description) {
         this.description = description;
         exits = new HashMap<String, Room>();
@@ -33,10 +28,6 @@ public class Room {
 
     public void setExit(String direction, Room neighbor) {
         exits.put(direction, neighbor);
-    }
-
-    public String getShortDescription() {
-        return description;
     }
 
     public String getLongDescription() {

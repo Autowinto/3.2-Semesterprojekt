@@ -26,11 +26,6 @@ public class CommandWords
             return CommandWord.UKENDT;
         }
     }
-    
-    public boolean isCommand(String aString)
-    {
-        return validCommands.containsKey(aString);
-    }
 
     public void showAll() 
     {

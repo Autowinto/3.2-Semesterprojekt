@@ -1,7 +1,6 @@
 package worldofzuul;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CraftingRoom extends Room {
     private EnergyType energyType;

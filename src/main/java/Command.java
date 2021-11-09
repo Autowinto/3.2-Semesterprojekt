@@ -38,11 +38,6 @@ public class Command
         return secondWord;
     }
 
-    public boolean isUnknown()
-    {
-        return (commandWord == CommandWord.UKENDT);
-    }
-
     public boolean hasSecondWord()
     {
         return (secondWord != null);
