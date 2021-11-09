@@ -26,7 +26,6 @@ public class Game {
     public Game() {
         createRooms();
         parser = new Parser();
-        inventory.addItem(allItems[11]);
     }
 
     private void createRooms() {
@@ -47,7 +46,7 @@ public class Game {
         sol1 = new Room("udenfor i et varmt område med meget sollys");
         sol2 = new Room("på en flad mark med meget sol",EnergyType.SOL,"middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.");
         sol3 = new Room("i en skov, hvor træerne dækker for solen",EnergyType.SOL,"worst","Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.");
-        sol4 = new Room("i et område med en bakke, der er meget sol",EnergyType.SOL,"best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ");
+        sol4 = new Room("i et område med en bakke, hvor der er meget sol",EnergyType.SOL,"best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ");
         CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord.", EnergyType.VIND, new Product("Vindmølle", EnergyType.VIND));
         CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord.", EnergyType.VAND, new Product("Vandmølle", EnergyType.VAND));
         CraftingRoom craftingSun = new CraftingRoom("foran et gult bord.", EnergyType.SOL, new Product("Solcellepanel", EnergyType.SOL));
@@ -153,7 +152,7 @@ public class Game {
     private void printWelcome() {
         System.out.println();
         System.out.println("Velkommen til spillet for bæredygtig energi!");
-        System.out.println("Dette er et spil som vil lære dig om forskellige energi løsninger.");
+        System.out.println("Dette er et spil som vil lære dig om forskellige energiløsninger.");
         System.out.println("Skriv '" + CommandWord.HJÆLP + "' hvis du har brug for hjælp.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
@@ -181,42 +180,15 @@ public class Game {
 
         else if (commandWord == CommandWord.SÆT) {
             placeOnDropOff(command);
-        }
-
-        else if (commandWord == CommandWord.TAG) {
-            if (currentRoom.getDropoff() == inventory.getName() && (currentRoom.getDropoff() != null)) {
-                if (currentRoom.getDropoff() == "solcelle") {
-                    power.setRoomSol(currentRoom);
-                    inventory.removeItem(solcelle);
-                } else if (currentRoom.getDropoff() == "vindmølle") {
-                    power.setRoomVind(currentRoom);
-                    inventory.removeItem(vindmølle);
-                } else if (currentRoom.getDropoff() == "vandmølle") {
-                    power.setRoomVand(currentRoom);
-                    inventory.removeItem(vandmølle);
-                }
-            }
-            else if (currentRoom.getDropoff() != inventory.getName() && (currentRoom.getDropoff() != null)
-                    && (inventory.getName() != null)) {
-                System.out.println("Du kan ikke sætte det produkt som du har i den inventory her.");
-            }
-
-            else if (currentRoom.getDropoff() == null) {
-                System.out.println("Du kan ikke sætte noget produkt her.");
-            }
-            else if (inventory.getName() == null) {
-                System.out.println("Du har ikke nogen produkter på dig.");
-            }
         } else if (commandWord == CommandWord.TAG) {
             getItem(command);
         } else if (commandWord == CommandWord.BYG) {
             craft(command);
         }
-
         else if (commandWord == CommandWord.STRØM) {
             printPower();
         }
-          
+
         return wantToQuit;
 
     }
@@ -346,7 +318,7 @@ public class Game {
                 power.addPower((Product) product, currentRoom);
             }
         } else {
-            System.out.println("Der er ikke noget sted at placerer produkter i dette rum");
+            System.out.println("Der er ikke noget sted at placere produkter i dette rum");
         }
     }
 
