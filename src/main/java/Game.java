@@ -3,9 +3,9 @@ package worldofzuul;
 import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Game
-{
+public class Game {
     private Parser parser;
     private Room currentRoom;
 
@@ -23,15 +23,13 @@ public class Game
     Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, sol1, sol2, sol3, sol4;
     Inventory inventory = new Inventory();
 
-    public Game()
-    {
+    public Game() {
         createRooms();
         parser = new Parser();
         inventory.addItem(allItems[11]);
     }
 
-    private void createRooms()
-    {
+    private void createRooms() {
         Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, vand5, sol1, sol2, sol3, sol4;
 
         start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner strømkilden er mod øst");
@@ -50,6 +48,9 @@ public class Game
         sol2 = new Room("på en flad mark med meget sol",EnergyType.SOL,"middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.");
         sol3 = new Room("i en skov, hvor træerne dækker for solen",EnergyType.SOL,"worst","Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.");
         sol4 = new Room("i et område med en bakke, der er meget sol",EnergyType.SOL,"best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ");
+        CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord.", EnergyType.VIND, new Product("Vindmølle", EnergyType.VIND));
+        CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord.", EnergyType.VAND, new Product("Vandmølle", EnergyType.VAND));
+        CraftingRoom craftingSun = new CraftingRoom("foran et gult bord.", EnergyType.SOL, new Product("Solcellepanel", EnergyType.SOL));
 
         //Udgange fra start
         start.setExit("øst", kul);
@@ -62,56 +63,63 @@ public class Game
         værksted.setExit("nord", vind1);
         værksted.setExit("vest", vand1);
         værksted.setExit("syd", sol1);
+        værksted.setExit("grøn", craftingWind);
+        værksted.setExit("gult", craftingSun);
+        værksted.setExit("blå", craftingWater);
         værksted.setExit("øst", start);
 
+        craftingWind.setExit("ud", værksted);
+        craftingSun.setExit("ud", værksted);
+        craftingWater.setExit("ud", værksted);
+
         //Udgange fra vind1
-        vind1.setExit("øst",vind2);
-        vind1.setExit("nord",vind3);
-        vind1.setExit("syd",værksted);
+        vind1.setExit("øst", vind2);
+        vind1.setExit("nord", vind3);
+        vind1.setExit("syd", værksted);
 
         //Udgang fra vind2
-        vind2.setExit("vest",vind1);
+        vind2.setExit("vest", vind1);
 
         //Udgange fra vind3
-        vind3.setExit("syd",vind1);
-        vind3.setExit("vest",vind4);
+        vind3.setExit("syd", vind1);
+        vind3.setExit("vest", vind4);
 
         //Udgang fra vind4
-        vind4.setExit("øst",vind3);
+        vind4.setExit("øst", vind3);
 
         //Udgange fra vand1
-        vand1.setExit("øst",værksted);
-        vand1.setExit("nord",vand2);
+        vand1.setExit("øst", værksted);
+        vand1.setExit("nord", vand2);
 
         //Udgange fra vand2
-        vand2.setExit("vest",vand3);
-        vand2.setExit("syd",vand1);
+        vand2.setExit("vest", vand3);
+        vand2.setExit("syd", vand1);
 
         //udgange fra vand3
-        vand3.setExit("øst",vand2);
-        vand3.setExit("syd",vand4);
-        vand3.setExit("nord",vand5);
+        vand3.setExit("øst", vand2);
+        vand3.setExit("syd", vand4);
+        vand3.setExit("nord", vand5);
 
         //Udgang fra vand4
-        vand4.setExit("nord",vand3);
+        vand4.setExit("nord", vand3);
 
         //Udgang fra vand5
-        vand5.setExit("syd",vand3);
+        vand5.setExit("syd", vand3);
 
         //Udgange fra sol1
-        sol1.setExit("nord",værksted);
-        sol1.setExit("vest",sol2);
-        sol1.setExit("syd",sol3);
+        sol1.setExit("nord", værksted);
+        sol1.setExit("vest", sol2);
+        sol1.setExit("syd", sol3);
 
         //Udgang fra sol2
-        sol2.setExit("øst",sol1);
+        sol2.setExit("øst", sol1);
 
         //Udgange fra sol3
-        sol3.setExit("nord",sol1);
-        sol3.setExit("vest",sol4);
+        sol3.setExit("nord", sol1);
+        sol3.setExit("vest", sol4);
 
         //Udgang fra sol4
-        sol4.setExit("øst",sol3);
+        sol4.setExit("øst", sol3);
 
         currentRoom = start;
 
@@ -131,20 +139,18 @@ public class Game
         sol3.addItem(allItems[8]);
     }
 
-    public void play() 
-    {            
+    public void play() {
         printWelcome();
 
         boolean finished = false;
-        while (! finished) {
+        while (!finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
         System.out.println("Tak fordi du deltog. Hav en god dag.");
     }
 
-    private void printWelcome()
-    {
+    private void printWelcome() {
         System.out.println();
         System.out.println("Velkommen til spillet for bæredygtig energi!");
         System.out.println("Dette er et spil som vil lære dig om forskellige energi løsninger.");
@@ -153,27 +159,23 @@ public class Game
         System.out.println(currentRoom.getLongDescription());
     }
 
-    private boolean processCommand(Command command) 
-    {
+    private boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
 
-        if(commandWord == CommandWord.UKENDT) {
+        if (commandWord == CommandWord.UKENDT) {
             System.out.println("Jeg er ikke helt med på hvad du mener...");
             return false;
         }
 
         if (commandWord == CommandWord.HJÆLP) {
             printHelp();
-        }
-        else if (commandWord == CommandWord.GÅ) {
+        } else if (commandWord == CommandWord.GÅ) {
             goRoom(command);
-        }
-        else if (commandWord == CommandWord.INVENTAR) {
+        } else if (commandWord == CommandWord.INVENTAR) {
             printInventory();
-        }
-        else if (commandWord == CommandWord.QUIT) {
+        } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
 
@@ -182,7 +184,33 @@ public class Game
         }
 
         else if (commandWord == CommandWord.TAG) {
+            if (currentRoom.getDropoff() == inventory.getName() && (currentRoom.getDropoff() != null)) {
+                if (currentRoom.getDropoff() == "solcelle") {
+                    power.setRoomSol(currentRoom);
+                    inventory.removeItem(solcelle);
+                } else if (currentRoom.getDropoff() == "vindmølle") {
+                    power.setRoomVind(currentRoom);
+                    inventory.removeItem(vindmølle);
+                } else if (currentRoom.getDropoff() == "vandmølle") {
+                    power.setRoomVand(currentRoom);
+                    inventory.removeItem(vandmølle);
+                }
+            }
+            else if (currentRoom.getDropoff() != inventory.getName() && (currentRoom.getDropoff() != null)
+                    && (inventory.getName() != null)) {
+                System.out.println("Du kan ikke sætte det produkt som du har i den inventory her.");
+            }
+
+            else if (currentRoom.getDropoff() == null) {
+                System.out.println("Du kan ikke sætte noget produkt her.");
+            }
+            else if (inventory.getName() == null) {
+                System.out.println("Du har ikke nogen produkter på dig.");
+            }
+        } else if (commandWord == CommandWord.TAG) {
             getItem(command);
+        } else if (commandWord == CommandWord.BYG) {
+            craft(command);
         }
 
         else if (commandWord == CommandWord.STRØM) {
@@ -190,11 +218,11 @@ public class Game
         }
           
         return wantToQuit;
-          
+
     }
-    private void getItem(Command command)
-    {
-        if(!command.hasSecondWord()) {
+
+    private void getItem(Command command) {
+        if (!command.hasSecondWord()) {
             System.out.println("Hvad skal jeg tage?");
             return;
         }
@@ -229,17 +257,15 @@ public class Game
         System.out.println(output);
     }
 
-    private void printHelp() 
-    {
+    private void printHelp() {
         System.out.println("Tak fordi du spørger om hjælp");
         System.out.println();
         System.out.println("Dine muligheder er følgende:");
         parser.showCommands();
     }
 
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
+    private void goRoom(Command command) {
+        if (!command.hasSecondWord()) {
             System.out.println("Hvorhen?");
             return;
         }
@@ -250,20 +276,45 @@ public class Game
 
         if (nextRoom == null) {
             System.out.println("Det er ikke muligt!");
-        }
-        else {
+        } else {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
+
+            // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
+            if (currentRoom instanceof CraftingRoom craftingRoom) {
+
+                // Vi bruger en iterator for at undgå en ConcurrentModificationException
+                for (Iterator<Item> iterator = inventory.getItems().iterator(); iterator.hasNext();) {
+                    Item item = iterator.next();
+                    if (item.getEnergyType() == craftingRoom.getEnergyType() && item instanceof Material materialItem) {
+                        System.out.println("Du får en lys idé og lægger din/dit " + item.getName() + " på arbejdsbordet!");
+                        craftingRoom.placeItem(materialItem);
+                        iterator.remove();
+                    }
+                }
+            }
         }
     }
 
-    private boolean quit(Command command) 
-    {
-        if(command.hasSecondWord()) {
+    private void craft(Command command) {
+        if (!(currentRoom instanceof CraftingRoom craftingRoom)) {
+            System.out.println("Du kan ikke bygge noget her!");
+            return;
+        }
+        if (craftingRoom.canCraft()) {
+            System.out.println("Du bygger en " + craftingRoom.getCraftingResult().getName());
+            inventory.addItem(craftingRoom.getCraftingResult());
+            return;
+        }
+        System.out.println("Du mangler noget før du kan bygge en " + craftingRoom.getCraftingResult().getName());
+        System.out.println("Arbejdsbordet indeholder følgende: " + craftingRoom.getPlacedItemsString());
+    }
+
+    private boolean quit(Command command) {
+        if (command.hasSecondWord()) {
             System.out.println("Giver du op?");
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
