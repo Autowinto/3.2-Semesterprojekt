@@ -1,8 +1,4 @@
 package worldofzuul;
-
-import javax.swing.plaf.synth.SynthTextAreaUI;
-import java.sql.SQLOutput;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Game {
