@@ -1,5 +1,7 @@
 package worldofzuul;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -8,9 +10,15 @@ public class Game {
     private Room currentRoom;
 
     Power power = new Power();
-    Item solcelle = new Product("solcelle", EnergyType.SOL);
-    Item vindmølle = new Product("vindmølle", EnergyType.VIND);
-    Item vandmølle = new Product("vandmølle", EnergyType.VAND);
+    Item[] allItems = {
+            new Material("generator",EnergyType.VIND), new Material("vinger",EnergyType.VIND), new Material("tårn",EnergyType.VIND),
+            new Material("turbine",EnergyType.VAND), new Material("vandrør",EnergyType.VAND), new Material("kabel",EnergyType.VAND),
+            new Material("solpanel",EnergyType.SOL), new Material("inverter",EnergyType.SOL), new Material("stativ",EnergyType.SOL),
+            new Product("vindmølle", EnergyType.VIND), new Product("vandmølle", EnergyType.VAND), new Product("solcelle", EnergyType.SOL)};
+
+    Item vindmølle = allItems[9];
+    Item vandmølle = allItems[10];
+    Item solcelle = allItems[11];
 
     Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, sol1, sol2, sol3, sol4;
     Inventory inventory = new Inventory();
@@ -18,6 +26,7 @@ public class Game {
     public Game() {
         createRooms();
         parser = new Parser();
+        inventory.addItem(allItems[11]);
     }
 
     private void createRooms() {
@@ -27,18 +36,18 @@ public class Game {
         kul = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul");
         værksted = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor");
         vind1 = new Room("udenfor i et område, hvor du kan mærke det blæser");
-        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden", "vindmølle", "vind2");
-        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden", "vindmølle", "vind3");
-        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind", "vindmølle", "vind4");
-        vand1 = new Room("udenfor i et område, hvor du ser et vandfald");
-        vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af", "vandmølle", "vand2");
-        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området", "vandmølle", "vand3");
+        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden",EnergyType.VIND,"middle","Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.");
+        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden",EnergyType.VIND,"best","Din vindmølle genererer en rigtig god mængde energi, da det blæser og der ikke er noget som dækker.");
+        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind",EnergyType.VIND,"worst", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da vinden er for stærk.");
+        vand1 = new Room("udenfor i et område, hvor du ser et vandfald",EnergyType.VAND,"best", "Din vandmølle genererer en rigtig god mængde energi, da der er en masse energi fra vandet der falder.");
+        vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af");
+        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området",EnergyType.VAND,"middle", "Din vandmølle genererer en god mængde energi, men det er ikke optimalt, da en flod ikke er hvor der er mest energi.");
         vand4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet");
-        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod", "vandmølle", "vand5");
-        sol1 = new Room("udenfor i et varm område, med meget sollys");
-        sol2 = new Room("på en flad mark med meget sol", "solcelle", "sol2");
-        sol3 = new Room("i en skov, hvor træerne dækker for solen", "solcelle", "sol3");
-        sol4 = new Room("i et område med en bakke, der er meget sol", "solcelle", "sol4");
+        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod",EnergyType.VAND,"worst","Din vandmølle genererer lidt energi, men det er ikke optimalt, da der ikke er meget energi i stilleliggende vand.");
+        sol1 = new Room("udenfor i et varmt område med meget sollys");
+        sol2 = new Room("på en flad mark med meget sol",EnergyType.SOL,"middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.");
+        sol3 = new Room("i en skov, hvor træerne dækker for solen",EnergyType.SOL,"worst","Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.");
+        sol4 = new Room("i et område med en bakke, der er meget sol",EnergyType.SOL,"best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ");
         CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord.", EnergyType.VIND, new Product("Vindmølle", EnergyType.VIND));
         CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord.", EnergyType.VAND, new Product("Vandmølle", EnergyType.VAND));
         CraftingRoom craftingSun = new CraftingRoom("foran et gult bord.", EnergyType.SOL, new Product("Solcellepanel", EnergyType.SOL));
@@ -115,20 +124,19 @@ public class Game {
         currentRoom = start;
 
         //vind items placering i rum
-        vind1.addItem(new Material("generator", EnergyType.VIND));
-        vind2.addItem(new Material("vinger", EnergyType.VIND));
-        vind4.addItem(new Material("tårn", EnergyType.VIND));
+        vind1.addItem(allItems[0]);
+        vind2.addItem(allItems[1]);
+        vind4.addItem(allItems[2]);
 
         //Vand items placering i rum
-
-        vand2.addItem(new Material("turbine", EnergyType.VAND));
-        vand3.addItem(new Material("vandrør", EnergyType.VAND));
-        vand4.addItem(new Material("kabel", EnergyType.VAND));
+        vand2.addItem(allItems[3]);
+        vand3.addItem(allItems[4]);
+        vand4.addItem(allItems[5]);
 
         //Sol items placering i rum
-        sol1.addItem(new Material("solpanel", EnergyType.SOL));
-        sol2.addItem(new Material("inverter", EnergyType.SOL));
-        sol3.addItem(new Material("stativ", EnergyType.SOL));
+        sol1.addItem(allItems[6]);
+        sol2.addItem(allItems[7]);
+        sol3.addItem(allItems[8]);
     }
 
     public void play() {
@@ -172,6 +180,10 @@ public class Game {
         }
 
         else if (commandWord == CommandWord.SÆT) {
+            placeOnDropOff(command);
+        }
+
+        else if (commandWord == CommandWord.TAG) {
             if (currentRoom.getDropoff() == inventory.getName() && (currentRoom.getDropoff() != null)) {
                 if (currentRoom.getDropoff() == "solcelle") {
                     power.setRoomSol(currentRoom);
@@ -202,7 +214,7 @@ public class Game {
         }
 
         else if (commandWord == CommandWord.STRØM) {
-            Power.getPower();
+            printPower();
         }
           
         return wantToQuit;
@@ -229,6 +241,9 @@ public class Game {
             inventory.addItem(newItem);
             currentRoom.removeItem(item);
             System.out.println("Du har samlet " + item + " op");
+            if(newItem instanceof Product){
+                power.removePower((Product) newItem, currentRoom);
+            }
         }
     }
 
@@ -302,6 +317,41 @@ public class Game {
         } else {
             return true;
         }
+    }
+
+    private void placeOnDropOff(Command command) {
+        if (currentRoom.getDropOffEffect() != null){
+            if(!command.hasSecondWord()) {
+                System.out.println("Hvad skal jeg sætte?");
+                return;
+            }
+            String productName = command.getSecondWord();
+            Item product = null;
+
+            for (int i = 0; i < allItems.length; i++) {
+                if (allItems[i].getName().equals(productName)) {
+                    product = allItems[i];
+                }
+            }
+            if (product == null){
+                System.out.println("Genstanden blev ikke genkendt");
+            } else if (product instanceof Material){
+                System.out.println("Du kan ikke sætte materialer, kun produkter");
+            } else if (!inventory.getItems().contains(product)){
+                System.out.println("Du har ikke det nævnte produkt i dit inventory");
+            } else {
+                inventory.removeItem(product);
+                currentRoom.addItem(product);
+                System.out.println("Du har sat "+product.getName()+" i det nuværende rum");
+                power.addPower((Product) product, currentRoom);
+            }
+        } else {
+            System.out.println("Der er ikke noget sted at placerer produkter i dette rum");
+        }
+    }
+
+    public void printPower(){
+        System.out.println("Du har "+power.getPower()+"% strøm");
     }
 
 }

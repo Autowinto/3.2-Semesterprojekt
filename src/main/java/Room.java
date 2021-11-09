@@ -7,8 +7,9 @@ import java.util.HashMap;
 
 public class Room {
     private String description;
-    private String name;
-    private String dropOff;
+    private String dropOffEffect;
+    private String dropOffText;
+    private EnergyType energyType;
     private HashMap<String, Room> exits;
     private ArrayList<Item> items = new ArrayList<>();
 
@@ -22,11 +23,12 @@ public class Room {
         exits = new HashMap<String, Room>();
     }
 
-    public Room(String description, String dropOff, String name) {
+    public Room(String description, EnergyType energyType, String dropOffEffect, String dropOffText) {
         this.description = description;
-        this.dropOff = dropOff;
+        this.energyType = energyType;
+        this.dropOffEffect = dropOffEffect;
+        this.dropOffText = dropOffText;
         exits = new HashMap<String, Room>();
-        this.name = name;
     }
 
     public void setExit(String direction, Room neighbor) {
@@ -40,10 +42,6 @@ public class Room {
     public String getLongDescription() {
         return "Du er " + description + ".\n" + getExitString() +
                 (getDropOffString().length() == 0 ? "" : ".\n" + getDropOffString());
-    }
-
-    public String getName() {
-        return name;
     }
 
     private String getExitString() {
@@ -60,12 +58,22 @@ public class Room {
             returnString += getRoomItems();
             return returnString;
         }
+    }
 
+    public EnergyType getEnergyType() {
+        return energyType;
+    }
 
+    public String getDropOffEffect(){
+        return this.dropOffEffect;
+    }
+
+    public String getDropOffText(){
+        return this.dropOffText;
     }
 
     public String getDropOffString() {
-        if (getDropoff() != null) {
+        if (dropOffEffect != null) {
             return "Du kan placere et produkt i dette rum";
         }
         return "";
@@ -73,10 +81,6 @@ public class Room {
 
     public Room getExit(String direction) {
         return exits.get(direction);
-    }
-
-    public String getDropoff() {
-        return this.dropOff;
     }
 
     //Samle ting op fra rummet
