@@ -1,7 +1,7 @@
 package worldofzuul;
 
 public enum EnergyType {
-    VIND,
-    SOL,
-    VAND
+    WIND,
+    SOLAR,
+    WATER
 }

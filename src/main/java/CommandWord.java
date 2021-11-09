@@ -1,15 +1,15 @@
 package worldofzuul;
 public enum CommandWord
 {
-    GÅ("gå"),
+    GO("gå"),
     QUIT("quit"),
-    HJÆLP("hjælp"),
-    SÆT("sæt"),
-    UKENDT("?"),
-    TAG("tag"),
-    INVENTAR("inventar"),
-    STRØM("strøm"),
-    BYG("byg");
+    HELP("hjælp"),
+    PLACE("sæt"),
+    UNKNOWN("?"),
+    TAKE("tag"),
+    INVENTORY("inventar"),
+    POWER("strøm"),
+    CRAFT("byg");
     
     private String commandString;
     

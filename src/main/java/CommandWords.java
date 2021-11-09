@@ -10,7 +10,7 @@ public class CommandWords
     {
         validCommands = new HashMap<String, CommandWord>();
         for(CommandWord command : CommandWord.values()) {
-            if(command != CommandWord.UKENDT) {
+            if(command != CommandWord.UNKNOWN) {
                 validCommands.put(command.toString(), command);
             }
         }
@@ -23,7 +23,7 @@ public class CommandWords
             return command;
         }
         else {
-            return CommandWord.UKENDT;
+            return CommandWord.UNKNOWN;
         }
     }
 

@@ -7,14 +7,14 @@ public class Game {
 
     Power power = new Power();
     Item[] allItems = {
-            new Material("generator",EnergyType.VIND), new Material("vinger",EnergyType.VIND), new Material("tårn",EnergyType.VIND),
-            new Material("turbine",EnergyType.VAND), new Material("vandrør",EnergyType.VAND), new Material("kabel",EnergyType.VAND),
-            new Material("solpanel",EnergyType.SOL), new Material("inverter",EnergyType.SOL), new Material("stativ",EnergyType.SOL),
-            new Product("vindmølle", EnergyType.VIND), new Product("vandmølle", EnergyType.VAND), new Product("solcelle", EnergyType.SOL)};
+            new Material("generator",EnergyType.WIND), new Material("vinger",EnergyType.WIND), new Material("tårn",EnergyType.WIND),
+            new Material("turbine",EnergyType.WATER), new Material("vandrør",EnergyType.WATER), new Material("kabel",EnergyType.WATER),
+            new Material("solpanel",EnergyType.SOLAR), new Material("inverter",EnergyType.SOLAR), new Material("stativ",EnergyType.SOLAR),
+            new Product("vindmølle", EnergyType.WIND), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
 
-    Product vindmølle = (Product) allItems[9];
-    Product vandmølle = (Product) allItems[10];
-    Product solcelle = (Product) allItems[11];
+    Product windmill = (Product) allItems[9];
+    Product watermill = (Product) allItems[10];
+    Product solarpanel = (Product) allItems[11];
 
     Inventory inventory = new Inventory();
 
@@ -24,113 +24,113 @@ public class Game {
     }
 
     private void createRooms() {
-        Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, vand5, sol1, sol2, sol3, sol4;
+        Room start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4;
 
         start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner strømkilden er mod øst");
-        kul = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul");
-        værksted = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor");
-        vind1 = new Room("udenfor i et område, hvor du kan mærke det blæser");
-        vind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden",EnergyType.VIND,"middle","Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.");
-        vind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden",EnergyType.VIND,"best","Din vindmølle genererer en rigtig god mængde energi, da det blæser og der ikke er noget som dækker.");
-        vind4 = new Room("udenfor i et område, hvor det er en meget stærk vind",EnergyType.VIND,"worst", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da vinden er for stærk.");
-        vand1 = new Room("udenfor i et område, hvor du ser et vandfald",EnergyType.VAND,"best", "Din vandmølle genererer en rigtig god mængde energi, da der er en masse energi fra vandet der falder.");
-        vand2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af");
-        vand3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området",EnergyType.VAND,"middle", "Din vandmølle genererer en god mængde energi, men det er ikke optimalt, da en flod ikke er hvor der er mest energi.");
-        vand4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet");
-        vand5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod",EnergyType.VAND,"worst","Din vandmølle genererer lidt energi, men det er ikke optimalt, da der ikke er meget energi i stilleliggende vand.");
-        sol1 = new Room("udenfor i et varmt område med meget sollys");
-        sol2 = new Room("på en flad mark med meget sol",EnergyType.SOL,"middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.");
-        sol3 = new Room("i en skov, hvor træerne dækker for solen",EnergyType.SOL,"worst","Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.");
-        sol4 = new Room("i et område med en bakke, hvor der er meget sol",EnergyType.SOL,"best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ");
-        CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord.", EnergyType.VIND, vindmølle);
-        CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord.", EnergyType.VAND, vandmølle);
-        CraftingRoom craftingSun = new CraftingRoom("foran et gult bord.", EnergyType.SOL, solcelle);
+        coal = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul");
+        workshop = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor");
+        wind1 = new Room("udenfor i et område, hvor du kan mærke det blæser");
+        wind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden",EnergyType.WIND,"middle","Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.");
+        wind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden",EnergyType.WIND,"best","Din vindmølle genererer en rigtig god mængde energi, da det blæser og der ikke er noget som dækker.");
+        wind4 = new Room("udenfor i et område, hvor det er en meget stærk vind",EnergyType.WIND,"worst", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da vinden er for stærk.");
+        water1 = new Room("udenfor i et område, hvor du ser et vandfald",EnergyType.WATER,"best", "Din vandmølle genererer en rigtig god mængde energi, da der er en masse energi fra vandet der falder.");
+        water2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af");
+        water3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området",EnergyType.WATER,"middle", "Din vandmølle genererer en god mængde energi, men det er ikke optimalt, da en flod ikke er hvor der er mest energi.");
+        water4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet");
+        water5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod",EnergyType.WATER,"worst","Din vandmølle genererer lidt energi, men det er ikke optimalt, da der ikke er meget energi i stilleliggende vand.");
+        solar1 = new Room("udenfor i et varmt område med meget sollys");
+        solar2 = new Room("på en flad mark med meget sol",EnergyType.SOLAR,"middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.");
+        solar3 = new Room("i en skov, hvor træerne dækker for solen",EnergyType.SOLAR,"worst","Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.");
+        solar4 = new Room("i et område med en bakke, hvor der er meget sol",EnergyType.SOLAR,"best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ");
+        CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord.", EnergyType.WIND, windmill);
+        CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord.", EnergyType.WATER, watermill);
+        CraftingRoom craftingSun = new CraftingRoom("foran et gult bord.", EnergyType.SOLAR, solarpanel);
 
         //Udgange fra start
-        start.setExit("øst", kul);
-        start.setExit("vest", værksted);
+        start.setExit("øst", coal);
+        start.setExit("vest", workshop);
 
         //Udgang fra kul
-        kul.setExit("vest", start);
+        coal.setExit("vest", start);
 
         //Udgange fra værksted
-        værksted.setExit("nord", vind1);
-        værksted.setExit("vest", vand1);
-        værksted.setExit("syd", sol1);
-        værksted.setExit("grøn", craftingWind);
-        værksted.setExit("gult", craftingSun);
-        værksted.setExit("blå", craftingWater);
-        værksted.setExit("øst", start);
+        workshop.setExit("nord", wind1);
+        workshop.setExit("vest", water1);
+        workshop.setExit("syd", solar1);
+        workshop.setExit("grøn", craftingWind);
+        workshop.setExit("gult", craftingSun);
+        workshop.setExit("blå", craftingWater);
+        workshop.setExit("øst", start);
 
-        craftingWind.setExit("ud", værksted);
-        craftingSun.setExit("ud", værksted);
-        craftingWater.setExit("ud", værksted);
+        craftingWind.setExit("ud", workshop);
+        craftingSun.setExit("ud", workshop);
+        craftingWater.setExit("ud", workshop);
 
         //Udgange fra vind1
-        vind1.setExit("øst", vind2);
-        vind1.setExit("nord", vind3);
-        vind1.setExit("syd", værksted);
+        wind1.setExit("øst", wind2);
+        wind1.setExit("nord", wind3);
+        wind1.setExit("syd", workshop);
 
         //Udgang fra vind2
-        vind2.setExit("vest", vind1);
+        wind2.setExit("vest", wind1);
 
         //Udgange fra vind3
-        vind3.setExit("syd", vind1);
-        vind3.setExit("vest", vind4);
+        wind3.setExit("syd", wind1);
+        wind3.setExit("vest", wind4);
 
         //Udgang fra vind4
-        vind4.setExit("øst", vind3);
+        wind4.setExit("øst", wind3);
 
         //Udgange fra vand1
-        vand1.setExit("øst", værksted);
-        vand1.setExit("nord", vand2);
+        water1.setExit("øst", workshop);
+        water1.setExit("nord", water2);
 
         //Udgange fra vand2
-        vand2.setExit("vest", vand3);
-        vand2.setExit("syd", vand1);
+        water2.setExit("vest", water3);
+        water2.setExit("syd", water1);
 
         //udgange fra vand3
-        vand3.setExit("øst", vand2);
-        vand3.setExit("syd", vand4);
-        vand3.setExit("nord", vand5);
+        water3.setExit("øst", water2);
+        water3.setExit("syd", water4);
+        water3.setExit("nord", water5);
 
         //Udgang fra vand4
-        vand4.setExit("nord", vand3);
+        water4.setExit("nord", water3);
 
         //Udgang fra vand5
-        vand5.setExit("syd", vand3);
+        water5.setExit("syd", water3);
 
         //Udgange fra sol1
-        sol1.setExit("nord", værksted);
-        sol1.setExit("vest", sol2);
-        sol1.setExit("syd", sol3);
+        solar1.setExit("nord", workshop);
+        solar1.setExit("vest", solar2);
+        solar1.setExit("syd", solar3);
 
         //Udgang fra sol2
-        sol2.setExit("øst", sol1);
+        solar2.setExit("øst", solar1);
 
         //Udgange fra sol3
-        sol3.setExit("nord", sol1);
-        sol3.setExit("vest", sol4);
+        solar3.setExit("nord", solar1);
+        solar3.setExit("vest", solar4);
 
         //Udgang fra sol4
-        sol4.setExit("øst", sol3);
+        solar4.setExit("øst", solar3);
 
         currentRoom = start;
 
         //vind items placering i rum
-        vind1.addItem(allItems[0]);
-        vind2.addItem(allItems[1]);
-        vind4.addItem(allItems[2]);
+        wind1.addItem(allItems[0]);
+        wind2.addItem(allItems[1]);
+        wind4.addItem(allItems[2]);
 
         //Vand items placering i rum
-        vand2.addItem(allItems[3]);
-        vand3.addItem(allItems[4]);
-        vand4.addItem(allItems[5]);
+        water2.addItem(allItems[3]);
+        water3.addItem(allItems[4]);
+        water4.addItem(allItems[5]);
 
         //Sol items placering i rum
-        sol1.addItem(allItems[6]);
-        sol2.addItem(allItems[7]);
-        sol3.addItem(allItems[8]);
+        solar1.addItem(allItems[6]);
+        solar2.addItem(allItems[7]);
+        solar3.addItem(allItems[8]);
     }
 
     public void play() {
@@ -148,7 +148,7 @@ public class Game {
         System.out.println();
         System.out.println("Velkommen til spillet for bæredygtig energi!");
         System.out.println("Dette er et spil som vil lære dig om forskellige energiløsninger.");
-        System.out.println("Skriv '" + CommandWord.HJÆLP + "' hvis du har brug for hjælp.");
+        System.out.println("Skriv '" + CommandWord.HELP + "' hvis du har brug for hjælp.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
     }
@@ -158,29 +158,29 @@ public class Game {
 
         CommandWord commandWord = command.getCommandWord();
 
-        if (commandWord == CommandWord.UKENDT) {
+        if (commandWord == CommandWord.UNKNOWN) {
             System.out.println("Jeg er ikke helt med på hvad du mener...");
             return false;
         }
 
-        if (commandWord == CommandWord.HJÆLP) {
+        if (commandWord == CommandWord.HELP) {
             printHelp();
-        } else if (commandWord == CommandWord.GÅ) {
+        } else if (commandWord == CommandWord.GO) {
             goRoom(command);
-        } else if (commandWord == CommandWord.INVENTAR) {
+        } else if (commandWord == CommandWord.INVENTORY) {
             printInventory();
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
 
-        else if (commandWord == CommandWord.SÆT) {
+        else if (commandWord == CommandWord.PLACE) {
             placeOnDropOff(command);
-        } else if (commandWord == CommandWord.TAG) {
+        } else if (commandWord == CommandWord.TAKE) {
             getItem(command);
-        } else if (commandWord == CommandWord.BYG) {
+        } else if (commandWord == CommandWord.CRAFT) {
             craft(command);
         }
-        else if (commandWord == CommandWord.STRØM) {
+        else if (commandWord == CommandWord.POWER) {
             printPower();
         }
 
