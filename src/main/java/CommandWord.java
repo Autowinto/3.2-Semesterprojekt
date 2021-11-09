@@ -8,6 +8,7 @@ public enum CommandWord
     UKENDT("?"),
     TAG("tag"),
     INVENTAR("inventar"),
+    STRØM("strøm"),
     BYG("byg");
     
     private String commandString;

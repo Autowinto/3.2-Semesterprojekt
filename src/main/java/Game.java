@@ -125,8 +125,6 @@ public class Game {
     public void play() {
         printWelcome();
 
-        inventory.addItem(vindmølle);
-
         boolean finished = false;
         while (!finished) {
             Command command = parser.getCommand();
@@ -162,8 +160,10 @@ public class Game {
             printInventory();
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
-        } else if (commandWord == CommandWord.PLACE) {
-            if (currentRoom.getDropoff() == inventory.getName()) {
+        }
+
+        else if (commandWord == CommandWord.SÆT) {
+            if (currentRoom.getDropoff() == inventory.getName() && (currentRoom.getDropoff() != null)) {
                 if (currentRoom.getDropoff() == "solcelle") {
                     power.setRoomSol(currentRoom);
                     inventory.removeItem(solcelle);
@@ -174,12 +174,17 @@ public class Game {
                     power.setRoomVand(currentRoom);
                     inventory.removeItem(vandmølle);
                 }
-            } else {
-                System.out.println("Unable to place down item. \n ~~~");
-                System.out.println("The current room's drop off is: ");
-                currentRoom.getDropoff();
-                System.out.println("Your inventory is: ");
-                inventory.show();
+            }
+            else if (currentRoom.getDropoff() != inventory.getName() && (currentRoom.getDropoff() != null)
+                    && (inventory.getName() != null)) {
+                System.out.println("Du kan ikke sætte det produkt som du har i den inventory her.");
+            }
+
+            else if (currentRoom.getDropoff() == null) {
+                System.out.println("Du kan ikke sætte noget produkt her.");
+            }
+            else if (inventory.getName() == null) {
+                System.out.println("Du har ikke nogen produkter på dig.");
             }
         } else if (commandWord == CommandWord.TAG) {
             getItem(command);
@@ -187,6 +192,10 @@ public class Game {
             craft(command);
         }
 
+        else if (commandWord == CommandWord.STRØM) {
+            Power.getPower();
+        }
+          
         return wantToQuit;
 
     }
@@ -203,7 +212,11 @@ public class Game {
 
         if (newItem == null) {
             System.out.println("Det er ikke her!");
-        } else {
+        }
+        else if (newItem.getWeight() + inventory.getCurrentWeight() > inventory.getWeightLimit()){
+            System.out.println("Du har ikke plads til at samle denne ting op");
+        }
+        else {
             inventory.addItem(newItem);
             currentRoom.removeItem(item);
             System.out.println("Du har samlet " + item + " op");
