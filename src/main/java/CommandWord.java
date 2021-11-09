@@ -4,7 +4,7 @@ public enum CommandWord
     GÅ("gå"),
     QUIT("quit"),
     HJÆLP("hjælp"),
-    PLACE("place"),
+    SÆT("sæt"),
     UKENDT("?"),
     TAG("tag"),
     INVENTAR("inventar"),
