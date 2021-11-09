@@ -44,7 +44,7 @@ public class Room {
         if (items.size() == 0) {
             return returnString;
         } else {
-            returnString += "\nFølgende ting kan samles op:";
+            returnString += "\nFølgende ting kan samles op: ";
             returnString += getRoomItems();
             return returnString;
         }
