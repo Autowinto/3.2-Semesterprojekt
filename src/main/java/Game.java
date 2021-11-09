@@ -1,6 +1,7 @@
 package worldofzuul;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Game {
     private Parser parser;
@@ -38,7 +39,9 @@ public class Game {
         sol2 = new Room("på en flad mark med meget sol", "solcelle", "sol2");
         sol3 = new Room("i en skov, hvor træerne dækker for solen", "solcelle", "sol3");
         sol4 = new Room("i et område med en bakke, der er meget sol", "solcelle", "sol4");
-        CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord", new Product("Vindmølle", EnergyType.VIND));
+        CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord.", EnergyType.VIND, new Product("Vindmølle", EnergyType.VIND));
+        CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord.", EnergyType.VAND, new Product("Vandmølle", EnergyType.VAND));
+        CraftingRoom craftingSun = new CraftingRoom("foran et gult bord.", EnergyType.SOL, new Product("Solcellepanel", EnergyType.SOL));
 
         //Udgange fra start
         start.setExit("øst", kul);
@@ -52,7 +55,13 @@ public class Game {
         værksted.setExit("vest", vand1);
         værksted.setExit("syd", sol1);
         værksted.setExit("grøn", craftingWind);
+        værksted.setExit("gult", craftingSun);
+        værksted.setExit("blå", craftingWater);
         værksted.setExit("øst", start);
+
+        craftingWind.setExit("ud", værksted);
+        craftingSun.setExit("ud", værksted);
+        craftingWater.setExit("ud", værksted);
 
         //Udgange fra vind1
         vind1.setExit("øst", vind2);
@@ -255,6 +264,20 @@ public class Game {
         } else {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
+
+            // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
+            if (currentRoom instanceof CraftingRoom craftingRoom) {
+
+                // Vi bruger en iterator for at undgå en ConcurrentModificationException
+                for (Iterator<Item> iterator = inventory.getItems().iterator(); iterator.hasNext();) {
+                    Item item = iterator.next();
+                    if (item.getEnergyType() == craftingRoom.getEnergyType() && item instanceof Material materialItem) {
+                        System.out.println("Du får en lys idé og lægger din/dit " + item.getName() + " på arbejdsbordet!");
+                        craftingRoom.placeItem(materialItem);
+                        iterator.remove();
+                    }
+                }
+            }
         }
     }
 
@@ -266,8 +289,10 @@ public class Game {
         if (craftingRoom.canCraft()) {
             System.out.println("Du bygger en " + craftingRoom.getCraftingResult().getName());
             inventory.addItem(craftingRoom.getCraftingResult());
+            return;
         }
         System.out.println("Du mangler noget før du kan bygge en " + craftingRoom.getCraftingResult().getName());
+        System.out.println("Arbejdsbordet indeholder følgende: " + craftingRoom.getPlacedItemsString());
     }
 
     private boolean quit(Command command) {
