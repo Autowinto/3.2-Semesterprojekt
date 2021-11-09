@@ -16,9 +16,9 @@ public class Game {
             new Material("solpanel",EnergyType.SOL), new Material("inverter",EnergyType.SOL), new Material("stativ",EnergyType.SOL),
             new Product("vindmølle", EnergyType.VIND), new Product("vandmølle", EnergyType.VAND), new Product("solcelle", EnergyType.SOL)};
 
-    Item vindmølle = allItems[9];
-    Item vandmølle = allItems[10];
-    Item solcelle = allItems[11];
+    Product vindmølle = (Product) allItems[9];
+    Product vandmølle = (Product) allItems[10];
+    Product solcelle = (Product) allItems[11];
 
     Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, sol1, sol2, sol3, sol4;
     Inventory inventory = new Inventory();
@@ -47,9 +47,9 @@ public class Game {
         sol2 = new Room("på en flad mark med meget sol",EnergyType.SOL,"middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.");
         sol3 = new Room("i en skov, hvor træerne dækker for solen",EnergyType.SOL,"worst","Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.");
         sol4 = new Room("i et område med en bakke, hvor der er meget sol",EnergyType.SOL,"best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ");
-        CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord.", EnergyType.VIND, new Product("Vindmølle", EnergyType.VIND));
-        CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord.", EnergyType.VAND, new Product("Vandmølle", EnergyType.VAND));
-        CraftingRoom craftingSun = new CraftingRoom("foran et gult bord.", EnergyType.SOL, new Product("Solcellepanel", EnergyType.SOL));
+        CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord.", EnergyType.VIND, vindmølle);
+        CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord.", EnergyType.VAND, vandmølle);
+        CraftingRoom craftingSun = new CraftingRoom("foran et gult bord.", EnergyType.SOL, solcelle);
 
         //Udgange fra start
         start.setExit("øst", kul);
