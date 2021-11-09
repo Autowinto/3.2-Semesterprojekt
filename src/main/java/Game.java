@@ -26,12 +26,12 @@ public class Game {
     private void createRooms() {
         Room start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4;
 
-        start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner strømkilden er mod øst");
+        start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner at strømkilden er mod øst");
         coal = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul");
         workshop = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor");
         wind1 = new Room("udenfor i et område, hvor du kan mærke det blæser");
-        wind2 = new Room("udenfor i et område, hvor der er en mild vind, du ser nogle træer der giver læ for vinden",EnergyType.WIND,"middle","Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.");
-        wind3 = new Room("udenfor i et område, hvor det blæser, du ser ikke noget der dække for vinden",EnergyType.WIND,"best","Din vindmølle genererer en rigtig god mængde energi, da det blæser og der ikke er noget som dækker.");
+        wind2 = new Room("udenfor i et område, hvor der er en mild vind. Du ser nogle træer der giver læ for vinden",EnergyType.WIND,"middle","Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.");
+        wind3 = new Room("udenfor i et område, hvor det blæser. Du ser ikke noget der dækker for vinden",EnergyType.WIND,"best","Din vindmølle genererer en rigtig god mængde energi, da det blæser og der ikke er noget som dækker.");
         wind4 = new Room("udenfor i et område, hvor det er en meget stærk vind",EnergyType.WIND,"worst", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da vinden er for stærk.");
         water1 = new Room("udenfor i et område, hvor du ser et vandfald",EnergyType.WATER,"best", "Din vandmølle genererer en rigtig god mængde energi, da der er en masse energi fra vandet der falder.");
         water2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af");
@@ -305,7 +305,7 @@ public class Game {
             } else if (product instanceof Material){
                 System.out.println("Du kan ikke sætte materialer, kun produkter");
             } else if (!inventory.getItems().contains(product)){
-                System.out.println("Du har ikke det nævnte produkt i dit inventory");
+                System.out.println("Du har ikke det nævnte produkt i dit inventar");
             } else {
                 inventory.removeItem(product);
                 currentRoom.addItem(product);

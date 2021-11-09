@@ -31,8 +31,7 @@ public class Room {
     }
 
     public String getLongDescription() {
-        return "Du er " + description + ".\n" + getExitString() +
-                (getDropOffString().length() == 0 ? "" : ".\n" + getDropOffString());
+        return "Du er " + description + ".\n" + getExitString() + getDropOffString();
     }
 
     private String getExitString() {
@@ -45,7 +44,7 @@ public class Room {
         if (items.size() == 0) {
             return returnString;
         } else {
-            returnString += "\nFølgende ting kan samles op:\n";
+            returnString += "\nFølgende ting kan samles op:";
             returnString += getRoomItems();
             return returnString;
         }
@@ -65,7 +64,7 @@ public class Room {
 
     public String getDropOffString() {
         if (dropOffEffect != null) {
-            return "Du kan placere et produkt i dette rum";
+            return "\nDu kan placere et produkt i dette rum";
         }
         return "";
     }
