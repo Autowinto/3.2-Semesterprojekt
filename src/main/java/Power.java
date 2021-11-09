@@ -6,11 +6,11 @@ public class Power {
     public void addPower(Product product, Room currentRoom){
         if(product.getEnergyType() == currentRoom.getEnergyType()){
             if(currentRoom.getDropOffEffect() == "best"){
-                this.power += 1/3;
+                this.power += 33.3;
             } else if (currentRoom.getDropOffEffect() == "middle"){
-                this.power += 20;
+                this.power += 20.0;
             } else {
-                this.power += 10;
+                this.power += 10.0;
             }
             System.out.println(currentRoom.getDropOffText());
         } else {
@@ -21,16 +21,16 @@ public class Power {
     public void removePower(Product product, Room currentRoom){
         if(product.getEnergyType() == currentRoom.getEnergyType()){
             if(currentRoom.getDropOffEffect() == "best"){
-                this.power -= 1/3;
+                this.power -= 33.3;
             } else if (currentRoom.getDropOffEffect() == "middle"){
-                this.power -= 20;
+                this.power -= 20.0;
             } else {
-                this.power -= 10;
+                this.power -= 10.0;
             }
         }
     }
 
     public double getPower() {
-        return this.power;
+        return Math.ceil(this.power);
     }
 }
