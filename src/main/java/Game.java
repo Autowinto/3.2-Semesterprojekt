@@ -38,6 +38,7 @@ public class Game {
         sol2 = new Room("på en flad mark med meget sol", "solcelle", "sol2");
         sol3 = new Room("i en skov, hvor træerne dækker for solen", "solcelle", "sol3");
         sol4 = new Room("i et område med en bakke, der er meget sol", "solcelle", "sol4");
+        CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord", new Product("Vindmølle", EnergyType.VIND));
 
         //Udgange fra start
         start.setExit("øst", kul);
@@ -50,6 +51,7 @@ public class Game {
         værksted.setExit("nord", vind1);
         værksted.setExit("vest", vand1);
         værksted.setExit("syd", sol1);
+        værksted.setExit("grøn", craftingWind);
         værksted.setExit("øst", start);
 
         //Udgange fra vind1
@@ -244,9 +246,15 @@ public class Game {
     }
 
     private void craft(Command command) {
-        if (currentRoom instanceof CraftingRoom && currentRoom.canCraft()) {
-
+        if (!(currentRoom instanceof CraftingRoom craftingRoom)) {
+            System.out.println("Du kan ikke bygge noget her!");
+            return;
         }
+        if (craftingRoom.canCraft()) {
+            System.out.println("Du bygger en " + craftingRoom.getCraftingResult().getName());
+            inventory.addItem(craftingRoom.getCraftingResult());
+        }
+        System.out.println("Du mangler noget før du kan bygge en " + craftingRoom.getCraftingResult().getName());
     }
 
     private boolean quit(Command command) {
