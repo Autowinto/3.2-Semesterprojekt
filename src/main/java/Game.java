@@ -16,7 +16,6 @@ public class Game {
     Product vandmølle = (Product) allItems[10];
     Product solcelle = (Product) allItems[11];
 
-    Room start, kul, værksted, vind1, vind2, vind3, vind4, vand1, vand2, vand3, vand4, sol1, sol2, sol3, sol4;
     Inventory inventory = new Inventory();
 
     public Game() {
