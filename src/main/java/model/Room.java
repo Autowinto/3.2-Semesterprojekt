@@ -1,6 +1,5 @@
-package worldofzuul;
+package worldofzuul.model;
 
-import java.util.*;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
@@ -54,11 +53,11 @@ public class Room {
         return energyType;
     }
 
-    public String getDropOffEffect(){
+    public String getDropOffEffect() {
         return this.dropOffEffect;
     }
 
-    public String getDropOffText(){
+    public String getDropOffText() {
         return this.dropOffText;
     }
 

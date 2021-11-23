@@ -1,4 +1,4 @@
-package worldofzuul;
+package worldofzuul.model;
 
 public enum EnergyType {
     WIND,

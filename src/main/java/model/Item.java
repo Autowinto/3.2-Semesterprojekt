@@ -1,4 +1,4 @@
-package worldofzuul;
+package worldofzuul.model;
 
 public abstract class Item {
     private String name;
