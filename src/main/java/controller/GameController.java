@@ -1,9 +1,14 @@
-package worldofzuul.model;
+package worldofzuul.controller;
 
+import javafx.fxml.Initializable;
+import worldofzuul.model.*;
+
+import java.net.URL;
 import java.util.Iterator;
+import java.util.ResourceBundle;
 
-public class Game {
-    private final Parser parser;
+public class GameController implements Initializable {
+    private final Parser parser = new Parser();
     Power power = new Power();
     Item[] allItems = {
             new Material("generator", EnergyType.WIND), new Material("vinger", EnergyType.WIND), new Material("tårn", EnergyType.WIND),
@@ -16,9 +21,10 @@ public class Game {
     Inventory inventory = new Inventory();
     private Room currentRoom;
 
-    public Game() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        System.out.println("START GAME");
         createRooms();
-        parser = new Parser();
     }
 
     private void createRooms() {
@@ -131,16 +137,16 @@ public class Game {
         solar3.addItem(allItems[8]);
     }
 
-    public void play() {
-        printWelcome();
-
-        boolean finished = false;
-        while (!finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
-        }
-        System.out.println("Tak fordi du deltog. Hav en god dag.");
-    }
+//    public void play() {
+//        printWelcome();
+//
+//        boolean finished = false;
+//        while (!finished) {
+//            Command command = parser.getCommand();
+//            finished = processCommand(command);
+//        }
+//        System.out.println("Tak fordi du deltog. Hav en god dag.");
+//    }
 
     private void printWelcome() {
         System.out.println();
@@ -313,5 +319,4 @@ public class Game {
     public void printPower() {
         System.out.println("Du har " + power.getPower() + "% strøm");
     }
-
 }
