@@ -1,4 +1,7 @@
-package worldofzuul;
+package worldofzuul.model;
+
+import worldofzuul.model.EnergyType;
+import worldofzuul.model.Item;
 
 public class Material extends Item {
 

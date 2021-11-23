@@ -1,4 +1,4 @@
-package worldofzuul;
+package worldofzuul.model;
 
 import java.util.ArrayList;
 
@@ -23,13 +23,13 @@ public class Inventory {
     }
 
 
-    public double getWeightLimit(){
+    public double getWeightLimit() {
         return this.weightLimit;
     }
 
     public double getCurrentWeight() {
         double currentWeight = 0.0;
-        for (Item item : items){
+        for (Item item : items) {
             currentWeight += item.getWeight();
         }
         return currentWeight;

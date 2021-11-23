@@ -1,10 +1,10 @@
-package worldofzuul;
+package worldofzuul.model;
 
 import java.util.ArrayList;
 
 public class CraftingRoom extends Room {
-    private EnergyType energyType;
     private final Product craftingResult;
+    private EnergyType energyType;
     private ArrayList<Material> placedItems = new ArrayList<>();
 
     public CraftingRoom(String description, EnergyType energyType, Product craftingResult) {

@@ -1,8 +1,8 @@
-package worldofzuul;
-public enum CommandWord
-{
+package worldofzuul.model;
+
+public enum CommandWord {
     GO("gå"),
-    QUIT("quit"),
+    QUIT("afslut"),
     HELP("hjælp"),
     PLACE("sæt"),
     UNKNOWN("?"),
@@ -10,16 +10,14 @@ public enum CommandWord
     INVENTORY("inventar"),
     POWER("strøm"),
     CRAFT("byg");
-    
+
     private String commandString;
-    
-    CommandWord(String commandString)
-    {
+
+    CommandWord(String commandString) {
         this.commandString = commandString;
     }
-    
-    public String toString()
-    {
+
+    public String toString() {
         return commandString;
     }
 }
