@@ -7,10 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import worldofzuul.Main;
-
-import java.io.IOException;
 
 public class MainMenuController {
     @FXML
@@ -21,7 +17,7 @@ public class MainMenuController {
     @FXML
     private void startGame(ActionEvent event) {
         try {
-            root = FXMLLoader.load(MainMenuController.class.getResource("/Game.fxml"));
+            root = FXMLLoader.load(MainMenuController.class.getResource("/Lys.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
