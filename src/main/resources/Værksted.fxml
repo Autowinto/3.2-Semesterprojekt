@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuul.controller.GameController">
    <children>
       <VBox prefHeight="800.0" prefWidth="1200.0">
          <children>
@@ -53,9 +53,9 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Rectangle fx:id="rightTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="332.0" translateY="-100.0" width="100.0" />
-      <Rectangle fx:id="leftTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="-350.0" translateY="-100.0" width="100.0" />
-      <Rectangle fx:id="bottomTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateY="136.0" width="200.0" />
-      <Rectangle fx:id="topTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateY="-350.0" width="200.0" />
+      <Rectangle fx:id="rightTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" onMouseEntered="#hoverOverRight" onMouseExited="#hoverDoneRight" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="332.0" translateY="-100.0" width="100.0" />
+      <Rectangle fx:id="leftTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" onMouseEntered="#hoverOverLeft" onMouseExited="#hoverDoneLeft" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="-350.0" translateY="-100.0" width="100.0" />
+      <Rectangle fx:id="bottomTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="100.0" onMouseEntered="#hoverOverBottom" onMouseExited="#hoverDoneBottom" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateY="136.0" width="200.0" />
+      <Rectangle fx:id="topTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="100.0" onMouseEntered="#hoverOverTop" onMouseExited="#hoverDoneTop" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateY="-350.0" width="200.0" />
    </children>
 </StackPane>
