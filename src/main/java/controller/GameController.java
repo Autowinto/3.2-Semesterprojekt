@@ -1,6 +1,8 @@
 package worldofzuul.controller;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.text.Text;
 import worldofzuul.model.*;
 
 import java.net.URL;
@@ -318,5 +320,57 @@ public class GameController implements Initializable {
 
     public void printPower() {
         System.out.println("Du har " + power.getPower() + "% strøm");
+    }
+
+    @FXML
+    private Text rightText;
+
+    @FXML
+    private Text leftText;
+
+    @FXML
+    private Text topText;
+
+    @FXML
+    private Text bottomText;
+
+    @FXML
+    public void hoverOverRight() {
+        rightText.setText("Gå øst");
+    }
+
+    @FXML
+    public void hoverDoneRight() {
+        rightText.setText("");
+    }
+
+    @FXML
+    public void hoverOverLeft() {
+        leftText.setText("Gå vest");
+    }
+
+    @FXML
+    public void hoverDoneLeft() {
+        leftText.setText("");
+    }
+
+    @FXML
+    public void hoverOverTop() {
+        topText.setText("Gå nord");
+    }
+
+    @FXML
+    public void hoverDoneTop() {
+        topText.setText("");
+    }
+
+    @FXML
+    public void hoverOverBottom() {
+        bottomText.setText("Gå syd");
+    }
+
+    @FXML
+    public void hoverDoneBottom() {
+        bottomText.setText("");
     }
 }
