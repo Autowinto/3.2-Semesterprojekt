@@ -1,9 +1,15 @@
 package worldofzuul.controller;
 
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import worldofzuul.model.*;
+
 
 import java.net.URL;
 import java.util.Iterator;
@@ -23,10 +29,40 @@ public class GameController implements Initializable {
     Inventory inventory = new Inventory();
     private Room currentRoom;
 
+    @FXML
+    private ListView inventoryListView;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("START GAME");
         createRooms();
+        initializeInventory();
+    }
+
+    private void initializeInventory() {
+        inventoryListView.setItems(inventory.getItems());
+        inventory.addItem(new Material("generator", EnergyType.WIND));
+        inventoryListView.setCellFactory(new Callback<ListView<Item>, ListCell<Item>>() {
+
+            @Override
+            public ListCell<Item> call(ListView<Item> list) {
+                ListCell<Item> cell = new ListCell<Item>() {
+                    @Override
+                    public void updateItem(Item item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            setText(item.getName());
+                        }
+                    }
+                };
+                return cell;
+            };
+        });
+    }
+
+    @FXML
+    private void interact(Event event) {
+        System.out.println(event.getTarget());
     }
 
     private void createRooms() {

@@ -1,9 +1,12 @@
 package worldofzuul.model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 public class Inventory {
-    private ArrayList<Item> items = new ArrayList<Item>();
+    private ObservableList<Item> items = FXCollections.observableArrayList();
     private double weightLimit;
 
     public Inventory() {
@@ -14,7 +17,7 @@ public class Inventory {
         items.add(item);
     }
 
-    public ArrayList<Item> getItems() {
+    public ObservableList<Item> getItems() {
         return this.items;
     }
 
