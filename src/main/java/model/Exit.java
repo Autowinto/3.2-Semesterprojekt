@@ -18,7 +18,6 @@ public class Exit extends Rectangle {
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-
             }
         });
 

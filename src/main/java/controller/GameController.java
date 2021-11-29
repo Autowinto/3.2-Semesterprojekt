@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -37,7 +38,7 @@ public class GameController implements Initializable {
     private Room currentRoom;
 
     @FXML
-    private StackPane sp;
+    private Pane pane;
 
     @FXML
     private ListView inventoryListView;
@@ -284,8 +285,6 @@ public class GameController implements Initializable {
     }
 
     private void goRoom(Room nextRoom) {
-        Group root = (Group) sp.getScene().getRoot();
-
         if (nextRoom == null) {
             System.out.println("Det er ikke muligt!");
         } else {
@@ -293,9 +292,7 @@ public class GameController implements Initializable {
             System.out.println(currentRoom.getLongDescription());
 
             HashMap<String, Exit> exits = nextRoom.getExits();
-
-//            for (Exit exit : exits.values()) {
-//            }
+            pane.getChildren().addAll(exits.values());
 
             // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
             if (currentRoom instanceof CraftingRoom craftingRoom) {
