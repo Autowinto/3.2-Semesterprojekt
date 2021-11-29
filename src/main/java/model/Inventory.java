@@ -14,7 +14,11 @@ public class Inventory {
     }
 
     public void addItem(Item item) {
-        items.add(item);
+        if ((getCurrentWeight() + item.getWeight()) <= getWeightLimit()) {
+            items.add(item);
+            return;
+        }
+        System.out.println("Du kan ikke bære mere");
     }
 
     public ObservableList<Item> getItems() {

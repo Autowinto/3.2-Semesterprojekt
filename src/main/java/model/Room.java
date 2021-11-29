@@ -1,5 +1,13 @@
 package worldofzuul.model;
 
+import javafx.geometry.Rectangle2D;
+import javafx.scene.image.Image;
+import javafx.scene.shape.Rectangle;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
@@ -9,12 +17,13 @@ public class Room {
     private String dropOffEffect;
     private String dropOffText;
     private EnergyType energyType;
-    private HashMap<String, Room> exits;
+    private HashMap<String, Exit> exits;
     private ArrayList<Item> items = new ArrayList<>();
+    private BufferedImage image;
 
     public Room(String description) {
         this.description = description;
-        exits = new HashMap<String, Room>();
+        exits = new HashMap<String, Exit>();
     }
 
     public Room(String description, EnergyType energyType, String dropOffEffect, String dropOffText) {
@@ -22,10 +31,10 @@ public class Room {
         this.energyType = energyType;
         this.dropOffEffect = dropOffEffect;
         this.dropOffText = dropOffText;
-        exits = new HashMap<String, Room>();
+        exits = new HashMap<String, Exit>();
     }
 
-    public void setExit(String direction, Room neighbor) {
+    public void setExit(String direction, Exit neighbor) {
         exits.put(direction, neighbor);
     }
 
@@ -68,8 +77,12 @@ public class Room {
         return "";
     }
 
-    public Room getExit(String direction) {
+    public Exit getExit(String direction) {
         return exits.get(direction);
+    }
+
+    public HashMap<String, Exit> getExits() {
+        return this.exits;
     }
 
     //Samle ting op fra rummet
