@@ -56,7 +56,7 @@ public class GameController implements Initializable {
                     }
                 };
                 return cell;
-            };
+            }
         });
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -26,14 +27,20 @@
                   </ImageView>
                </center>
             </BorderPane>
-            <HBox prefHeight="199.0" prefWidth="820.0" style="-fx-background-color: GRAY;">
+            <HBox prefHeight="199.0" prefWidth="820.0">
                <children>
-                  <Pane prefHeight="198.0" prefWidth="440.0">
+                  <Pane prefHeight="198.0" prefWidth="198.0" style="-fx-background-color: DARKGREY;">
                      <children>
-                        <ListView fx:id="inventoryListView" layoutX="14.0" layoutY="14.0" prefHeight="112.0" prefWidth="194.0" />
+                        <ListView fx:id="inventoryListView" layoutX="14.0" layoutY="28.0" prefHeight="154.0" prefWidth="170.0" />
+                        <Label layoutX="14.0" layoutY="3.0" text="Inventar:">
+                           <font>
+                              <Font name="Bookshelf Symbol 7" size="20.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" />
+                  <Pane prefHeight="198.0" prefWidth="404.0" />
+                  <Pane prefHeight="198.0" prefWidth="200.0" />
                </children></HBox>
          </children>
       </VBox>
