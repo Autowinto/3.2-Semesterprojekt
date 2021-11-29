@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
@@ -24,7 +27,21 @@
                   </ImageView>
                </center>
             </BorderPane>
-            <HBox prefHeight="199.0" prefWidth="820.0" style="-fx-background-color: BLACK;" />
+            <HBox prefHeight="199.0" prefWidth="820.0">
+               <children>
+                  <Pane prefHeight="198.0" prefWidth="198.0" style="-fx-background-color: DARKGREY;">
+                     <children>
+                        <ListView fx:id="inventoryListView" layoutX="14.0" layoutY="28.0" prefHeight="154.0" prefWidth="170.0" />
+                        <Label layoutX="14.0" layoutY="3.0" text="Inventar:">
+                           <font>
+                              <Font name="Bookshelf Symbol 7" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="198.0" prefWidth="404.0" />
+                  <Pane prefHeight="198.0" prefWidth="200.0" />
+               </children></HBox>
          </children>
       </VBox>
       <ImageView fitHeight="157.0" fitWidth="142.0" pickOnBounds="true" preserveRatio="true" translateX="290.0" translateY="-320.0">
@@ -38,12 +55,12 @@
             <Font size="20.0" />
          </font>
       </Text>
+      <Rectangle fx:id="rightTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" onMouseClicked="#interact" onMouseEntered="#hoverOverRight" onMouseExited="#hoverDoneRight" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="332.0" translateY="-100.0" width="100.0" />
       <Text id="leftText" fx:id="leftText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" translateX="-320.0" translateY="-100.0" wrappingWidth="126.89453125">
          <font>
             <Font size="20.0" />
          </font>
       </Text>
-      <Rectangle fx:id="rightTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" onMouseEntered="#hoverOverRight" onMouseExited="#hoverDoneRight" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="332.0" translateY="-100.0" width="100.0" />
-      <Rectangle fx:id="leftTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" onMouseEntered="#hoverOverLeft" onMouseExited="#hoverDoneLeft" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="-350.0" translateY="-100.0" width="100.0" />
+      <Rectangle fx:id="leftTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" onMouseClicked="#interact" onMouseEntered="#hoverOverLeft" onMouseExited="#hoverDoneLeft" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="-350.0" translateY="-100.0" width="100.0" />
    </children>
 </StackPane>
