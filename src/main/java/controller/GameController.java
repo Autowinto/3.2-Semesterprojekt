@@ -212,17 +212,6 @@ public class GameController implements Initializable {
         }
     }
 
-//    public void play() {
-//        printWelcome();
-//
-//        boolean finished = false;
-//        while (!finished) {
-//            Command command = parser.getCommand();
-//            finished = processCommand(command);
-//        }
-//        System.out.println("Tak fordi du deltog. Hav en god dag.");
-//    }
-
     private void print(String text) {
         consoleTextArea.setText(text + '\n');
     }
@@ -268,16 +257,6 @@ public class GameController implements Initializable {
         if (newItem instanceof Product) {
             power.removePower((Product) newItem, currentRoom);
         }
-    }
-
-    private void printInventory() {
-        String output = "";
-        for (int i = 0; i < inventory.getItems().size(); i++) {
-            output += inventory.getItems().get(i).getName() + " ";
-        }
-        System.out.println("Dit inventar indholder:");
-        System.out.println("-----------------------");
-        System.out.println(output);
     }
 
     private void printHelp() {
