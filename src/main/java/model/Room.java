@@ -107,6 +107,10 @@ public class Room {
         return null;
     }
 
+    public ArrayList<Item> getItems( ){
+        return this.items;
+    }
+
     public void removeItem(String itemName) {
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getName().equals(itemName)) {

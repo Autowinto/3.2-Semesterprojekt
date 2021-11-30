@@ -22,21 +22,16 @@ import worldofzuul.model.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class GameController implements Initializable {
     private final Parser parser = new Parser();
     Power power = new Power();
-    Item[] allItems = {
-            new Material("generator", EnergyType.WIND), new Material("vinger", EnergyType.WIND), new Material("tårn", EnergyType.WIND),
-            new Material("turbine", EnergyType.WATER), new Material("vandrør", EnergyType.WATER), new Material("kabel", EnergyType.WATER),
-            new Material("solpanel", EnergyType.SOLAR), new Material("inverter", EnergyType.SOLAR), new Material("stativ", EnergyType.SOLAR),
-            new Product("vindmølle", EnergyType.WIND), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
-    Product windmill = (Product) allItems[9];
-    Product watermill = (Product) allItems[10];
-    Product solarpanel = (Product) allItems[11];
+    private Item[] allItems;
+
+    Product windmill;
+    Product watermill;
+    Product solarpanel;
     Inventory inventory = new Inventory();
     private Room currentRoom;
 
@@ -55,17 +50,28 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("START GAME");
-
+        createItems();
         createRooms();
         initializeInventory();
         printWelcome();
     }
 
-    private void initializeInventory() {
-        inventory.addItem(new Material("generator", EnergyType.WIND));
-        inventory.addItem(new Material("generator2", EnergyType.WIND));
-        inventory.addItem(new Material("generator2", EnergyType.WIND));
+    private void createItems() {
+        try {
+            allItems = new Item[]{
+                    new Material("generator", EnergyType.WIND, 200, 200, "/item_placeholder.png"), new Material("vinger", EnergyType.WIND), new Material("tårn", EnergyType.WIND),
+                            new Material("turbine", EnergyType.WATER), new Material("vandrør", EnergyType.WATER), new Material("kabel", EnergyType.WATER),
+                            new Material("solpanel", EnergyType.SOLAR), new Material("inverter", EnergyType.SOLAR), new Material("stativ", EnergyType.SOLAR),
+                            new Product("vindmølle", EnergyType.WIND), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
+            windmill = (Product) allItems[9];
+            watermill = (Product) allItems[10];
+            solarpanel = (Product) allItems[11];
+        } catch (Exception e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
+    }
 
+    private void initializeInventory() {
         inventoryListView.setItems(inventory.getItems());
         inventoryListView.setCellFactory(new Callback<ListView<Item>, ListCell<Item>>() {
 
@@ -184,6 +190,7 @@ public class GameController implements Initializable {
 //        solar4.setExit("øst", solar3);
 //
             goRoom(start);
+            coal.addItem(allItems[0]);
 //
 //        //vind items placering i rum
 //        wind1.addItem(allItems[0]);
@@ -199,7 +206,6 @@ public class GameController implements Initializable {
 //        solar1.addItem(allItems[6]);
 //        solar2.addItem(allItems[7]);
 //        solar3.addItem(allItems[8]);
-
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -305,22 +311,8 @@ public class GameController implements Initializable {
             print(currentRoom.getLongDescription());
 
             this.roomBackground.setImage(nextRoom.getBackgroundImage());
-
-            // Clear existing exits before adding new ones.
-            pane.getChildren().removeIf(it -> it instanceof Exit);
-
-            HashMap<String, Exit> exits = nextRoom.getExits();
-
-            pane.getChildren().addAll(exits.values());
-            for (Exit exit : exits.values()) {
-                exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        goRoom(exit.getRoom());
-                    }
-                });
-            }
-
+            initializeExits(nextRoom);
+            initializeItems(nextRoom);
 
             // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
             if (currentRoom instanceof CraftingRoom craftingRoom) {
@@ -335,6 +327,41 @@ public class GameController implements Initializable {
                     }
                 }
             }
+        }
+    }
+
+    private void initializeExits(Room nextRoom) {
+        // Clear existing exits before adding new ones.
+        pane.getChildren().removeIf(it -> it instanceof Exit);
+
+
+        HashMap<String, Exit> exits = nextRoom.getExits();
+
+        pane.getChildren().addAll(exits.values());
+        for (Exit exit : exits.values()) {
+            exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    goRoom(exit.getRoom());
+                }
+            });
+        }
+    }
+
+    private void initializeItems(Room nextRoom) {
+        // Clear existing items before loading in new ones
+        pane.getChildren().removeIf(it -> it instanceof Item);
+
+        ArrayList<Item> items = nextRoom.getItems();
+        System.out.print(items);
+        pane.getChildren().addAll(items);
+        for (Item item : items) {
+            item.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("Pickup item code here!");
+                }
+            });
         }
     }
 
