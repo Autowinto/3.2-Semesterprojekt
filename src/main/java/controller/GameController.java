@@ -156,81 +156,83 @@ public class GameController implements Initializable {
             solar3 = new Room("i en skov, hvor træerne dækker for solen", EnergyType.SOLAR, "worst", "Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.", "/Scener/Sol_3.png");
             solar4 = new Room("i et område med en bakke, hvor der er meget sol", EnergyType.SOLAR, "best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ", "/Scener/Sol_4.png");
 
-//            CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord. Over bordet er der et skilt hvorpå der står \"vindenergi\".", EnergyType.WIND, windmill);
-//       CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord. Over bordet er der et skilt hvorpå der står \"vandenergi\".", EnergyType.WATER, watermill);
-//       CraftingRoom craftingSun = new CraftingRoom("foran et gult bord. Over bordet er der et skilt hvorpå der står \"solenergi\".", EnergyType.SOLAR, solarpanel);
+            CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord. Over bordet er der et skilt hvorpå der står \"vindenergi\".", EnergyType.WIND, windmill);
+            CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord. Over bordet er der et skilt hvorpå der står \"vandenergi\".", EnergyType.WATER, watermill);
+            CraftingRoom craftingSun = new CraftingRoom("foran et gult bord. Over bordet er der et skilt hvorpå der står \"solenergi\".", EnergyType.SOLAR, solarpanel);
 
             //Udgange fra start
-            start.setExit(new Exit(coal, 100, 200, 700, 200, "vest"));
-            //start.setExit("vest", new Exit(workshop,100, 200, 0, 200));
+
+            start.setExit("øst", new Exit(coal, 100, 200, 700, 200));
+            start.setExit("vest", new Exit(workshop,100, 200, 0, 200));
 
             //Udgang fra kul
-            coal.setExit(new Exit(start, 100, 200, 0, 200, "øst"));
-/*
-        //Udgange fra værksted
-        workshop.setExit("nord", wind1);
-        workshop.setExit("vest", water1);
-        workshop.setExit("syd", solar1);
-        workshop.setExit("vindstation", craftingWind);
-        workshop.setExit("solstation", craftingSun);
-        workshop.setExit("vandstation", craftingWater);
-        workshop.setExit("øst", start);
+            coal.setExit("vest", new Exit(start, 100, 200, 0, 200));
 
-        craftingWind.setExit("ud", workshop);
-        craftingSun.setExit("ud", workshop);
-        craftingWater.setExit("ud", workshop);
+            //Udgange fra værksted
+            workshop.setExit("nord", new Exit(wind1,200,100,300,0));
+            workshop.setExit("vest", new Exit(water1,100, 200, 0, 200));
+            workshop.setExit("syd", new Exit(solar1,200,100,300,500));
+            workshop.setExit("øst", new Exit(start, 100,200,700,200));
+            workshop.setExit("vindstation", new Exit(craftingWind,200,100,100,500 ));
+            workshop.setExit("solstation", new Exit(craftingSun,200,100,525,0));
+            workshop.setExit("vandstation", new Exit(craftingWater,200,200,600,400));
 
-        //Udgange fra vind1
-        wind1.setExit("øst", wind2);
-        wind1.setExit("nord", wind3);
-        wind1.setExit("syd", workshop);
+            craftingWind.setExit("ud", new Exit(workshop,200,100,300,500));
+            craftingSun.setExit("ud",new Exit(workshop,200,100,300,500));
+            craftingWater.setExit("ud", new Exit(workshop,200,100,300,500));
 
-        //Udgang fra vind2
-        wind2.setExit("vest", wind1);
+            //Udgange fra vind1
+            wind1.setExit("øst",new Exit(wind2,100,200,700,100));
+            wind1.setExit("nord", new Exit(wind3,200,100,250,0));
+            wind1.setExit("syd",new Exit(workshop, 200,100,250,500));
 
-        //Udgange fra vind3
-        wind3.setExit("syd", wind1);
-        wind3.setExit("vest", wind4);
+            //Udgang fra vind2
+            wind2.setExit("vest",new Exit(wind1,100, 200, 0, 250));
 
-        //Udgang fra vind4
-        wind4.setExit("øst", wind3);
+            //Udgange fra vind3
+            wind3.setExit("syd",new Exit(wind1,200,100,300,500));
+            wind3.setExit("vest",new Exit(wind4,100, 200, 0, 150));
 
-        //Udgange fra vand1
-        water1.setExit("øst", workshop);
-        water1.setExit("nord", water2);
+            //Udgang fra vind4
+            wind4.setExit("øst", new Exit(wind3,100, 200, 700, 200) );
 
-        //Udgange fra vand2
-        water2.setExit("vest", water3);
-        water2.setExit("syd", water1);
+            //Udgange fra vand1
+            water1.setExit("øst", new Exit(workshop,100,200,700,200));
+            water1.setExit("nord", new Exit(water2, 200,100,250,0));
 
-        //udgange fra vand3
-        water3.setExit("øst", water2);
-        water3.setExit("syd", water4);
-        water3.setExit("nord", water5);
+            //Udgange fra vand2
+            water2.setExit("vest", new Exit(water3,100,200,0,150));
+            water2.setExit("syd", new Exit(water1, 200,100,350,500));
 
-        //Udgang fra vand4
-        water4.setExit("nord", water3);
+            //udgange fra vand3
+            water3.setExit("øst", new Exit(water2,100,200,700,200));
+            water3.setExit("syd", new Exit(water4, 200,100,300,500));
+            water3.setExit("nord", new Exit(water5, 200,100,250,0));
 
-        //Udgang fra vand5
-        water5.setExit("syd", water3);
+            //Udgang fra vand4
+            water4.setExit("nord", new Exit(water3,200,100,300,0));
 
-        //Udgange fra sol1
-        solar1.setExit("nord", workshop);
-        solar1.setExit("vest", solar2);
-        solar1.setExit("syd", solar3);
+            //Udgang fra vand5
+            water5.setExit("syd", new Exit(water3,200,100,250,500));
 
-        //Udgang fra sol2
-        solar2.setExit("øst", solar1);
+            //Udgange fra sol1
+            solar1.setExit("nord", new Exit(workshop,200,100,300,0));
+            solar1.setExit("vest", new Exit(solar2,100,200,0,200));
+            solar1.setExit("syd", new Exit(solar3, 200,100,300,500));
 
-        //Udgange fra sol3
-        solar3.setExit("nord", solar1);
-       solar3.setExit("vest", solar4);
+            //Udgang fra sol2
+            solar2.setExit("øst", new Exit(solar1,100,200,700,250));
 
-        //Udgang fra sol4
-        solar4.setExit("øst", solar3);
-*/
-            goRoom(start);
-            coal.addItem(allItems[0]);
+            //Udgange fra sol3
+            solar3.setExit("nord", new Exit(solar1,200,100,300,0));
+           solar3.setExit("vest", new Exit(solar4,100,200,0,250));
+
+            //Udgang fra sol4
+            solar4.setExit("øst",new Exit(solar3,100,200,700,250));
+
+
+
+
 //
 //        //vind items placering i rum
 //        wind1.addItem(allItems[0]);
@@ -246,6 +248,9 @@ public class GameController implements Initializable {
 //        solar1.addItem(allItems[6]);
 //        solar2.addItem(allItems[7]);
 //        solar3.addItem(allItems[8]);
+
+            goRoom(start);
+            coal.addItem(allItems[0]);
         } catch (Exception e) {
             System.out.println(e);
         }
