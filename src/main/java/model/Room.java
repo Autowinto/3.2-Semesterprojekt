@@ -6,6 +6,7 @@ import javafx.scene.shape.Rectangle;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.beans.Visibility;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -111,12 +112,9 @@ public class Room {
         return this.items;
     }
 
-    public void removeItem(String itemName) {
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getName().equals(itemName)) {
-                items.remove(i);
-            }
-        }
+    public void removeItem(Item item) {
+        items.remove(item);
+        item.setVisible(false);
     }
 
     public void addItem(Item newitem) {

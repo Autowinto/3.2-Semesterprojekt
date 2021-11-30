@@ -248,8 +248,6 @@ public class GameController implements Initializable {
             wantToQuit = quit(command);
         } else if (commandWord == CommandWord.PLACE) {
             placeOnDropOff(command);
-        } else if (commandWord == CommandWord.TAKE) {
-            getItem(command);
         } else if (commandWord == CommandWord.CRAFT) {
             craft(command);
         } else if (commandWord == CommandWord.POWER) {
@@ -260,27 +258,16 @@ public class GameController implements Initializable {
 
     }
 
-    private void getItem(Command command) {
-        if (!command.hasSecondWord()) {
-            System.out.println("Hvad skal jeg tage?");
+    private void pickupItem(Item newItem) {
+        if (newItem.getWeight() + inventory.getCurrentWeight() > inventory.getWeightLimit()) {
+            print("Du har ikke plads til at samle denne ting op");
             return;
         }
-
-        String item = command.getSecondWord();
-
-        Item newItem = currentRoom.getItem(item);
-
-        if (newItem == null) {
-            System.out.println("Det er ikke her!");
-        } else if (newItem.getWeight() + inventory.getCurrentWeight() > inventory.getWeightLimit()) {
-            System.out.println("Du har ikke plads til at samle denne ting op");
-        } else {
-            inventory.addItem(newItem);
-            currentRoom.removeItem(item);
-            System.out.println("Du har samlet " + item + " op");
-            if (newItem instanceof Product) {
-                power.removePower((Product) newItem, currentRoom);
-            }
+        inventory.addItem(newItem);
+        currentRoom.removeItem(newItem);
+        print("Du har samlet " + newItem.getName() + " op");
+        if (newItem instanceof Product) {
+            power.removePower((Product) newItem, currentRoom);
         }
     }
 
@@ -359,7 +346,8 @@ public class GameController implements Initializable {
             item.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    System.out.println("Pickup item code here!");
+                    Item item = (Item) mouseEvent.getSource();
+                    pickupItem(item);
                 }
             });
         }
