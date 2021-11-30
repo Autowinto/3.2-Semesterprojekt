@@ -65,7 +65,7 @@ public class GameController implements Initializable {
         createRooms();
         initializeInventory();
         printWelcome();
-        UpdatePowerBars();
+        updatePowerBars();
     }
 
     private void createItems() {
