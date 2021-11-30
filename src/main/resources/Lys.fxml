@@ -2,46 +2,54 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuul.controller.GameController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuul.controller.GameController">
    <children>
-      <VBox prefHeight="800.0" prefWidth="1200.0">
+      <VBox prefHeight="800.0" prefWidth="800.0">
          <children>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
-               <center>
-                  <ImageView fitHeight="1219.0" fitWidth="801.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+            <Pane prefHeight="800.0" prefWidth="800.0">
+               <children>
+                  <ImageView fx:id="roomBackground" fitHeight="602.0" fitWidth="887.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Scener/Start.png" />
                      </image>
                   </ImageView>
-               </center>
-            </BorderPane>
-            <HBox prefHeight="199.0" prefWidth="820.0">
-               <children>
-                  <Pane prefHeight="198.0" prefWidth="198.0" style="-fx-background-color: DARKGREY;">
+                  <HBox layoutY="602.0" prefHeight="199.0" prefWidth="800.0">
                      <children>
-                        <ListView fx:id="inventoryListView" layoutX="14.0" layoutY="28.0" prefHeight="154.0" prefWidth="170.0" />
-                        <Label layoutX="14.0" layoutY="3.0" text="Inventar:">
-                           <font>
-                              <Font name="Bookshelf Symbol 7" size="20.0" />
-                           </font>
-                        </Label>
+                        <Pane prefHeight="198.0" prefWidth="198.0" style="-fx-background-color: DARKGREY;">
+                           <children>
+                              <ListView fx:id="inventoryListView" layoutX="14.0" layoutY="28.0" prefHeight="154.0" prefWidth="170.0" />
+                              <Label layoutX="14.0" layoutY="3.0" text="Inventar:">
+                                 <font>
+                                    <Font name="Bookshelf Symbol 7" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="198.0" prefWidth="404.0">
+                           <children>
+                              <TextArea fx:id="consoleTextArea" editable="false" layoutY="-1.0" prefHeight="198.0" prefWidth="404.0" promptText="TEst" wrapText="true">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </TextArea>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="198.0" prefWidth="200.0" />
                      </children>
-                  </Pane>
-                  <Pane prefHeight="198.0" prefWidth="404.0" />
-                  <Pane prefHeight="198.0" prefWidth="200.0" />
-               </children></HBox>
+                  </HBox>
+               </children>
+            </Pane>
          </children>
       </VBox>
       <ImageView fitHeight="157.0" fitWidth="142.0" pickOnBounds="true" preserveRatio="true" translateX="290.0" translateY="-320.0">
@@ -55,7 +63,6 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Rectangle fx:id="rightTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" onMouseClicked="#interact" onMouseEntered="#hoverOverRight" onMouseExited="#hoverDoneRight" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="332.0" translateY="-100.0" width="100.0" />
       <Text id="leftText" fx:id="leftText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" translateX="-320.0" translateY="-100.0" wrappingWidth="126.89453125">
          <font>
             <Font size="20.0" />
@@ -63,4 +70,4 @@
       </Text>
       <Rectangle fx:id="leftTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" onMouseClicked="#interact" onMouseEntered="#hoverOverLeft" onMouseExited="#hoverDoneLeft" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="-350.0" translateY="-100.0" width="100.0" />
    </children>
-</StackPane>
+</Pane>

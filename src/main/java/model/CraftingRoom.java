@@ -1,5 +1,6 @@
 package worldofzuul.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class CraftingRoom extends Room {
@@ -7,8 +8,8 @@ public class CraftingRoom extends Room {
     private EnergyType energyType;
     private ArrayList<Material> placedItems = new ArrayList<>();
 
-    public CraftingRoom(String description, EnergyType energyType, Product craftingResult) {
-        super(description);
+    public CraftingRoom(String description, EnergyType energyType, Product craftingResult) throws IOException {
+        super(description, "");
         //this.recipe = (ArrayList<Material>) Arrays.asList(recipe);
         this.energyType = energyType;
         this.craftingResult = craftingResult;
