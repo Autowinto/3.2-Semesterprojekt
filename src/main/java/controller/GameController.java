@@ -5,6 +5,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -14,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import worldofzuul.model.*;
@@ -36,13 +38,12 @@ public class GameController implements Initializable {
 
     @FXML
     private Pane pane;
-
+    @FXML
+    private Label hoverLabel;
     @FXML
     private ListView inventoryListView;
-
     @FXML
     private TextArea consoleTextArea;
-
     @FXML
     private ImageView roomBackground;
 
@@ -71,9 +72,9 @@ public class GameController implements Initializable {
         try {
             allItems = new Item[]{
                     new Material("generator", EnergyType.WIND, 200, 200, "/item_placeholder.png"), new Material("vinger", EnergyType.WIND), new Material("tårn", EnergyType.WIND),
-                            new Material("turbine", EnergyType.WATER), new Material("vandrør", EnergyType.WATER), new Material("kabel", EnergyType.WATER),
-                            new Material("solpanel", EnergyType.SOLAR), new Material("inverter", EnergyType.SOLAR), new Material("stativ", EnergyType.SOLAR),
-                            new Product("vindmølle", EnergyType.WIND), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
+                    new Material("turbine", EnergyType.WATER), new Material("vandrør", EnergyType.WATER), new Material("kabel", EnergyType.WATER),
+                    new Material("solpanel", EnergyType.SOLAR), new Material("inverter", EnergyType.SOLAR), new Material("stativ", EnergyType.SOLAR),
+                    new Product("vindmølle", EnergyType.WIND), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
@@ -102,11 +103,6 @@ public class GameController implements Initializable {
         });
     }
 
-    @FXML
-    private void interact(Event event) {
-        System.out.println(event.getTarget());
-    }
-
     public void placeProduct(){
         try {
             for (Object item : inventoryListView.getItems()) {
@@ -114,7 +110,7 @@ public class GameController implements Initializable {
                     int selectedID = inventoryListView.getSelectionModel().getSelectedIndex();
                     power.addPower((Product) inventoryListView.getSelectionModel().getSelectedItem(), currentRoom);
                     inventoryListView.getItems().remove(selectedID);
-                    UpdatePowerBars();
+                    updatePowerBars();
                     return;
                 }
                 System.out.println("PRODUKT IKKE REGISTRERET");
@@ -124,7 +120,7 @@ public class GameController implements Initializable {
         }
     }
 
-    public void UpdatePowerBars(){
+    public void updatePowerBars(){
         double powerPercentage = power.getPower()/100;
         powerProgressBar.setProgress(powerPercentage);
 
@@ -135,41 +131,40 @@ public class GameController implements Initializable {
         }*/
     }
 
-
     private void createRooms() {
         Room start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4;
         try {
 
             start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner at strømkilden er mod øst", "/Scener/Start.png");
             coal = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul", "/Scener/Kul.png");
-            workshop = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor","/Scener/Værksted.png");
+            workshop = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor", "/Scener/Værksted.png");
 
-            wind1 = new Room("udenfor i et område, hvor du kan mærke det blæser","/Scener/Vind_1.png");
-            wind2 = new Room("udenfor i et område, hvor der er en mild vind. Du ser nogle træer der giver læ for vinden", EnergyType.WIND, "middle", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.","/Scener/Vind_2.png");
-            wind3 = new Room("udenfor i et område, hvor det blæser. Du ser ikke noget der dækker for vinden", EnergyType.WIND, "best", "Din vindmølle genererer en rigtig god mængde energi, da det blæser og der ikke er noget som dækker.","/Scener/Vind_3.png");
-            wind4 = new Room("udenfor i et område, hvor det er en meget stærk vind", EnergyType.WIND, "worst", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da vinden er for stærk.","/Scener/Vind_4.png");
+            wind1 = new Room("udenfor i et område, hvor du kan mærke det blæser", "/Scener/Vind_1.png");
+            wind2 = new Room("udenfor i et område, hvor der er en mild vind. Du ser nogle træer der giver læ for vinden", EnergyType.WIND, "middle", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.", "/Scener/Vind_2.png");
+            wind3 = new Room("udenfor i et område, hvor det blæser. Du ser ikke noget der dækker for vinden", EnergyType.WIND, "best", "Din vindmølle genererer en rigtig god mængde energi, da det blæser og der ikke er noget som dækker.", "/Scener/Vind_3.png");
+            wind4 = new Room("udenfor i et område, hvor det er en meget stærk vind", EnergyType.WIND, "worst", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da vinden er for stærk.", "/Scener/Vind_4.png");
 
-            water1 = new Room("udenfor i et område, hvor du ser et vandfald", EnergyType.WATER, "best", "Din vandmølle genererer en rigtig god mængde energi, da der er en masse energi fra vandet der falder.","/Scener/Vand_1.png");
-            water2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af","/Scener/Vand_2.png");
-            water3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området", EnergyType.WATER, "middle", "Din vandmølle genererer en god mængde energi, men det er ikke optimalt, da en flod ikke er hvor der er mest energi.","/Scener/Vand_3.png");
-            water4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet","/Scener/Vand_4.png");
-            water5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod", EnergyType.WATER, "worst", "Din vandmølle genererer lidt energi, men det er ikke optimalt, da der ikke er meget energi i stilleliggende vand.","/Scener/Vand_5.png");
+            water1 = new Room("udenfor i et område, hvor du ser et vandfald", EnergyType.WATER, "best", "Din vandmølle genererer en rigtig god mængde energi, da der er en masse energi fra vandet der falder.", "/Scener/Vand_1.png");
+            water2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af", "/Scener/Vand_2.png");
+            water3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området", EnergyType.WATER, "middle", "Din vandmølle genererer en god mængde energi, men det er ikke optimalt, da en flod ikke er hvor der er mest energi.", "/Scener/Vand_3.png");
+            water4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet", "/Scener/Vand_4.png");
+            water5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod", EnergyType.WATER, "worst", "Din vandmølle genererer lidt energi, men det er ikke optimalt, da der ikke er meget energi i stilleliggende vand.", "/Scener/Vand_5.png");
 
-            solar1 = new Room("udenfor i et varmt område med meget sollys","/Scener/Sol_1.png");
-            solar2 = new Room("på en flad mark med meget sol", EnergyType.SOLAR, "middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.","/Scener/Sol_2.png");
-            solar3 = new Room("i en skov, hvor træerne dækker for solen", EnergyType.SOLAR, "worst", "Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.","/Scener/Sol_3.png");
-            solar4 = new Room("i et område med en bakke, hvor der er meget sol", EnergyType.SOLAR, "best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ","/Scener/Sol_4.png");
+            solar1 = new Room("udenfor i et varmt område med meget sollys", "/Scener/Sol_1.png");
+            solar2 = new Room("på en flad mark med meget sol", EnergyType.SOLAR, "middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.", "/Scener/Sol_2.png");
+            solar3 = new Room("i en skov, hvor træerne dækker for solen", EnergyType.SOLAR, "worst", "Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.", "/Scener/Sol_3.png");
+            solar4 = new Room("i et område med en bakke, hvor der er meget sol", EnergyType.SOLAR, "best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ", "/Scener/Sol_4.png");
 
 //            CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord. Over bordet er der et skilt hvorpå der står \"vindenergi\".", EnergyType.WIND, windmill);
 //       CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord. Over bordet er der et skilt hvorpå der står \"vandenergi\".", EnergyType.WATER, watermill);
 //       CraftingRoom craftingSun = new CraftingRoom("foran et gult bord. Over bordet er der et skilt hvorpå der står \"solenergi\".", EnergyType.SOLAR, solarpanel);
 
             //Udgange fra start
-            start.setExit("øst", new Exit(coal, 100, 200, 700, 200));
+            start.setExit(new Exit(coal, 100, 200, 700, 200, "vest"));
             //start.setExit("vest", new Exit(workshop,100, 200, 0, 200));
 
             //Udgang fra kul
-            coal.setExit("vest", new Exit(start, 100, 200, 0, 200));
+            coal.setExit(new Exit(start, 100, 200, 0, 200, "øst"));
 /*
         //Udgange fra værksted
         workshop.setExit("nord", wind1);
@@ -255,17 +250,6 @@ public class GameController implements Initializable {
         }
     }
 
-//    public void play() {
-//        printWelcome();
-//
-//        boolean finished = false;
-//        while (!finished) {
-//            Command command = parser.getCommand();
-//            finished = processCommand(command);
-//        }
-//        System.out.println("Tak fordi du deltog. Hav en god dag.");
-//    }
-
     private void print(String text) {
         consoleTextArea.setText(text + '\n');
     }
@@ -313,16 +297,6 @@ public class GameController implements Initializable {
         }
     }
 
-    private void printInventory() {
-        String output = "";
-        for (int i = 0; i < inventory.getItems().size(); i++) {
-            output += inventory.getItems().get(i).getName() + " ";
-        }
-        System.out.println("Dit inventar indholder:");
-        System.out.println("-----------------------");
-        System.out.println(output);
-    }
-
     private void printHelp() {
         System.out.println("Tak fordi du spørger om hjælp");
         System.out.println();
@@ -337,7 +311,6 @@ public class GameController implements Initializable {
 
 
             this.currentRoom = nextRoom;
-            print(currentRoom.getLongDescription());
 
             this.roomBackground.setImage(nextRoom.getBackgroundImage());
             initializeExits(nextRoom);
@@ -364,14 +337,27 @@ public class GameController implements Initializable {
         pane.getChildren().removeIf(it -> it instanceof Exit);
 
 
-        HashMap<String, Exit> exits = nextRoom.getExits();
+        ArrayList<Exit> exits = nextRoom.getExits();
 
-        pane.getChildren().addAll(exits.values());
-        for (Exit exit : exits.values()) {
+        pane.getChildren().addAll(exits);
+        for (Exit exit : exits) {
             exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     goRoom(exit.getRoom());
+                }
+            });
+
+            exit.hoverProperty().addListener((obs, oldVal, newVal) -> {
+                if (newVal) {
+                    this.hoverLabel.setTranslateX(exit.getX() + 5);
+                    this.hoverLabel.setTranslateY(exit.getY() + exit.getHeight() / 2);
+                    this.hoverLabel.setVisible(true);
+                    this.hoverLabel.setText("Gå " + exit.getDirection());
+                    System.out.println("HOVER");
+                } else {
+                    this.hoverLabel.setVisible(false);
+                    System.out.println("NOT HOVER");
                 }
             });
         }
@@ -390,6 +376,20 @@ public class GameController implements Initializable {
                 public void handle(MouseEvent mouseEvent) {
                     Item item = (Item) mouseEvent.getSource();
                     pickupItem(item);
+                }
+            });
+
+            item.hoverProperty().addListener((obs, oldVal, newVal) -> {
+                if (newVal) {
+                    this.hoverLabel.setTranslateX(item.getX());
+                    this.hoverLabel.setTranslateY(item.getY());
+                    this.hoverLabel.setVisible(true);
+                    hoverLabel.setText(item.getName());
+                    hoverLabel.toFront();
+                    System.out.println("HOVER");
+                } else {
+                    this.hoverLabel.setVisible(false);
+                    System.out.println("NOT HOVER");
                 }
             });
         }
@@ -451,57 +451,5 @@ public class GameController implements Initializable {
 
     public void printPower() {
         System.out.println("Du har " + power.getPower() + "% strøm");
-    }
-
-    @FXML
-    private Text rightText;
-
-    @FXML
-    private Text leftText;
-
-    @FXML
-    private Text topText;
-
-    @FXML
-    private Text bottomText;
-
-    @FXML
-    public void hoverOverRight() {
-        rightText.setText("Gå øst");
-    }
-
-    @FXML
-    public void hoverDoneRight() {
-        rightText.setText("");
-    }
-
-    @FXML
-    public void hoverOverLeft() {
-        leftText.setText("Gå vest");
-    }
-
-    @FXML
-    public void hoverDoneLeft() {
-        leftText.setText("");
-    }
-
-    @FXML
-    public void hoverOverTop() {
-        topText.setText("Gå nord");
-    }
-
-    @FXML
-    public void hoverDoneTop() {
-        topText.setText("");
-    }
-
-    @FXML
-    public void hoverOverBottom() {
-        bottomText.setText("Gå syd");
-    }
-
-    @FXML
-    public void hoverDoneBottom() {
-        bottomText.setText("");
     }
 }
