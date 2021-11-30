@@ -14,11 +14,8 @@ public class Exit extends Rectangle {
         this.setY(posY);
         this.direction = direction;
 //        this.setStroke(Color.BLACK);
-        this.setFill(Color.BLACK);
+        this.setFill(Color.TRANSPARENT);
         this.room = room;
-    }
-
-    public Exit(Room water4, int width, int height, int posX, int posY) {
     }
 
     public Room getRoom() {

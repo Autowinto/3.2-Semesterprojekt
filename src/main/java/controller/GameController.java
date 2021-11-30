@@ -44,7 +44,8 @@ public class GameController implements Initializable {
     private ListView inventoryListView;
     @FXML
     private ImageView roomBackground;
-
+    @FXML
+    private Label consoleLabel;
     @FXML
     private ProgressBar powerProgressBar;
 
@@ -171,9 +172,9 @@ public class GameController implements Initializable {
             workshop.setExit(new Exit(water1,100, 200, 0, 200, "vest"));
             workshop.setExit(new Exit(solar1,200,100,300,500, "syd"));
             workshop.setExit(new Exit(start, 100,200,700,200, "øst"));
-            workshop.setExit(new Exit(craftingWind,200,100,100,500, "vindstation"));
-            workshop.setExit(new Exit(craftingSun,200,100,525,0, "solstation"));
-            workshop.setExit(new Exit(craftingWater,200,200,600,400, "vandstation"));
+            workshop.setExit(new Exit(craftingWind,200,100,525,0, "vindstation"));
+            workshop.setExit(new Exit(craftingSun,200,100,100,500, "solstation"));
+            workshop.setExit(new Exit(craftingWater,200,200,0,0, "vandstation"));
 
             craftingWind.setExit(new Exit(workshop,200,100,300,500, "ud"));
             craftingSun.setExit(new Exit(workshop,200,100,300,500, "ud"));
@@ -255,8 +256,7 @@ public class GameController implements Initializable {
     }
 
     private void print(String text) {
-        System.out.println(text);
-//        consoleTextArea.setText(text + '\n');
+        consoleLabel.setText(text + '\n');
     }
 
     private void printWelcome() {
@@ -313,10 +313,7 @@ public class GameController implements Initializable {
         if (nextRoom == null) {
             System.out.println("Det er ikke muligt!");
         } else {
-
-
             this.currentRoom = nextRoom;
-
             this.roomBackground.setImage(nextRoom.getBackgroundImage());
             initializeExits(nextRoom);
             initializeItems(nextRoom);
@@ -328,7 +325,7 @@ public class GameController implements Initializable {
                 for (Iterator<Item> iterator = inventory.getItems().iterator(); iterator.hasNext(); ) {
                     Item item = iterator.next();
                     if (item.getEnergyType() == craftingRoom.getEnergyType() && item instanceof Material materialItem) {
-                        System.out.println("Du får en lys idé og lægger din/dit " + item.getName() + " på arbejdsbordet!");
+                        print("Du får en lys idé og lægger din/dit " + item.getName() + " på arbejdsbordet!");
                         craftingRoom.placeItem(materialItem);
                         iterator.remove();
                     }
