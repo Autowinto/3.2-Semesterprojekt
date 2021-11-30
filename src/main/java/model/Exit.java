@@ -16,7 +16,7 @@ public class Exit extends Rectangle {
         this.setX(posX);
         this.setY(posY);
 //        this.setStroke(Color.BLACK);
-        this.setFill(Color.TRANSPARENT);
+        this.setFill(Color.BLACK);
         this.room = room;
     }
 
