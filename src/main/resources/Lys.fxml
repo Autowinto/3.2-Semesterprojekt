@@ -19,7 +19,7 @@
          <children>
             <Pane prefHeight="800.0" prefWidth="800.0">
                <children>
-                  <ImageView fitHeight="602.0" fitWidth="887.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="roomBackground" fitHeight="602.0" fitWidth="887.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@Scener/Start.png" />
                      </image>
@@ -63,7 +63,6 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Rectangle fx:id="rightTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="1.0" onMouseClicked="#interact" onMouseEntered="#hoverOverRight" onMouseExited="#hoverDoneRight" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="332.0" translateY="-100.0" width="1.0" />
       <Text id="leftText" fx:id="leftText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" translateX="-320.0" translateY="-100.0" wrappingWidth="126.89453125">
          <font>
             <Font size="20.0" />

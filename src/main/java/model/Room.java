@@ -6,6 +6,7 @@ import javafx.scene.shape.Rectangle;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -19,19 +20,26 @@ public class Room {
     private EnergyType energyType;
     private HashMap<String, Exit> exits;
     private ArrayList<Item> items = new ArrayList<>();
-    private BufferedImage image;
+    private Image image;
 
-    public Room(String description) {
+    public Room(String description, String imagePath) throws IOException {
         this.description = description;
+        this.image = loadImage(imagePath);
         exits = new HashMap<String, Exit>();
     }
 
-    public Room(String description, EnergyType energyType, String dropOffEffect, String dropOffText) {
+    public Room(String description, EnergyType energyType, String dropOffEffect, String dropOffText, String imagePath) throws IOException {
         this.description = description;
         this.energyType = energyType;
         this.dropOffEffect = dropOffEffect;
         this.dropOffText = dropOffText;
+        this.image = loadImage(imagePath);
         exits = new HashMap<String, Exit>();
+    }
+
+    private Image loadImage(String path) throws IOException {
+        Image testImage = new Image(getClass().getResourceAsStream(path));
+        return testImage;
     }
 
     public void setExit(String direction, Exit neighbor) {
@@ -56,6 +64,10 @@ public class Room {
             returnString += getRoomItems();
             return returnString;
         }
+    }
+
+    public Image getBackgroundImage() {
+        return this.image;
     }
 
     public EnergyType getEnergyType() {

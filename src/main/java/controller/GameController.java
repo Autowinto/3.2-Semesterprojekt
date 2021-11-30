@@ -2,6 +2,7 @@ package worldofzuul.controller;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -9,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -45,6 +48,9 @@ public class GameController implements Initializable {
 
     @FXML
     private TextArea consoleTextArea;
+
+    @FXML
+    private ImageView roomBackground;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -86,9 +92,11 @@ public class GameController implements Initializable {
 
     private void createRooms() {
         Room start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4;
+        try {
 
-        start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner at strømkilden er mod øst");
-        coal = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul");
+            start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner at strømkilden er mod øst", "/Scener/Start.png");
+            coal = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul", "/Scener/Kul.png");
+
 //        workshop = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor");
 //        wind1 = new Room("udenfor i et område, hvor du kan mærke det blæser");
 //        wind2 = new Room("udenfor i et område, hvor der er en mild vind. Du ser nogle træer der giver læ for vinden", EnergyType.WIND, "middle", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.");
@@ -106,12 +114,12 @@ public class GameController implements Initializable {
 //        CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord. Over bordet er der et skilt hvorpå der står \"vindenergi\".", EnergyType.WIND, windmill);
 //        CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord. Over bordet er der et skilt hvorpå der står \"vandenergi\".", EnergyType.WATER, watermill);
 //        CraftingRoom craftingSun = new CraftingRoom("foran et gult bord. Over bordet er der et skilt hvorpå der står \"solenergi\".", EnergyType.SOLAR, solarpanel);
-        //Udgange fra start
-        start.setExit("øst", new Exit(coal, 100, 200, 332, -100));
+            //Udgange fra start
+            start.setExit("øst", new Exit(coal, 100, 200, 700, 200));
 //        start.setExit("vest", workshop);
 
-        //Udgang fra kul
-//        coal.setExit("vest", start);
+            //Udgang fra kul
+        coal.setExit("vest", new Exit(start, 100, 200, 0, 200));
 
 //        //Udgange fra værksted
 //        workshop.setExit("nord", wind1);
@@ -175,7 +183,7 @@ public class GameController implements Initializable {
 //        //Udgang fra sol4
 //        solar4.setExit("øst", solar3);
 //
-        goRoom(start);
+            goRoom(start);
 //
 //        //vind items placering i rum
 //        wind1.addItem(allItems[0]);
@@ -192,6 +200,9 @@ public class GameController implements Initializable {
 //        solar2.addItem(allItems[7]);
 //        solar3.addItem(allItems[8]);
 
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 //    public void play() {
@@ -288,11 +299,28 @@ public class GameController implements Initializable {
         if (nextRoom == null) {
             System.out.println("Det er ikke muligt!");
         } else {
+
+
             this.currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
+            print(currentRoom.getLongDescription());
+
+            this.roomBackground.setImage(nextRoom.getBackgroundImage());
+
+            // Clear existing exits before adding new ones.
+            pane.getChildren().removeIf(it -> it instanceof Exit);
 
             HashMap<String, Exit> exits = nextRoom.getExits();
+
             pane.getChildren().addAll(exits.values());
+            for (Exit exit : exits.values()) {
+                exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        goRoom(exit.getRoom());
+                    }
+                });
+            }
+
 
             // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
             if (currentRoom instanceof CraftingRoom craftingRoom) {
