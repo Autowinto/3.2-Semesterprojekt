@@ -50,8 +50,6 @@ public class GameController implements Initializable {
     @FXML
     private ProgressBar powerProgressBar;
 
-    private Image dropOffImage = new Image("/Scener/Kul.png");
-
     @FXML
     private ImageView powerImageView;
 
@@ -74,7 +72,7 @@ public class GameController implements Initializable {
                     new Material("generator", EnergyType.WIND, 200, 200, "/item_placeholder.png"), new Material("vinger", EnergyType.WIND), new Material("tårn", EnergyType.WIND),
                     new Material("turbine", EnergyType.WATER), new Material("vandrør", EnergyType.WATER), new Material("kabel", EnergyType.WATER),
                     new Material("solpanel", EnergyType.SOLAR), new Material("inverter", EnergyType.SOLAR), new Material("stativ", EnergyType.SOLAR),
-                    new Product("vindmølle", EnergyType.WIND), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
+                    new Product("vindmølle", EnergyType.WIND, 200, 200, "/item_placeholder.png"), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
