@@ -52,8 +52,7 @@
                         <Pane prefHeight="198.0" prefWidth="200.0" />
                      </children>
                   </HBox>
-                  <ImageView fx:id="dropOffImageView" fitHeight="119.0" fitWidth="127.0" layoutX="165.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="dropOffPunkt" layoutX="165.0" layoutY="198.0" mnemonicParsing="false" onAction="#placeProduct" prefHeight="119.0" prefWidth="120.0" text="myButton" />
+                  <Rectangle fx:id="leftTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" layoutY="200.0" onMouseClicked="#interact" onMouseEntered="#hoverOverLeft" onMouseExited="#hoverDoneLeft" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
                </children>
             </Pane>
          </children>
@@ -69,6 +68,5 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Rectangle fx:id="leftTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" onMouseClicked="#interact" onMouseEntered="#hoverOverLeft" onMouseExited="#hoverDoneLeft" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="-350.0" translateY="-100.0" width="100.0" />
    </children>
 </Pane>
