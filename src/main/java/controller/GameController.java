@@ -9,7 +9,9 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -52,6 +54,15 @@ public class GameController implements Initializable {
     @FXML
     private ImageView roomBackground;
 
+    @FXML
+    private ProgressBar powerProgressBar;
+
+    @FXML
+    private ImageView powerImageView;
+
+    private Image image1 = new Image("/Scener/img.png");
+    private Image image2 = new Image("/Scener/ve-omstilling169.png");
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("START GAME");
@@ -59,13 +70,13 @@ public class GameController implements Initializable {
         createRooms();
         initializeInventory();
         printWelcome();
+        UpdatePowerBars();
     }
 
     private void initializeInventory() {
-        inventory.addItem(new Material("generator", EnergyType.WIND));
-        inventory.addItem(new Material("generator2", EnergyType.WIND));
-        inventory.addItem(new Material("generator2", EnergyType.WIND));
-
+        //inventory.addItem(new Material("generator", EnergyType.WIND));
+        //inventory.addItem(new Material("generator2", EnergyType.WIND));
+        inventory.addItem(new Product("Solcelle", EnergyType.SOLAR));
         inventoryListView.setItems(inventory.getItems());
         inventoryListView.setCellFactory(new Callback<ListView<Item>, ListCell<Item>>() {
 
@@ -89,6 +100,36 @@ public class GameController implements Initializable {
     private void interact(Event event) {
         System.out.println(event.getTarget());
     }
+
+    public void placeProduct(){
+        try {
+            for (Object item : inventoryListView.getItems()) {
+                if (item instanceof Product) {
+                    int selectedID = inventoryListView.getSelectionModel().getSelectedIndex();
+                    System.out.println(inventoryListView.getSelectionModel().getSelectedItem().toString());
+                    power.addPower((Product) inventoryListView.getSelectionModel().getSelectedItem(), currentRoom);
+                    inventoryListView.getItems().remove(selectedID);
+                    UpdatePowerBars();
+                    return;
+                }
+                System.out.println("PRODUKT IKKE REGISTRERET");
+            }
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("PRODUKT IKKE VALGT");
+        }
+    }
+
+    public void UpdatePowerBars(){
+        double powerPercentage = power.getPower()/100;
+        powerProgressBar.setProgress(powerPercentage);
+
+        if (powerPercentage == 0) {
+            powerImageView.setImage(image2);
+        } else {
+            powerImageView.setImage(image1);
+        }
+    }
+
 
     private void createRooms() {
         Room start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4;
