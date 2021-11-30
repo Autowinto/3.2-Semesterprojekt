@@ -48,6 +48,7 @@
                         <Pane prefHeight="198.0" prefWidth="200.0" />
                      </children>
                   </HBox>
+                  <Rectangle fx:id="leftTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" layoutY="200.0" onMouseClicked="#interact" onMouseEntered="#hoverOverLeft" onMouseExited="#hoverDoneLeft" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
                </children>
             </Pane>
          </children>
@@ -68,6 +69,5 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Rectangle fx:id="leftTextTrigger" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="200.0" onMouseClicked="#interact" onMouseEntered="#hoverOverLeft" onMouseExited="#hoverDoneLeft" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="-350.0" translateY="-100.0" width="100.0" />
    </children>
 </Pane>
