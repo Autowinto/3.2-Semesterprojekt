@@ -55,12 +55,6 @@ public class GameController implements Initializable {
     @FXML
     private ProgressBar powerProgressBar;
 
-    @FXML
-    private Button dropOffPunkt = new Button();
-
-    @FXML
-    private ImageView dropOffImageView;
-
     private Image dropOffImage = new Image("/Scener/Kul.png");
 
     @FXML
@@ -68,8 +62,6 @@ public class GameController implements Initializable {
 
     private Image image1 = new Image("/Scener/img.png");
     private Image image2 = new Image("/Scener/ve-omstilling169.png");
-
-    private HashMap<Integer, Image> hashmap = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,7 +71,6 @@ public class GameController implements Initializable {
         initializeInventory();
         printWelcome();
         UpdatePowerBars();
-        initializeHashmap();
     }
 
     private void initializeInventory() {
@@ -110,10 +101,6 @@ public class GameController implements Initializable {
         System.out.println(event.getTarget());
     }
 
-    public void initializeHashmap (){
-        hashmap.put(1, new Image("/Scener/Kul.png"));
-    }
-
     public void placeProduct(){
         try {
             for (Object item : inventoryListView.getItems()) {
@@ -121,9 +108,7 @@ public class GameController implements Initializable {
                     int selectedID = inventoryListView.getSelectionModel().getSelectedIndex();
                     power.addPower((Product) inventoryListView.getSelectionModel().getSelectedItem(), currentRoom);
                     inventoryListView.getItems().remove(selectedID);
-                    dropOffImageView.setImage(hashmap.get(15));
                     UpdatePowerBars();
-                    dropOffPunkt.setOpacity(0);
                     return;
                 }
                 System.out.println("PRODUKT IKKE REGISTRERET");
