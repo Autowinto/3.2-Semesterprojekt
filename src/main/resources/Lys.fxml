@@ -52,16 +52,12 @@
                         <Pane prefHeight="198.0" prefWidth="200.0" />
                      </children>
                   </HBox>
-                  <Button fx:id="dropOffPunkt" layoutX="165.0" layoutY="198.0" mnemonicParsing="false" onAction="#placeProduct" prefHeight="119.0" prefWidth="120.0" text="TEST" />
+                  <ImageView fx:id="dropOffImageView" fitHeight="119.0" fitWidth="127.0" layoutX="165.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="dropOffPunkt" layoutX="165.0" layoutY="198.0" mnemonicParsing="false" onAction="#placeProduct" prefHeight="119.0" prefWidth="120.0" text="myButton" />
                </children>
             </Pane>
          </children>
       </VBox>
-      <ImageView fitHeight="157.0" fitWidth="142.0" pickOnBounds="true" preserveRatio="true" translateX="290.0" translateY="-320.0">
-         <image>
-            <Image url="@Scener/RumOversigt.png" />
-         </image>
-      </ImageView>
       <Circle fill="#e12323" radius="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" translateX="318.0" translateY="-320.0" />
       <Text id="rightText" fx:id="rightText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" translateX="310.0" translateY="-100.0" wrappingWidth="126.89453125">
          <font>

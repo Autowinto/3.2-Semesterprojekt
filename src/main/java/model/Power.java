@@ -31,7 +31,6 @@ public class Power {
     }
 
     public double getPower() {
-        return 50;
-        //Math.ceil(this.power);
+        return Math.ceil(this.power);
     }
 }

@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,6 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
@@ -58,10 +56,20 @@ public class GameController implements Initializable {
     private ProgressBar powerProgressBar;
 
     @FXML
+    private Button dropOffPunkt = new Button();
+
+    @FXML
+    private ImageView dropOffImageView;
+
+    private Image dropOffImage = new Image("/Scener/Kul.png");
+
+    @FXML
     private ImageView powerImageView;
 
     private Image image1 = new Image("/Scener/img.png");
     private Image image2 = new Image("/Scener/ve-omstilling169.png");
+
+    private HashMap<Integer, Image> hashmap = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,6 +79,7 @@ public class GameController implements Initializable {
         initializeInventory();
         printWelcome();
         UpdatePowerBars();
+        initializeHashmap();
     }
 
     private void initializeInventory() {
@@ -101,15 +110,20 @@ public class GameController implements Initializable {
         System.out.println(event.getTarget());
     }
 
+    public void initializeHashmap (){
+        hashmap.put(1, new Image("/Scener/Kul.png"));
+    }
+
     public void placeProduct(){
         try {
             for (Object item : inventoryListView.getItems()) {
                 if (item instanceof Product) {
                     int selectedID = inventoryListView.getSelectionModel().getSelectedIndex();
-                    System.out.println(inventoryListView.getSelectionModel().getSelectedItem().toString());
                     power.addPower((Product) inventoryListView.getSelectionModel().getSelectedItem(), currentRoom);
                     inventoryListView.getItems().remove(selectedID);
+                    dropOffImageView.setImage(hashmap.get(15));
                     UpdatePowerBars();
+                    dropOffPunkt.setOpacity(0);
                     return;
                 }
                 System.out.println("PRODUKT IKKE REGISTRERET");
@@ -123,11 +137,11 @@ public class GameController implements Initializable {
         double powerPercentage = power.getPower()/100;
         powerProgressBar.setProgress(powerPercentage);
 
-        if (powerPercentage == 0) {
+        /*if (powerPercentage == 0) {
             powerImageView.setImage(image2);
         } else {
             powerImageView.setImage(image1);
-        }
+        }*/
     }
 
 
