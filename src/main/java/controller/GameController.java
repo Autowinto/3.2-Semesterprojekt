@@ -121,7 +121,7 @@ public class GameController implements Initializable {
 //        CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord. Over bordet er der et skilt hvorpå der står \"vandenergi\".", EnergyType.WATER, watermill);
 //        CraftingRoom craftingSun = new CraftingRoom("foran et gult bord. Over bordet er der et skilt hvorpå der står \"solenergi\".", EnergyType.SOLAR, solarpanel);
             //Udgange fra start
-            start.setExit("øst", new Exit(coal, 100, 200, 700, 200));
+        start.setExit("øst", new Exit(coal, 100, 200, 700, 200));
 //        start.setExit("vest", workshop);
 
             //Udgang fra kul
