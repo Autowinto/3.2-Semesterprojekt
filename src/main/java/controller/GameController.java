@@ -102,23 +102,23 @@ public class GameController implements Initializable {
 
             start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner at strømkilden er mod øst", "/Scener/Start.png");
             coal = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul", "/Scener/Kul.png");
-//            workshop = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor","/Scener/Værksted.png");
-//
-//            wind1 = new Room("udenfor i et område, hvor du kan mærke det blæser","/Scener/Vind_1");
-//            wind2 = new Room("udenfor i et område, hvor der er en mild vind. Du ser nogle træer der giver læ for vinden", EnergyType.WIND, "middle", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.","/Scener/vind_2.png");
-//            wind3 = new Room("udenfor i et område, hvor det blæser. Du ser ikke noget der dækker for vinden", EnergyType.WIND, "best", "Din vindmølle genererer en rigtig god mængde energi, da det blæser og der ikke er noget som dækker.","/Scener/Vind3.png");
-//            wind4 = new Room("udenfor i et område, hvor det er en meget stærk vind", EnergyType.WIND, "worst", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da vinden er for stærk.","/Scener/Vind4.png");
-//
-//            water1 = new Room("udenfor i et område, hvor du ser et vandfald", EnergyType.WATER, "best", "Din vandmølle genererer en rigtig god mængde energi, da der er en masse energi fra vandet der falder.","/Scener/Vand_1.png");
-//            water2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af","/Scener/Vand_2.png");
-//            water3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området", EnergyType.WATER, "middle", "Din vandmølle genererer en god mængde energi, men det er ikke optimalt, da en flod ikke er hvor der er mest energi.","/Scener/Vand_3.png");
-//            water4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet","/Scener/Vand_4.png");
-//            water5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod", EnergyType.WATER, "worst", "Din vandmølle genererer lidt energi, men det er ikke optimalt, da der ikke er meget energi i stilleliggende vand.","/Scener/Vand_5.png");
-//
-//            solar1 = new Room("udenfor i et varmt område med meget sollys","/Scener/Sol_1.png");
-//            solar2 = new Room("på en flad mark med meget sol", EnergyType.SOLAR, "middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.","/Scener/Sol_2.png");
-//            solar3 = new Room("i en skov, hvor træerne dækker for solen", EnergyType.SOLAR, "worst", "Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.","/Scener/Sol_3.png");
-//            solar4 = new Room("i et område med en bakke, hvor der er meget sol", EnergyType.SOLAR, "best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ","/Scener/Sol_4.png");
+            workshop = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor","/Scener/Værksted.png");
+
+            wind1 = new Room("udenfor i et område, hvor du kan mærke det blæser","/Scener/Vind_1.png");
+            wind2 = new Room("udenfor i et område, hvor der er en mild vind. Du ser nogle træer der giver læ for vinden", EnergyType.WIND, "middle", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.","/Scener/Vind_2.png");
+            wind3 = new Room("udenfor i et område, hvor det blæser. Du ser ikke noget der dækker for vinden", EnergyType.WIND, "best", "Din vindmølle genererer en rigtig god mængde energi, da det blæser og der ikke er noget som dækker.","/Scener/Vind_3.png");
+            wind4 = new Room("udenfor i et område, hvor det er en meget stærk vind", EnergyType.WIND, "worst", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da vinden er for stærk.","/Scener/Vind_4.png");
+
+            water1 = new Room("udenfor i et område, hvor du ser et vandfald", EnergyType.WATER, "best", "Din vandmølle genererer en rigtig god mængde energi, da der er en masse energi fra vandet der falder.","/Scener/Vand_1.png");
+            water2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af","/Scener/Vand_2.png");
+            water3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området", EnergyType.WATER, "middle", "Din vandmølle genererer en god mængde energi, men det er ikke optimalt, da en flod ikke er hvor der er mest energi.","/Scener/Vand_3.png");
+            water4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet","/Scener/Vand_4.png");
+            water5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod", EnergyType.WATER, "worst", "Din vandmølle genererer lidt energi, men det er ikke optimalt, da der ikke er meget energi i stilleliggende vand.","/Scener/Vand_5.png");
+
+            solar1 = new Room("udenfor i et varmt område med meget sollys","/Scener/Sol_1.png");
+            solar2 = new Room("på en flad mark med meget sol", EnergyType.SOLAR, "middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.","/Scener/Sol_2.png");
+            solar3 = new Room("i en skov, hvor træerne dækker for solen", EnergyType.SOLAR, "worst", "Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.","/Scener/Sol_3.png");
+            solar4 = new Room("i et område med en bakke, hvor der er meget sol", EnergyType.SOLAR, "best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ","/Scener/Sol_4.png");
 
 //            CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord. Over bordet er der et skilt hvorpå der står \"vindenergi\".", EnergyType.WIND, windmill);
 //       CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord. Over bordet er der et skilt hvorpå der står \"vandenergi\".", EnergyType.WATER, watermill);
@@ -227,13 +227,11 @@ public class GameController implements Initializable {
 //    }
 
     private void print(String text) {
-        consoleTextArea.appendText(text + '\n');
+        consoleTextArea.setText(text + '\n');
     }
 
     private void printWelcome() {
-        print("Velkommen til spillet for bæredygtig energi!");
-        print("Dette er et spil som vil lære dig om forskellige energiløsninger.");
-//        print(currentRoom.getLongDescription());
+        print("Velkommen til spillet for bæredygtig energi!\nDette er et spil som vil lære dig om forskellige energiløsninger.");
     }
 
     private boolean processCommand(Command command) {
