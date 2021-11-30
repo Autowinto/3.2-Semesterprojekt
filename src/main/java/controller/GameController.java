@@ -61,6 +61,7 @@ public class GameController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("START GAME");
+        hoverLabel.setMouseTransparent(true);
         createItems();
         createRooms();
         initializeInventory();
