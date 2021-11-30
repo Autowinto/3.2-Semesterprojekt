@@ -18,6 +18,9 @@ public class Exit extends Rectangle {
         this.room = room;
     }
 
+    public Exit(Room water4, int width, int height, int posX, int posY) {
+    }
+
     public Room getRoom() {
         return room;
     }

@@ -43,8 +43,6 @@ public class GameController implements Initializable {
     @FXML
     private ListView inventoryListView;
     @FXML
-    private TextArea consoleTextArea;
-    @FXML
     private ImageView roomBackground;
 
     @FXML
@@ -162,73 +160,73 @@ public class GameController implements Initializable {
 
             //Udgange fra start
 
-            start.setExit("øst", new Exit(coal, 100, 200, 700, 200));
-            start.setExit("vest", new Exit(workshop,100, 200, 0, 200));
+            start.setExit(new Exit(coal, 100, 200, 700, 200, "øst"));
+            start.setExit(new Exit(workshop,100, 200, 0, 200, "vest"));
 
             //Udgang fra kul
-            coal.setExit("vest", new Exit(start, 100, 200, 0, 200));
+            coal.setExit(new Exit(start, 100, 200, 0, 200, "vest"));
 
             //Udgange fra værksted
-            workshop.setExit("nord", new Exit(wind1,200,100,300,0));
-            workshop.setExit("vest", new Exit(water1,100, 200, 0, 200));
-            workshop.setExit("syd", new Exit(solar1,200,100,300,500));
-            workshop.setExit("øst", new Exit(start, 100,200,700,200));
-            workshop.setExit("vindstation", new Exit(craftingWind,200,100,100,500 ));
-            workshop.setExit("solstation", new Exit(craftingSun,200,100,525,0));
-            workshop.setExit("vandstation", new Exit(craftingWater,200,200,600,400));
+            workshop.setExit(new Exit(wind1,200,100,300,0, "nord"));
+            workshop.setExit(new Exit(water1,100, 200, 0, 200, "vest"));
+            workshop.setExit(new Exit(solar1,200,100,300,500, "syd"));
+            workshop.setExit(new Exit(start, 100,200,700,200, "øst"));
+            workshop.setExit(new Exit(craftingWind,200,100,100,500, "vindstation"));
+            workshop.setExit(new Exit(craftingSun,200,100,525,0, "solstation"));
+            workshop.setExit(new Exit(craftingWater,200,200,600,400, "vandstation"));
 
-            craftingWind.setExit("ud", new Exit(workshop,200,100,300,500));
-            craftingSun.setExit("ud",new Exit(workshop,200,100,300,500));
-            craftingWater.setExit("ud", new Exit(workshop,200,100,300,500));
+            craftingWind.setExit(new Exit(workshop,200,100,300,500, "ud"));
+            craftingSun.setExit(new Exit(workshop,200,100,300,500, "ud"));
+            craftingWater.setExit(new Exit(workshop,200,100,300,500, "ud"));
 
             //Udgange fra vind1
-            wind1.setExit("øst",new Exit(wind2,100,200,700,100));
-            wind1.setExit("nord", new Exit(wind3,200,100,250,0));
-            wind1.setExit("syd",new Exit(workshop, 200,100,250,500));
+            wind1.setExit(new Exit(wind2,100,200,700,100, "øst"));
+            wind1.setExit(new Exit(wind3,200,100,250,0, "nord"));
+            wind1.setExit(new Exit(workshop, 200,100,250,500, "syd"));
 
             //Udgang fra vind2
-            wind2.setExit("vest",new Exit(wind1,100, 200, 0, 250));
+            wind2.setExit(new Exit(wind1,100, 200, 0, 250, "vest"));
 
             //Udgange fra vind3
-            wind3.setExit("syd",new Exit(wind1,200,100,300,500));
-            wind3.setExit("vest",new Exit(wind4,100, 200, 0, 150));
+            wind3.setExit(new Exit(wind1,200,100,300,500, "syd"));
+            wind3.setExit(new Exit(wind4,100, 200, 0, 150, "vest"));
 
             //Udgang fra vind4
-            wind4.setExit("øst", new Exit(wind3,100, 200, 700, 200) );
+            wind4.setExit(new Exit(wind3,100, 200, 700, 200, "øst") );
 
             //Udgange fra vand1
-            water1.setExit("øst", new Exit(workshop,100,200,700,200));
-            water1.setExit("nord", new Exit(water2, 200,100,250,0));
+            water1.setExit(new Exit(workshop,100,200,700,200, "øst"));
+            water1.setExit(new Exit(water2, 200,100,250,0, "nord"));
 
             //Udgange fra vand2
-            water2.setExit("vest", new Exit(water3,100,200,0,150));
-            water2.setExit("syd", new Exit(water1, 200,100,350,500));
+            water2.setExit(new Exit(water3,100,200,0,150, "vest"));
+            water2.setExit(new Exit(water1, 200,100,350,500, "syd"));
 
             //udgange fra vand3
-            water3.setExit("øst", new Exit(water2,100,200,700,200));
-            water3.setExit("syd", new Exit(water4, 200,100,300,500));
-            water3.setExit("nord", new Exit(water5, 200,100,250,0));
+            water3.setExit(new Exit(water2,100,200,700,200, "øst"));
+            water3.setExit(new Exit(water4, 200,100,300,500, "syd"));
+            water3.setExit(new Exit(water5, 200,100,250,0, "nord"));
 
             //Udgang fra vand4
-            water4.setExit("nord", new Exit(water3,200,100,300,0));
+            water4.setExit(new Exit(water3,200,100,300,0, "nord"));
 
             //Udgang fra vand5
-            water5.setExit("syd", new Exit(water3,200,100,250,500));
+            water5.setExit(new Exit(water3,200,100,250,500, "syd"));
 
             //Udgange fra sol1
-            solar1.setExit("nord", new Exit(workshop,200,100,300,0));
-            solar1.setExit("vest", new Exit(solar2,100,200,0,200));
-            solar1.setExit("syd", new Exit(solar3, 200,100,300,500));
+            solar1.setExit(new Exit(workshop,200,100,300,0, "nord"));
+            solar1.setExit(new Exit(solar2,100,200,0,200, "vest"));
+            solar1.setExit(new Exit(solar3, 200,100,300,500, "syd"));
 
             //Udgang fra sol2
-            solar2.setExit("øst", new Exit(solar1,100,200,700,250));
+            solar2.setExit(new Exit(solar1,100,200,700,250, "øst"));
 
             //Udgange fra sol3
-            solar3.setExit("nord", new Exit(solar1,200,100,300,0));
-           solar3.setExit("vest", new Exit(solar4,100,200,0,250));
+            solar3.setExit(new Exit(solar1,200,100,300,0, "nord"));
+           solar3.setExit(new Exit(solar4,100,200,0,250, "vest"));
 
             //Udgang fra sol4
-            solar4.setExit("øst",new Exit(solar3,100,200,700,250));
+            solar4.setExit(new Exit(solar3,100,200,700,250, "øst"));
 
 
 
@@ -257,7 +255,8 @@ public class GameController implements Initializable {
     }
 
     private void print(String text) {
-        consoleTextArea.setText(text + '\n');
+        System.out.println(text);
+//        consoleTextArea.setText(text + '\n');
     }
 
     private void printWelcome() {
