@@ -10,6 +10,7 @@ import java.beans.Visibility;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
@@ -19,14 +20,14 @@ public class Room {
     private String dropOffEffect;
     private String dropOffText;
     private EnergyType energyType;
-    private HashMap<String, Exit> exits;
+    private ArrayList<Exit> exits;
     private ArrayList<Item> items = new ArrayList<>();
     private Image image;
 
     public Room(String description, String imagePath) throws IOException {
         this.description = description;
         this.image = loadImage(imagePath);
-        exits = new HashMap<String, Exit>();
+        exits = new ArrayList<Exit>();
     }
 
     public Room(String description, EnergyType energyType, String dropOffEffect, String dropOffText, String imagePath) throws IOException {
@@ -35,37 +36,42 @@ public class Room {
         this.dropOffEffect = dropOffEffect;
         this.dropOffText = dropOffText;
         this.image = loadImage(imagePath);
-        exits = new HashMap<String, Exit>();
+        exits = new ArrayList<>();
     }
 
     private Image loadImage(String path) throws IOException {
+        try {
+
         Image testImage = new Image(getClass().getResourceAsStream(path));
         return testImage;
-    }
-
-    public void setExit(String direction, Exit neighbor) {
-        exits.put(direction, neighbor);
-    }
-
-    public String getLongDescription() {
-        return "Du er " + description + ".\n" + getExitString() + getDropOffString();
-    }
-
-    private String getExitString() {
-        String returnString = "Udgange:";
-        Set<String> keys = exits.keySet();
-        for (String exit : keys) {
-            returnString += " " + exit;
-        }
-        //Udskriv hvad der kan samles i et rum hvis der er noget
-        if (items.size() == 0) {
-            return returnString;
-        } else {
-            returnString += "\nFølgende ting kan samles op: ";
-            returnString += getRoomItems();
-            return returnString;
+        } catch (NullPointerException e) {
+            return new Image(getClass().getResourceAsStream("/item_placeholder.png"));
         }
     }
+
+    public void setExit(Exit exit) {
+        exits.add(exit);
+    }
+
+//    public String getLongDescription() {
+//        return "Du er " + description + ".\n" + getExitString() + getDropOffString();
+//    }
+
+//    private String getExitString() {
+//        String returnString = "Udgange:";
+//        Set<String> keys = exits.keySet();
+//        for (String exit : keys) {
+//            returnString += " " + exit;
+//        }
+//        //Udskriv hvad der kan samles i et rum hvis der er noget
+//        if (items.size() == 0) {
+//            return returnString;
+//        } else {
+//            returnString += "\nFølgende ting kan samles op: ";
+//            returnString += getRoomItems();
+//            return returnString;
+//        }
+//    }
 
     public Image getBackgroundImage() {
         return this.image;
@@ -90,11 +96,9 @@ public class Room {
         return "";
     }
 
-    public Exit getExit(String direction) {
-        return exits.get(direction);
-    }
 
-    public HashMap<String, Exit> getExits() {
+
+    public ArrayList<Exit> getExits() {
         return this.exits;
     }
 
