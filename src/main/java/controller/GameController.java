@@ -71,10 +71,20 @@ public class GameController implements Initializable {
     private void createItems() {
         try {
             allItems = new Item[]{
-                    new Material("generator", EnergyType.WIND, 200, 200, "/item_placeholder.png"), new Material("vinger", EnergyType.WIND), new Material("tårn", EnergyType.WIND),
-                    new Material("turbine", EnergyType.WATER), new Material("vandrør", EnergyType.WATER), new Material("kabel", EnergyType.WATER),
-                    new Material("solpanel", EnergyType.SOLAR), new Material("inverter", EnergyType.SOLAR), new Material("stativ", EnergyType.SOLAR),
-                    new Product("vindmølle", EnergyType.WIND), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
+                    //Items
+                    new Material("generator", EnergyType.WIND, 200, 200, "/item_placeholder.png"),
+                    new Material("vinger", EnergyType.WIND,200,200,"/item_placeholder.png"),
+                    new Material("tårn", EnergyType.WIND,200,200,"/item_placeholder.png"),
+                    new Material("turbine", EnergyType.WATER,200,200,"/item_placeholder.png"),
+                    new Material("vandrør", EnergyType.WATER,200,200,"/item_placeholder.png"),
+                    new Material("kabel", EnergyType.WATER,200,200,"/item_placeholder.png"),
+                    new Material("solpanel", EnergyType.SOLAR,200,200,"/item_placeholder.png"),
+                    new Material("inverter", EnergyType.SOLAR,200,200,"/item_placeholder.png"),
+                    new Material("stativ", EnergyType.SOLAR,200,200,"/item_placeholder.png"),
+                    //Products
+                    new Product("vindmølle", EnergyType.WIND), 
+                    new Product("vandmølle", EnergyType.WATER),
+                    new Product("solcelle", EnergyType.SOLAR)};
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
@@ -249,7 +259,22 @@ public class GameController implements Initializable {
 //        solar3.addItem(allItems[8]);
 
             goRoom(start);
-            coal.addItem(allItems[0]);
+
+            //Load materials in rooms
+            wind1.addItem(allItems[0]);
+            wind2.addItem(allItems[1]);
+            wind4.addItem(allItems[2]);
+
+            water2.addItem(allItems[3]);
+            water3.addItem(allItems[4]);
+            water4.addItem(allItems[5]);
+
+            solar1.addItem(allItems[6]);
+            solar2.addItem(allItems[7]);
+            solar3.addItem(allItems[8]);
+
+
+
         } catch (Exception e) {
             System.out.println(e);
         }
