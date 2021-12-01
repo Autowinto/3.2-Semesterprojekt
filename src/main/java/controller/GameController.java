@@ -1,5 +1,6 @@
 package worldofzuul.controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -65,7 +66,6 @@ public class GameController implements Initializable {
         createRooms();
         initializeInventory();
         printWelcome();
-        updatePowerBars();
     }
 
     private void createItems() {
@@ -74,7 +74,7 @@ public class GameController implements Initializable {
                     new Material("generator", EnergyType.WIND, 200, 200, "/item_placeholder.png"), new Material("vinger", EnergyType.WIND), new Material("tårn", EnergyType.WIND),
                     new Material("turbine", EnergyType.WATER), new Material("vandrør", EnergyType.WATER), new Material("kabel", EnergyType.WATER),
                     new Material("solpanel", EnergyType.SOLAR), new Material("inverter", EnergyType.SOLAR), new Material("stativ", EnergyType.SOLAR),
-                    new Product("solcelle", EnergyType.SOLAR, 300, 300,"/item_placeholder.png"), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
+                    new Product("solarpanel", EnergyType.SOLAR, 400, 300,"/item_placeholder.png"), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
@@ -287,23 +287,7 @@ public class GameController implements Initializable {
         }
     }
 
-    public void placeProduct(){
-        try {
-            for (Object item : inventoryListView.getItems()) {
-                if (item instanceof Product) {
-                    power.addPower((Product) inventoryListView.getSelectionModel().getSelectedItem(), currentRoom);
-                    inventory.removeItem((Item) item);
-                    updatePowerBars();
-                    System.out.println("PRODUKT PLACERET");
-                    //consoleLabel.setText("Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.");
-                    return;
-                }
-            }
-        } catch (NullPointerException e) {
-            System.out.println("PRODUKT IKKE VALGT");
-        }
-            System.out.println("Ikke registreret");
-        }
+
 
     private void printHelp() {
         System.out.println("Tak fordi du spørger om hjælp");
@@ -421,6 +405,56 @@ public class GameController implements Initializable {
         }
     }
 
+    public void placeProduct(){
+        try {
+            Item productName = null;
+            if (currentRoom.getDropOffEffect() != null) {
+                for (Object item : inventoryListView.getItems()) {
+                    if (item instanceof Product) {
+                        productName = (Item) item;
+                    }
+                }
+                System.out.println(productName);
+                Item product = null;
+
+
+                for (int i = 0; i < allItems.length; i++) {
+                    if (allItems[i].getName().equals(productName.toString())) {
+                        product = allItems[i];
+                    }
+                }
+                if (product == null) {
+                    System.out.println("Genstanden blev ikke genkendt");
+                } else if (product instanceof Material) {
+                    System.out.println("Du kan ikke sætte materialer, kun produkter");
+                } else if (!inventory.getItems().contains(product)) {
+                    System.out.println("Du har ikke det nævnte produkt i dit inventar");
+                } else {
+                    inventory.removeItem(product);
+                    currentRoom.addItem(product);
+                    System.out.println("Du har sat " + product.getName() + " i det nuværende rum");
+                    power.addPower((Product) product, currentRoom);
+                }
+            } else {
+                System.out.println("Der er ikke noget sted at placere produkter i dette rum");
+            }
+           /* for (Object item : inventoryListView.getItems()) {
+                if (item instanceof Product) {
+                    power.addPower((Product) inventoryListView.getSelectionModel().getSelectedItem(), currentRoom);
+                    inventory.removeItem((Item) item);
+                    currentRoom.addItem((Item) item);
+                    updatePowerBars();
+                    System.out.println("PRODUKT PLACERET");
+                    //consoleLabel.setText("Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.");
+                    return;
+                }
+            }*/
+        } catch (NullPointerException e) {
+            System.out.println("PRODUKT IKKE VALGT");
+        }
+        System.out.println("Ikke registreret");
+    }
+
     private void craft(Command command) {
         if (!(currentRoom instanceof CraftingRoom craftingRoom)) {
             System.out.println("Du kan ikke bygge noget her!");
@@ -445,34 +479,7 @@ public class GameController implements Initializable {
     }
 
     private void placeOnDropOff(Command command) {
-        if (currentRoom.getDropOffEffect() != null) {
-            if (!command.hasSecondWord()) {
-                System.out.println("Hvad skal jeg sætte?");
-                return;
-            }
-            String productName = command.getSecondWord();
-            Item product = null;
 
-            for (int i = 0; i < allItems.length; i++) {
-                if (allItems[i].getName().equals(productName)) {
-                    product = allItems[i];
-                }
-            }
-            if (product == null) {
-                System.out.println("Genstanden blev ikke genkendt");
-            } else if (product instanceof Material) {
-                System.out.println("Du kan ikke sætte materialer, kun produkter");
-            } else if (!inventory.getItems().contains(product)) {
-                System.out.println("Du har ikke det nævnte produkt i dit inventar");
-            } else {
-                inventory.removeItem(product);
-                currentRoom.addItem(product);
-                System.out.println("Du har sat " + product.getName() + " i det nuværende rum");
-                power.addPower((Product) product, currentRoom);
-            }
-        } else {
-            System.out.println("Der er ikke noget sted at placere produkter i dette rum");
-        }
     }
 
     public void printPower() {
