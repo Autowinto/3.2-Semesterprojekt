@@ -74,7 +74,7 @@ public class GameController implements Initializable {
                     new Material("generator", EnergyType.WIND, 200, 200, "/item_placeholder.png"), new Material("vinger", EnergyType.WIND), new Material("tårn", EnergyType.WIND),
                     new Material("turbine", EnergyType.WATER), new Material("vandrør", EnergyType.WATER), new Material("kabel", EnergyType.WATER),
                     new Material("solpanel", EnergyType.SOLAR), new Material("inverter", EnergyType.SOLAR), new Material("stativ", EnergyType.SOLAR),
-                    new Product("vindmølle", EnergyType.WIND), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
+                    new Product("solcelle", EnergyType.SOLAR, 300, 300,"/item_placeholder.png"), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
@@ -103,22 +103,6 @@ public class GameController implements Initializable {
         });
     }
 
-    public void placeProduct(){
-        try {
-            for (Object item : inventoryListView.getItems()) {
-                if (item instanceof Product) {
-                    int selectedID = inventoryListView.getSelectionModel().getSelectedIndex();
-                    power.addPower((Product) inventoryListView.getSelectionModel().getSelectedItem(), currentRoom);
-                    inventoryListView.getItems().remove(selectedID);
-                    updatePowerBars();
-                    return;
-                }
-                System.out.println("PRODUKT IKKE REGISTRERET");
-            }
-        } catch (IndexOutOfBoundsException e){
-            System.out.println("PRODUKT IKKE VALGT");
-        }
-    }
 
     public void updatePowerBars(){
         double powerPercentage = power.getPower()/100;
@@ -230,6 +214,7 @@ public class GameController implements Initializable {
             solar4.setExit(new Exit(solar3,100,200,700,250, "øst"));
 
 
+            solar2.setDropOff(new DropOff(150, 200, 50, 100, EnergyType.SOLAR));
 
 
 //
@@ -302,6 +287,24 @@ public class GameController implements Initializable {
         }
     }
 
+    public void placeProduct(){
+        try {
+            for (Object item : inventoryListView.getItems()) {
+                if (item instanceof Product) {
+                    power.addPower((Product) inventoryListView.getSelectionModel().getSelectedItem(), currentRoom);
+                    inventory.removeItem((Item) item);
+                    updatePowerBars();
+                    System.out.println("PRODUKT PLACERET");
+                    //consoleLabel.setText("Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.");
+                    return;
+                }
+            }
+        } catch (NullPointerException e) {
+            System.out.println("PRODUKT IKKE VALGT");
+        }
+            System.out.println("Ikke registreret");
+        }
+
     private void printHelp() {
         System.out.println("Tak fordi du spørger om hjælp");
         System.out.println();
@@ -309,7 +312,7 @@ public class GameController implements Initializable {
         parser.showCommands();
     }
 
-    private void goRoom(Room nextRoom) {
+    private void goRoom(Room nextRoom) throws IOException {
         if (nextRoom == null) {
             System.out.println("Det er ikke muligt!");
         } else {
@@ -317,6 +320,7 @@ public class GameController implements Initializable {
             this.roomBackground.setImage(nextRoom.getBackgroundImage());
             initializeExits(nextRoom);
             initializeItems(nextRoom);
+            initializeDropOff(nextRoom);
 
             // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
             if (currentRoom instanceof CraftingRoom craftingRoom) {
@@ -334,7 +338,7 @@ public class GameController implements Initializable {
         }
     }
 
-    private void initializeExits(Room nextRoom) {
+    private void initializeExits(Room nextRoom) throws IOException {
         // Clear existing exits before adding new ones.
         pane.getChildren().removeIf(it -> it instanceof Exit);
 
@@ -346,7 +350,11 @@ public class GameController implements Initializable {
             exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    goRoom(exit.getRoom());
+                    try {
+                        goRoom(exit.getRoom());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -392,6 +400,22 @@ public class GameController implements Initializable {
                 } else {
                     this.hoverLabel.setVisible(false);
                     System.out.println("NOT HOVER");
+                }
+            });
+        }
+    }
+
+    private void initializeDropOff(Room nextRoom){
+
+        ArrayList<DropOff> dropOffs = nextRoom.getDropOffs();
+        System.out.println(dropOffs);
+        pane.getChildren().addAll(dropOffs);
+        for (DropOff dropOff : dropOffs) {
+            dropOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    DropOff dropOff = (DropOff) mouseEvent.getSource();
+                    placeProduct();
                 }
             });
         }
