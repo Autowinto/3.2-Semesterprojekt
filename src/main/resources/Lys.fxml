@@ -52,7 +52,7 @@
                                     <Image url="@Scener/RumOversigt.png" />
                                  </image>
                               </ImageView>
-                              <Circle fill="#e12323" layoutX="184.0" layoutY="21.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                              <Circle fx:id="minimapCircle" fill="#e12323" layoutX="141.0" layoutY="100.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
                            </children></Pane>
                      </children>
                   </HBox>
