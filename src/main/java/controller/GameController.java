@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -48,6 +49,8 @@ public class GameController implements Initializable {
     private Label consoleLabel;
     @FXML
     private ProgressBar powerProgressBar;
+    @FXML
+    private Circle minimapCircle;
 
     private Image dropOffImage = new Image("/Scener/Kul.png");
 
@@ -372,6 +375,18 @@ public class GameController implements Initializable {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     goRoom(exit.getRoom());
+                    if (exit.getDirection() == "vest") {
+                        minimapCircle.setLayoutX(minimapCircle.getLayoutX()-37);
+                    }
+                    else if (exit.getDirection() == "øst") {
+                        minimapCircle.setLayoutX(minimapCircle.getLayoutX()+37);
+                    }
+                    else if (exit.getDirection() == "nord") {
+                        minimapCircle.setLayoutY(minimapCircle.getLayoutY()-39);
+                    }
+                    else if (exit.getDirection() == "syd") {
+                        minimapCircle.setLayoutY(minimapCircle.getLayoutY()+39);
+                    }
                 }
             });
 
