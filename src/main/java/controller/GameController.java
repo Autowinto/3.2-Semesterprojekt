@@ -173,12 +173,16 @@ public class GameController implements Initializable {
                         super.updateItem(item, empty);
                         if (item == null || empty) {
                             setDisable(true);
-                            setGraphic(null);
                             setText(null);
+                            setGraphic(null);
                         } else {
                             setDisable(false);
-                            //setGraphic(item);
                             setText(item.getName());
+                            ImageView imageView = new ImageView();
+                            imageView.setImage(item.getImage());
+                            imageView.setFitWidth(65);
+                            imageView.setFitHeight(65);
+                            setGraphic(imageView);
                         }
                     }
                 };
