@@ -200,7 +200,7 @@ public class GameController implements Initializable {
         Room start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4;
         try {
 
-            start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner at strømkilden er mod øst", "/Scener/Start.png");
+            start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner at strømkilden er mod øst", "/Scener/startScener_3.png");
             coal = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul", "/Scener/Kul.png");
             workshop = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor", "/Scener/Værksted.png");
 
