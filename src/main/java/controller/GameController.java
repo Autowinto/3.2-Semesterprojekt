@@ -88,12 +88,12 @@ public class GameController implements Initializable {
             allItems = new Item[]{
                     //Items
 
-                    new Material("vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Generator.png","Beskrivelse af vindgenerator"),
+                    new Material("vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Vindgenerator.png","Beskrivelse af vindgenerator"),
                     new Material("vinger", EnergyType.WIND,200,200,"/Scener/Vinger.png","Beskrivelse af vinger"),
                     new Material("tårn", EnergyType.WIND,200,200,"/Scener/Tårn.png","Beskrivelse af tårn"),
                     new Material("turbine", EnergyType.WATER,200,200,"/Scener/Turbine.png","Beskrivelse af turbine"),
                     new Material("vandrør", EnergyType.WATER,200,200,"/Scener/Vandrør.png","Beskrivelse af vandrør"),
-                    new Material("vandgenerator", EnergyType.WATER,200,200,"/Scener/Generator.png","Beskrivelse af vandgenerator"),
+                    new Material("vandgenerator", EnergyType.WATER,200,200,"/Scener/Vandgenerator.png","Beskrivelse af vandgenerator"),
                     new Material("solpanel", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png","Beskrivelse af solpanel"),
                     new Material("inverter", EnergyType.SOLAR,200,200,"/Scener/Inverter.png","Beskrivelse af inverter"),
                     new Material("glas", EnergyType.SOLAR,200,200,"/Scener/Glas.png","Beskrivelse af glas"),
