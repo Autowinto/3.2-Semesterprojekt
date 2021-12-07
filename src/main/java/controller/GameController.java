@@ -1,5 +1,6 @@
 package worldofzuul.controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -18,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.ObservableFaceArray;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -46,7 +48,7 @@ public class GameController implements Initializable {
     @FXML
     private Label hoverLabel;
     @FXML
-    private ListView inventoryListView;
+    private ListView<Item> inventoryListView;
     @FXML
     private ImageView roomBackground;
     @FXML
@@ -123,13 +125,7 @@ public class GameController implements Initializable {
             solarpanel = (Product) allItems[11];
 
             for (Item item : allItems) {
-                item.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        Item item = (Item) mouseEvent.getSource();
-                        pickupItem(item);
-                    }
-                });
+                item.setOnMouseClicked(itemClickHandler);
 
                 item.hoverProperty().addListener((obs, oldVal, newVal) -> {
                     if (newVal) {
@@ -156,8 +152,17 @@ public class GameController implements Initializable {
         }
     }
 
+    EventHandler<MouseEvent> itemClickHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent mouseEvent) {
+            Item item = (Item) mouseEvent.getSource();
+            pickupItem(item);
+        }
+    };
+
     private void initializeInventory() {
         inventoryListView.setItems(inventory.getItems());
+        inventory.addItem(solarpanel);
         inventoryListView.setCellFactory(new Callback<ListView<Item>, ListCell<Item>>() {
 
             @Override
@@ -178,7 +183,6 @@ public class GameController implements Initializable {
                 return cell;
             }
         });
-        inventory.addItem(solarpanel);
     }
 
     public void updatePowerBars() {
@@ -320,9 +324,9 @@ public class GameController implements Initializable {
             solar2.addItem(allItems[7]);
             solar3.addItem(allItems[8]);
 
-            craftingWind.addItem(allItems[9]);
-            craftingWater.addItem(allItems[10]);
-            craftingSun.addItem(allItems[11]);
+//            craftingWind.addItem(allItems[9]);
+//            craftingWater.addItem(allItems[10]);
+//            craftingSun.addItem(allItems[11]);
             ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4, craftingWind, craftingSun, craftingWater));
             for (Room room : rooms) {
 
@@ -406,12 +410,11 @@ public class GameController implements Initializable {
         currentRoom.removeItem(newItem);
         loadItems(currentRoom);
         print("Du har samlet " + newItem.getName() + " op");
-        if (newItem instanceof Product) {
+        if (newItem instanceof Product && !(currentRoom instanceof CraftingRoom)) {
             power.removePower((Product) newItem, currentRoom);
             updatePowerBars();
         }
     }
-
 
     private void printHelp() {
         System.out.println("Tak fordi du spørger om hjælp");
@@ -428,24 +431,31 @@ public class GameController implements Initializable {
             this.roomBackground.setImage(nextRoom.getBackgroundImage());
             loadExits(nextRoom);
             loadDropOffs(nextRoom);
-            loadItems(nextRoom);
 
             // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
             if (currentRoom instanceof CraftingRoom craftingRoom) {
 
                 // Vi bruger en iterator for at undgå en ConcurrentModificationException
-                for (Iterator<Item> iterator = inventory.getItems().iterator(); iterator.hasNext(); ) {
-                    Item item = iterator.next();
-                    if (item.getEnergyType() == craftingRoom.getEnergyType() && item instanceof Material materialItem) {
-                        print("Du får en lys idé og klargøre material på arbejdsbordet!");
-                        craftingRoom.placeItem(materialItem);
-                        iterator.remove();
 
+                int widthDiff = 50;
+                System.out.println(inventory.getItems().size());
+                int i = ((CraftingRoom) currentRoom).getPlacedItems().size();
+                for (Item item : oldInv) {
+                    if (item instanceof Material && item.getEnergyType() == currentRoom.getEnergyType()) {
+                        System.out.println("YOINK");
+                        item.setX(50 + (widthDiff * (i + 1)));
+                        item.setY(420);
+                        item.setMouseTransparent(true);
+                        craftingRoom.placeItem((Material) item);
+                        inventory.removeItem(item);
+                        pane.getChildren().add(item);
+                        i++;
                     }
-
                 }
 
             }
+            System.out.println("Loading items");
+            loadItems(nextRoom);
 
 
         }
@@ -464,8 +474,12 @@ public class GameController implements Initializable {
     private void loadItems(Room nextRoom) {
         // Clear existing items before loading in new ones
         pane.getChildren().removeIf(it -> it instanceof Item);
-
-        ArrayList<Item> items = nextRoom.getItems();
+        ArrayList<Item> items;
+        if (nextRoom instanceof CraftingRoom) {
+            items = ((CraftingRoom) nextRoom).getPlacedItems();
+        } else {
+            items = nextRoom.getItems();
+        }
         System.out.print(items);
         pane.getChildren().addAll(items);
     }
