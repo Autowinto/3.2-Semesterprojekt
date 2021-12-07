@@ -1,5 +1,7 @@
 package worldofzuul.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -91,6 +93,30 @@ public class GameController implements Initializable {
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
+
+            for (Item item : allItems) {
+                item.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        Item item = (Item) mouseEvent.getSource();
+                        pickupItem(item);
+                    }
+                });
+
+                item.hoverProperty().addListener((obs, oldVal, newVal) -> {
+                    if (newVal) {
+                        this.hoverLabel.setTranslateX(item.getX());
+                        this.hoverLabel.setTranslateY(item.getY());
+                        this.hoverLabel.setVisible(true);
+                        hoverLabel.setText(item.getName());
+                        hoverLabel.toFront();
+                        System.out.println("HOVER");
+                    } else {
+                        this.hoverLabel.setVisible(false);
+                        System.out.println("NOT HOVER");
+                    }
+                });
+            }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
@@ -173,9 +199,9 @@ public class GameController implements Initializable {
             CraftingRoom craftingSun = new CraftingRoom("foran et gult bord. Over bordet er der et skilt hvorpå der står \"solenergi\".", EnergyType.SOLAR, solarpanel);
 
             //Udgange fra start
-
             start.setExit(new Exit(coal, 100, 200, 700, 200, "øst"));
             start.setExit(new Exit(workshop,100, 200, 0, 200, "vest"));
+
 
             //Udgang fra kul
             coal.setExit(new Exit(start, 100, 200, 0, 200, "vest"));
@@ -242,25 +268,6 @@ public class GameController implements Initializable {
             //Udgang fra sol4
             solar4.setExit(new Exit(solar3,100,200,700,250, "øst"));
 
-
-
-
-//
-//        //vind items placering i rum
-//        wind1.addItem(allItems[0]);
-//        wind2.addItem(allItems[1]);
-//        wind4.addItem(allItems[2]);
-//
-//        //Vand items placering i rum
-//        water2.addItem(allItems[3]);
-//        water3.addItem(allItems[4]);
-//        water4.addItem(allItems[5]);
-//
-//        //Sol items placering i rum
-//        solar1.addItem(allItems[6]);
-//        solar2.addItem(allItems[7]);
-//        solar3.addItem(allItems[8]);
-
             goRoom(start);
 
             //Load materials in rooms
@@ -276,7 +283,40 @@ public class GameController implements Initializable {
             solar2.addItem(allItems[7]);
             solar3.addItem(allItems[8]);
 
+            ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4));
+for (Room room : rooms) {
 
+    for (Exit exit : room.getExits()) {
+        exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                goRoom(exit.getRoom());
+                if (exit.getDirection() == "vest") {
+                    minimapCircle.setLayoutX(minimapCircle.getLayoutX() - 37);
+                } else if (exit.getDirection() == "øst") {
+                    minimapCircle.setLayoutX(minimapCircle.getLayoutX() + 37);
+                } else if (exit.getDirection() == "nord") {
+                    minimapCircle.setLayoutY(minimapCircle.getLayoutY() - 39);
+                } else if (exit.getDirection() == "syd") {
+                    minimapCircle.setLayoutY(minimapCircle.getLayoutY() + 39);
+                }
+            }
+        });
+
+        exit.hoverProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                this.hoverLabel.setTranslateX(exit.getX() + 5);
+                this.hoverLabel.setTranslateY(exit.getY() + exit.getHeight() / 2);
+                this.hoverLabel.setVisible(true);
+                this.hoverLabel.setText("Gå " + exit.getDirection());
+                System.out.println("HOVER");
+            } else {
+                this.hoverLabel.setVisible(false);
+                System.out.println("NOT HOVER");
+            }
+        });
+    }
+}
 
         } catch (Exception e) {
             System.out.println(e);
@@ -343,8 +383,8 @@ public class GameController implements Initializable {
         } else {
             this.currentRoom = nextRoom;
             this.roomBackground.setImage(nextRoom.getBackgroundImage());
-            initializeExits(nextRoom);
-            initializeItems(nextRoom);
+            loadExits(nextRoom);
+            loadItems(nextRoom);
 
             // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
             if (currentRoom instanceof CraftingRoom craftingRoom) {
@@ -362,7 +402,7 @@ public class GameController implements Initializable {
         }
     }
 
-    private void initializeExits(Room nextRoom) {
+    private void loadExits(Room nextRoom) {
         // Clear existing exits before adding new ones.
         pane.getChildren().removeIf(it -> it instanceof Exit);
 
@@ -370,71 +410,16 @@ public class GameController implements Initializable {
         ArrayList<Exit> exits = nextRoom.getExits();
 
         pane.getChildren().addAll(exits);
-        for (Exit exit : exits) {
-            exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    goRoom(exit.getRoom());
-                    if (exit.getDirection() == "vest") {
-                        minimapCircle.setLayoutX(minimapCircle.getLayoutX()-37);
-                    }
-                    else if (exit.getDirection() == "øst") {
-                        minimapCircle.setLayoutX(minimapCircle.getLayoutX()+37);
-                    }
-                    else if (exit.getDirection() == "nord") {
-                        minimapCircle.setLayoutY(minimapCircle.getLayoutY()-39);
-                    }
-                    else if (exit.getDirection() == "syd") {
-                        minimapCircle.setLayoutY(minimapCircle.getLayoutY()+39);
-                    }
-                }
-            });
 
-            exit.hoverProperty().addListener((obs, oldVal, newVal) -> {
-                if (newVal) {
-                    this.hoverLabel.setTranslateX(exit.getX() + 5);
-                    this.hoverLabel.setTranslateY(exit.getY() + exit.getHeight() / 2);
-                    this.hoverLabel.setVisible(true);
-                    this.hoverLabel.setText("Gå " + exit.getDirection());
-                    System.out.println("HOVER");
-                } else {
-                    this.hoverLabel.setVisible(false);
-                    System.out.println("NOT HOVER");
-                }
-            });
-        }
     }
 
-    private void initializeItems(Room nextRoom) {
+    private void loadItems(Room nextRoom) {
         // Clear existing items before loading in new ones
         pane.getChildren().removeIf(it -> it instanceof Item);
 
         ArrayList<Item> items = nextRoom.getItems();
         System.out.print(items);
         pane.getChildren().addAll(items);
-        for (Item item : items) {
-            item.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    Item item = (Item) mouseEvent.getSource();
-                    pickupItem(item);
-                }
-            });
-
-            item.hoverProperty().addListener((obs, oldVal, newVal) -> {
-                if (newVal) {
-                    this.hoverLabel.setTranslateX(item.getX());
-                    this.hoverLabel.setTranslateY(item.getY());
-                    this.hoverLabel.setVisible(true);
-                    hoverLabel.setText(item.getName());
-                    hoverLabel.toFront();
-                    System.out.println("HOVER");
-                } else {
-                    this.hoverLabel.setVisible(false);
-                    System.out.println("NOT HOVER");
-                }
-            });
-        }
     }
 
     private void craft(Command command) {
