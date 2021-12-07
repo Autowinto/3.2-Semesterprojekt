@@ -163,7 +163,6 @@ public class GameController implements Initializable {
 
     private void initializeInventory() {
         inventoryListView.setItems(inventory.getItems());
-        inventory.addItem(solarpanel);
         inventoryListView.setCellFactory(new Callback<ListView<Item>, ListCell<Item>>() {
 
             @Override
@@ -587,6 +586,7 @@ public class GameController implements Initializable {
             product.setY(420);
 
             pane.getChildren().removeIf(it -> it instanceof Material);
+            craftingRoom.clearPlacedItems();
             pane.getChildren().add(product);
             return;
         }

@@ -42,6 +42,10 @@ public class CraftingRoom extends Room {
         placedItems.add(item);
     }
 
+    public void clearPlacedItems(){
+        placedItems.clear();
+    }
+
     public EnergyType getEnergyType() {
         return this.energyType;
     }
