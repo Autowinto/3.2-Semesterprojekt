@@ -45,5 +45,4 @@ public class CraftingRoom extends Room {
     public EnergyType getEnergyType() {
         return this.energyType;
     }
-
 }

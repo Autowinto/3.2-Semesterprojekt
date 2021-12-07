@@ -393,7 +393,7 @@ public class GameController implements Initializable {
         } else if (commandWord == CommandWord.PLACE) {
             placeOnDropOff(command);
         } else if (commandWord == CommandWord.CRAFT) {
-            craft(command);
+            //craft(command);
         } else if (commandWord == CommandWord.POWER) {
             printPower();
         }
@@ -432,6 +432,7 @@ public class GameController implements Initializable {
             this.roomBackground.setImage(nextRoom.getBackgroundImage());
             loadExits(nextRoom);
             loadDropOffs(nextRoom);
+            loadCraftButton(nextRoom);
 
             // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
             if (currentRoom instanceof CraftingRoom craftingRoom) {
@@ -467,7 +468,6 @@ public class GameController implements Initializable {
         // Clear existing exits before adding new ones.
         pane.getChildren().removeIf(it -> it instanceof Exit);
 
-
         ArrayList<Exit> exits = nextRoom.getExits();
 
         pane.getChildren().addAll(exits);
@@ -489,7 +489,6 @@ public class GameController implements Initializable {
     private void loadDropOffs(Room nextRoom) {
         pane.getChildren().removeIf(it -> it instanceof DropOff);
 
-
         ArrayList<DropOff> dropOffs = nextRoom.getDropOffs();
         System.out.println(dropOffs);
         pane.getChildren().addAll(dropOffs);
@@ -501,6 +500,24 @@ public class GameController implements Initializable {
                     placeProduct(dropOff);
                 }
             });
+        }
+    }
+
+    private void loadCraftButton(Room currentRoom){
+        pane.getChildren().removeIf(it -> it instanceof Button);
+
+        if (currentRoom instanceof CraftingRoom) {
+            Button craftButton = new Button("Byg");
+            craftButton.setLayoutX(465);
+            craftButton.setLayoutY(400);
+            craftButton.setPrefWidth(100);
+            craftButton.setStyle("-fx-background-color: #e3cfaf; ");
+
+            craftButton.setOnMouseClicked(mouseEvent -> {
+                craft((CraftingRoom) currentRoom);
+            });
+
+            pane.getChildren().add(craftButton);
         }
     }
 
@@ -562,11 +579,7 @@ public class GameController implements Initializable {
 //        }
     }
 
-    private void craft(Command command) {
-        if (!(currentRoom instanceof CraftingRoom craftingRoom)) {
-            System.out.println("Du kan ikke bygge noget her!");
-            return;
-        }
+    private void craft(CraftingRoom craftingRoom) {
         if (craftingRoom.canCraft()) {
             System.out.println("Du bygger en " + craftingRoom.getCraftingResult().getName());
             inventory.addItem(craftingRoom.getCraftingResult());
