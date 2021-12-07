@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -37,7 +39,10 @@
                         <Pane prefHeight="199.0" prefWidth="409.0">
                            <children>
                               <ProgressBar fx:id="powerProgressBar" layoutX="104.0" layoutY="176.0" prefWidth="200.0" progress="0.0" />
-                              <ImageView fx:id="powerImageView" fitHeight="110.0" fitWidth="200.0" layoutX="104.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="powerImageView" fitHeight="110.0" fitWidth="197.0" layoutX="149.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Scener/pære0.png" />
+                                 </image></ImageView>
                               <Label fx:id="consoleLabel" layoutX="5.0" layoutY="6.0" text="Label" wrapText="true">
                                  <font>
                                     <Font size="15.0" />
@@ -56,6 +61,12 @@
                            </children></Pane>
                      </children>
                   </HBox>
+                  <TextArea fx:id="tutorialText" editable="false" layoutX="211.0" layoutY="14.0" onMouseClicked="#setTutorialText" prefHeight="229.0" prefWidth="379.0" text="1/3 - Tryk for at se næste tip&#10;Du er løbet tør for kul og er nødt til at skabe energi på en bæredygtig måde!&#10;Pæren nederst i midten vil begynde at lyse mere og mere i takt med hvor meget strøm der generes bæredygtigt. Der er også en statusbar under pæren." wrapText="true">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextArea>
+                  <Button mnemonicParsing="false" onAction="#endGame" prefHeight="27.0" prefWidth="82.0" text="Afslut spil" />
                </children>
             </Pane>
          </children>

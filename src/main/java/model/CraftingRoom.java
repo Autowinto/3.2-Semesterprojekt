@@ -9,10 +9,14 @@ public class CraftingRoom extends Room {
     private ArrayList<Material> placedItems = new ArrayList<>();
 
     public CraftingRoom(String description, EnergyType energyType, Product craftingResult) throws IOException {
-        super(description, "");
+        super(description, "/Scener/Arbejdsbord.png");
         //this.recipe = (ArrayList<Material>) Arrays.asList(recipe);
         this.energyType = energyType;
         this.craftingResult = craftingResult;
+    }
+
+    public ArrayList<Material> getPlacedItems() {
+        return placedItems;
     }
 
     public Product getCraftingResult() {
@@ -22,6 +26,7 @@ public class CraftingRoom extends Room {
     public boolean canCraft() {
         // If the size of placedItems contains 3 items, we're ready to craft
         return placedItems.size() == 3;
+
     }
 
     public String getPlacedItemsString() {

@@ -4,10 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +25,7 @@ import javafx.util.Callback;
 import worldofzuul.model.*;
 
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -35,6 +39,7 @@ public class GameController implements Initializable {
     Inventory inventory = new Inventory();
     private Item[] allItems;
     private Room currentRoom;
+    private int tutorialTextField;
 
     @FXML
     private Pane pane;
@@ -50,14 +55,29 @@ public class GameController implements Initializable {
     private ProgressBar powerProgressBar;
     @FXML
     private Circle minimapCircle;
+    @FXML
+    private TextArea tutorialText;
 
     private final Image dropOffImage = new Image("/Scener/Kul.png");
 
     @FXML
     private ImageView powerImageView;
 
-    private final Image image1 = new Image("/Scener/img.png");
-    private final Image image2 = new Image("/Scener/ve-omstilling169.png");
+
+    private Image pære0 = new Image("/Scener/pære0.png");
+    private Image pære1 = new Image("/Scener/pære1.jpg");
+    private Image pære2 = new Image("/Scener/pære2.jpg");
+    private Image pære3 = new Image("/Scener/pære3.jpg");
+    private Image pære4 = new Image("/Scener/pære4.jpg");
+    private Image pære5 = new Image("/Scener/pære5.jpg");
+    private Image pære6 = new Image("/Scener/pære6.jpg");
+    private Image pære7 = new Image("/Scener/pære7.jpg");
+    private Image pære8 = new Image("/Scener/pære8.jpg");
+
+    @FXML
+    Pane root;
+    private Stage stage;
+    private Scene scene;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,24 +89,35 @@ public class GameController implements Initializable {
         printWelcome();
     }
 
+    public void endGame (ActionEvent event){
+        try {
+            root = FXMLLoader.load(GameController.class.getResource("/End.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     private void createItems() {
         try {
             allItems = new Item[]{
                     //Items
-                    new Material("generator", EnergyType.WIND, 200, 200, "/item_placeholder.png"),
-                    new Material("vinger", EnergyType.WIND, 200, 200, "/item_placeholder.png"),
-                    new Material("tårn", EnergyType.WIND, 200, 200, "/item_placeholder.png"),
-                    new Material("turbine", EnergyType.WATER, 200, 200, "/item_placeholder.png"),
-                    new Material("vandrør", EnergyType.WATER, 200, 200, "/item_placeholder.png"),
-                    new Material("kabel", EnergyType.WATER, 200, 200, "/item_placeholder.png"),
-                    new Material("solpanel", EnergyType.SOLAR, 200, 200, "/item_placeholder.png"),
-                    new Material("inverter", EnergyType.SOLAR, 200, 200, "/item_placeholder.png"),
-                    new Material("stativ", EnergyType.SOLAR, 200, 200, "/item_placeholder.png"),
-                    //Products
-                    new Product("vindmølle", EnergyType.WIND),
-                    new Product("vandmølle", EnergyType.WATER),
-                    new Product("solarpanel", EnergyType.SOLAR, 400, 300, "/item_placeholder.png"), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
+                    new Material("vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Vindgenerator.png","Beskrivelse af vindgenerator"),
+                    new Material("vinger", EnergyType.WIND,200,200,"/Scener/Vinger.png","Beskrivelse af vinger"),
+                    new Material("tårn", EnergyType.WIND,200,200,"/Scener/Tårn.png","Beskrivelse af tårn"),
+                    new Material("turbine", EnergyType.WATER,200,200,"/Scener/Turbine.png","Beskrivelse af turbine"),
+                    new Material("vandrør", EnergyType.WATER,200,200,"/Scener/Vandrør.png","Beskrivelse af vandrør"),
+                    new Material("vandgenerator", EnergyType.WATER,200,200,"/Scener/Vandgenerator.png","Beskrivelse af vandgenerator"),
+                    new Material("solpanel", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png","Beskrivelse af solpanel"),
+                    new Material("inverter", EnergyType.SOLAR,200,200,"/Scener/Inverter.png","Beskrivelse af inverter"),
+                    new Material("glas", EnergyType.SOLAR,200,200,"/Scener/Glas.png","Beskrivelse af glas"),
 
+                    //Products
+                    new Product("vindmølle", EnergyType.WIND,100,100,"/Scener/Vindkraft.png"),
+                    new Product("vandmølle", EnergyType.WATER,100,100,"/Scener/Vandkraft.png"),
+                    new Product("solcelle", EnergyType.SOLAR, 400, 300,"/Scener/Solkraft.png")};
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
@@ -108,6 +139,12 @@ public class GameController implements Initializable {
                         hoverLabel.setText(item.getName());
                         hoverLabel.toFront();
                         System.out.println("HOVER");
+                        if (!item.getHoveredOver()) {
+                            item.setHoveredOver();
+                            tutorialTextField = 2;
+                            tutorialText.setVisible(true);
+                            tutorialText.setText(item.getDescription());
+                        }
                     } else {
                         this.hoverLabel.setVisible(false);
                         System.out.println("NOT HOVER");
@@ -149,18 +186,32 @@ public class GameController implements Initializable {
         System.out.println(powerPercentage);
         powerProgressBar.setProgress(powerPercentage);
 
-        /*if (powerPercentage == 0) {
-            powerImageView.setImage(image2);
+        if (powerPercentage == 0.0) {
+            powerImageView.setImage(pære0);
+        } else if (powerPercentage <= 0.125){
+            powerImageView.setImage(pære1);
+        } else if (powerPercentage <= 0.25){
+            powerImageView.setImage(pære2);
+        } else if (powerPercentage <= 0.375){
+            powerImageView.setImage(pære3);
+        } else if (powerPercentage <= 0.50){
+            powerImageView.setImage(pære4);
+        } else if (powerPercentage <= 0.75){
+            powerImageView.setImage(pære5);
+        } else if (powerPercentage <= 0.875){
+            powerImageView.setImage(pære6);
+        } else if (powerPercentage < 0.95){
+            powerImageView.setImage(pære7);
         } else {
-            powerImageView.setImage(image1);
-        }*/
+            powerImageView.setImage(pære8);
+        }
     }
 
     private void createRooms() {
         Room start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4;
         try {
 
-            start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner at strømkilden er mod øst", "/Scener/Start.png");
+            start = new Room("i et hus med en lyskilde, der ikke lyser. Det ligner at strømkilden er mod øst", "/Scener/startScener_3.png");
             coal = new Room("i en kælder med et kulkraftværk. Det ligner du er løbet tør for kul", "/Scener/Kul.png");
             workshop = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor", "/Scener/Værksted.png");
 
@@ -269,6 +320,9 @@ public class GameController implements Initializable {
             solar2.addItem(allItems[7]);
             solar3.addItem(allItems[8]);
 
+            craftingWind.addItem(allItems[9]);
+            craftingWater.addItem(allItems[10]);
+            craftingSun.addItem(allItems[11]);
             ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4, craftingWind, craftingSun, craftingWater));
             for (Room room : rooms) {
 
@@ -386,9 +440,14 @@ public class GameController implements Initializable {
                         print("Du får en lys idé og klargøre material på arbejdsbordet!");
                         craftingRoom.placeItem(materialItem);
                         iterator.remove();
+
                     }
+
                 }
+
             }
+
+
         }
     }
 
@@ -516,5 +575,22 @@ public class GameController implements Initializable {
 
     public void printPower() {
         System.out.println("Du har " + power.getPower() + "% strøm");
+    }
+
+    public void setTutorialText() {
+        if (tutorialTextField == 0) {
+            tutorialText.setText("2/3 - Tryk for at se næste tip\n" +
+                    "Du skal rundt i forskellige rum og samle materialer op, som du kan bygge med. Dette foregår via. værkstedsborde i lokalet til venstre, hvor du kan lave produkter, som sættes på drop-off punkter rundt omkring.");
+            tutorialTextField += 1;
+        }
+        else if (tutorialTextField == 1) {
+            tutorialText.setText("3/3 - Tryk for at se næste tip\n" +
+                    "For at bevæge dig fra lokale til lokale holder du musen over en dør og trykker med musen.\n" +
+                    "Du kan også samle ting op ved at trykke på dem og kan se disse ting i din inventar nede til venstre. Held og lykke!");
+            tutorialTextField += 1;
+        }
+        else {
+            tutorialText.setVisible(false);
+        }
     }
 }
