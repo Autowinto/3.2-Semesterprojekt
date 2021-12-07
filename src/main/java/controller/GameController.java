@@ -393,7 +393,7 @@ for (Room room : rooms) {
                 for (Iterator<Item> iterator = inventory.getItems().iterator(); iterator.hasNext(); ) {
                     Item item = iterator.next();
                     if (item.getEnergyType() == craftingRoom.getEnergyType() && item instanceof Material materialItem) {
-                        print("Du får en lys idé og lægger din/dit " + item.getName() + " på arbejdsbordet!");
+                        print("Du får en lys idé og klargøre material på arbejdsbordet!");
                         craftingRoom.placeItem(materialItem);
                         iterator.remove();
                     }
