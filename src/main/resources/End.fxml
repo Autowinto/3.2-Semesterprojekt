@@ -20,7 +20,12 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="endGameButton" layoutX="209.0" layoutY="493.0" mnemonicParsing="false" onAction="#restartGame" text="Genstart spil">
+            <Button fx:id="restartGameButton" layoutX="132.0" layoutY="493.0" mnemonicParsing="false" onAction="#restartGame" text="Genstart spil">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="exitGameButton" layoutX="287.0" layoutY="493.0" mnemonicParsing="false" onAction="#exitGame" text="Afslut til windows">
                <font>
                   <Font size="15.0" />
                </font>
