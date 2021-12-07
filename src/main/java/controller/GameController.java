@@ -476,6 +476,7 @@ public class GameController implements Initializable {
     private void loadItems(Room nextRoom) {
         // Clear existing items before loading in new ones
         pane.getChildren().removeIf(it -> it instanceof Item);
+
         ArrayList<Item> items;
         if (nextRoom instanceof CraftingRoom) {
             items = ((CraftingRoom) nextRoom).getPlacedItems();
@@ -581,12 +582,15 @@ public class GameController implements Initializable {
 
     private void craft(CraftingRoom craftingRoom) {
         if (craftingRoom.canCraft()) {
-            System.out.println("Du bygger en " + craftingRoom.getCraftingResult().getName());
-            inventory.addItem(craftingRoom.getCraftingResult());
+            Product product = craftingRoom.getCraftingResult();
+            product.setX(595);
+            product.setY(420);
+
+            pane.getChildren().removeIf(it -> it instanceof Material);
+            pane.getChildren().add(product);
             return;
         }
-        System.out.println("Du mangler noget før du kan bygge en " + craftingRoom.getCraftingResult().getName());
-        System.out.println("Arbejdsbordet indeholder følgende: " + craftingRoom.getPlacedItemsString());
+        print("Du mangler noget før du kan bygge en " + craftingRoom.getCraftingResult().getName());;
     }
 
     private boolean quit(Command command) {
