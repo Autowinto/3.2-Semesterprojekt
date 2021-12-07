@@ -444,7 +444,6 @@ public class GameController implements Initializable {
                 ObservableList<Item> oldInv = FXCollections.observableArrayList(inventory.getItems());
                 for (Item item : oldInv) {
                     if (item instanceof Material && item.getEnergyType() == currentRoom.getEnergyType()) {
-                        System.out.println("YOINK");
                         item.setX(100 + (widthDiff * i));
                         item.setY(420);
                         item.setMouseTransparent(true);
@@ -588,6 +587,7 @@ public class GameController implements Initializable {
             pane.getChildren().removeIf(it -> it instanceof Material);
             craftingRoom.clearPlacedItems();
             pane.getChildren().add(product);
+            print("Du har bygget en " + craftingRoom.getCraftingResult().getName());
             return;
         }
         print("Du mangler noget før du kan bygge en " + craftingRoom.getCraftingResult().getName());;
