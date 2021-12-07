@@ -38,6 +38,7 @@ public class GameController implements Initializable {
     Product solarpanel;
     Inventory inventory = new Inventory();
     private Room currentRoom;
+    private int tutorialTextField;
 
     @FXML
     private Pane pane;
@@ -53,6 +54,8 @@ public class GameController implements Initializable {
     private ProgressBar powerProgressBar;
     @FXML
     private Circle minimapCircle;
+    @FXML
+    private TextArea tutorialText;
 
     private Image dropOffImage = new Image("/Scener/Kul.png");
 
@@ -478,5 +481,22 @@ for (Room room : rooms) {
 
     public void printPower() {
         System.out.println("Du har " + power.getPower() + "% strøm");
+    }
+
+    public void setTutorialText() {
+        if (tutorialTextField == 0) {
+            tutorialText.setText("2/3 - Tryk for at se næste tip\n" +
+                    "Du skal rundt i forskellige rum og samle materialer op, som du kan bygge med. Dette foregår via. værkstedsborde i lokalet til venstre, hvor du kan lave produkter, som sættes på drop-off punkter rundt omkring.");
+            tutorialTextField += 1;
+        }
+        else if (tutorialTextField == 1) {
+            tutorialText.setText("3/3 - Tryk for at se næste tip\n" +
+                    "For at bevæge dig fra lokale til lokale holder du musen over en dør og trykker med musen.\n" +
+                    "Du kan også samle ting op ved at trykke på dem og kan se disse ting i din inventar nede til venstre. Held og lykke!");
+            tutorialTextField += 1;
+        }
+        else {
+            tutorialText.setVisible(false);
+        }
     }
 }
