@@ -260,50 +260,51 @@ public class GameController implements Initializable {
             wind1.setExit(new Exit(wind3, 200, 100, 250, 0, "nord"));
             wind1.setExit(new Exit(workshop, 200, 100, 250, 500, "syd"));
 
-            solar2.setDropOff(new DropOff(150, 200, 50, 100, EnergyType.SOLAR));
-            //Udgang fra vind2
+            //Udgang og dropoff fra vind2
             wind2.setExit(new Exit(wind1, 100, 200, 0, 250, "vest"));
-
-            //Udgange fra vind3
+            wind2.setDropOff(new DropOff(100, 100, 550, 225, EnergyType.WIND));
+            //Udgange og dropoff fra vind3
             wind3.setExit(new Exit(wind1, 200, 100, 300, 500, "syd"));
             wind3.setExit(new Exit(wind4, 100, 200, 0, 150, "vest"));
-
-            //Udgang fra vind4
+            wind3.setDropOff(new DropOff(100, 100, 540, 100, EnergyType.WIND));
+            //Udgang og dropoff fra vind4
             wind4.setExit(new Exit(wind3, 100, 200, 700, 200, "øst"));
-
-            //Udgange fra vand1
+            wind4.setDropOff(new DropOff(100, 100, 60, 450, EnergyType.WIND));
+            //Udgange og dropoff fra vand1
             water1.setExit(new Exit(workshop, 100, 200, 700, 200, "øst"));
             water1.setExit(new Exit(water2, 200, 100, 250, 0, "nord"));
-
+            water1.setDropOff(new DropOff(100, 100, 25, 200, EnergyType.WATER));
             //Udgange fra vand2
             water2.setExit(new Exit(water3, 100, 200, 0, 150, "vest"));
             water2.setExit(new Exit(water1, 200, 100, 350, 500, "syd"));
 
-            //udgange fra vand3
+            //udgange og dropoff fra vand3
             water3.setExit(new Exit(water2, 100, 200, 700, 200, "øst"));
             water3.setExit(new Exit(water4, 200, 100, 300, 500, "syd"));
             water3.setExit(new Exit(water5, 200, 100, 250, 0, "nord"));
-
-            //Udgang fra vand4
+            water3.setDropOff(new DropOff(100, 100, 10, 100, EnergyType.WATER));
+            //Udgang og dropoff fra vand4
             water4.setExit(new Exit(water3, 200, 100, 300, 0, "nord"));
 
             //Udgang fra vand5
             water5.setExit(new Exit(water3, 200, 100, 250, 500, "syd"));
-
-            //Udgange fra sol1
+            water5.setDropOff(new DropOff(100, 100, 300, 100, EnergyType.WATER));
+            //Udgange og dropoff fra sol1
             solar1.setExit(new Exit(workshop, 200, 100, 300, 0, "nord"));
             solar1.setExit(new Exit(solar2, 100, 200, 0, 200, "vest"));
             solar1.setExit(new Exit(solar3, 200, 100, 300, 500, "syd"));
 
-            //Udgang fra sol2
+            //Udgang og dropoff fra sol2
             solar2.setExit(new Exit(solar1, 100, 200, 700, 250, "øst"));
-
-            //Udgange fra sol3
+            solar2.setDropOff(new DropOff(100, 100, 50, 410, EnergyType.SOLAR));
+            //Udgange og dropoff fra sol3
             solar3.setExit(new Exit(solar1, 200, 100, 300, 0, "nord"));
             solar3.setExit(new Exit(solar4, 100, 200, 0, 250, "vest"));
+            solar3.setDropOff(new DropOff(100, 100, 635, 185, EnergyType.SOLAR));
 
-            //Udgang fra sol4
+            //Udgang og dropoff fra sol4
             solar4.setExit(new Exit(solar3, 100, 200, 700, 250, "øst"));
+            solar4.setDropOff(new DropOff(100, 100, 100, 85, EnergyType.SOLAR));
 
             goRoom(start);
 
