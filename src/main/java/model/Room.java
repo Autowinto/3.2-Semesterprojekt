@@ -95,8 +95,7 @@ public class Room {
 
 
 
-    public ArrayList<Exit> getExits() throws IOException {
-        items.add(new Product("solcelle", EnergyType.SOLAR, 300, 300,"/item_placeholder.png"));
+    public ArrayList<Exit> getExits() {
         return this.exits;
     }
 
@@ -120,7 +119,6 @@ public class Room {
 
     public void removeItem(Item item) {
         items.remove(item);
-        item.setVisible(false);
     }
 
     public void addItem(Item newitem) {

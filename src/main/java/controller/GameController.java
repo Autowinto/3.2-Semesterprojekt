@@ -1,6 +1,5 @@
 package worldofzuul.controller;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -15,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -29,12 +29,11 @@ import java.util.*;
 public class GameController implements Initializable {
     private final Parser parser = new Parser();
     Power power = new Power();
-    private Item[] allItems;
-
     Product windmill;
     Product watermill;
     Product solarpanel;
     Inventory inventory = new Inventory();
+    private Item[] allItems;
     private Room currentRoom;
 
     @FXML
@@ -49,14 +48,16 @@ public class GameController implements Initializable {
     private Label consoleLabel;
     @FXML
     private ProgressBar powerProgressBar;
+    @FXML
+    private Circle minimapCircle;
 
-    private Image dropOffImage = new Image("/Scener/Kul.png");
+    private final Image dropOffImage = new Image("/Scener/Kul.png");
 
     @FXML
     private ImageView powerImageView;
 
-    private Image image1 = new Image("/Scener/img.png");
-    private Image image2 = new Image("/Scener/ve-omstilling169.png");
+    private final Image image1 = new Image("/Scener/img.png");
+    private final Image image2 = new Image("/Scener/ve-omstilling169.png");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,13 +72,48 @@ public class GameController implements Initializable {
     private void createItems() {
         try {
             allItems = new Item[]{
-                    new Material("generator", EnergyType.WIND, 200, 200, "/item_placeholder.png"), new Material("vinger", EnergyType.WIND), new Material("tårn", EnergyType.WIND),
-                    new Material("turbine", EnergyType.WATER), new Material("vandrør", EnergyType.WATER), new Material("kabel", EnergyType.WATER),
-                    new Material("solpanel", EnergyType.SOLAR), new Material("inverter", EnergyType.SOLAR), new Material("stativ", EnergyType.SOLAR),
-                    new Product("solarpanel", EnergyType.SOLAR, 400, 300,"/item_placeholder.png"), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
+                    //Items
+                    new Material("generator", EnergyType.WIND, 200, 200, "/item_placeholder.png"),
+                    new Material("vinger", EnergyType.WIND, 200, 200, "/item_placeholder.png"),
+                    new Material("tårn", EnergyType.WIND, 200, 200, "/item_placeholder.png"),
+                    new Material("turbine", EnergyType.WATER, 200, 200, "/item_placeholder.png"),
+                    new Material("vandrør", EnergyType.WATER, 200, 200, "/item_placeholder.png"),
+                    new Material("kabel", EnergyType.WATER, 200, 200, "/item_placeholder.png"),
+                    new Material("solpanel", EnergyType.SOLAR, 200, 200, "/item_placeholder.png"),
+                    new Material("inverter", EnergyType.SOLAR, 200, 200, "/item_placeholder.png"),
+                    new Material("stativ", EnergyType.SOLAR, 200, 200, "/item_placeholder.png"),
+                    //Products
+                    new Product("vindmølle", EnergyType.WIND),
+                    new Product("vandmølle", EnergyType.WATER),
+                    new Product("solarpanel", EnergyType.SOLAR, 400, 300, "/item_placeholder.png"), new Product("vandmølle", EnergyType.WATER), new Product("solcelle", EnergyType.SOLAR)};
+
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
+
+            for (Item item : allItems) {
+                item.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        Item item = (Item) mouseEvent.getSource();
+                        pickupItem(item);
+                    }
+                });
+
+                item.hoverProperty().addListener((obs, oldVal, newVal) -> {
+                    if (newVal) {
+                        this.hoverLabel.setTranslateX(item.getX());
+                        this.hoverLabel.setTranslateY(item.getY());
+                        this.hoverLabel.setVisible(true);
+                        hoverLabel.setText(item.getName());
+                        hoverLabel.toFront();
+                        System.out.println("HOVER");
+                    } else {
+                        this.hoverLabel.setVisible(false);
+                        System.out.println("NOT HOVER");
+                    }
+                });
+            }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
@@ -90,10 +126,14 @@ public class GameController implements Initializable {
             @Override
             public ListCell<Item> call(ListView<Item> list) {
                 ListCell<Item> cell = new ListCell<Item>() {
-                    @Override
-                    public void updateItem(Item item, boolean empty) {
+
+                    protected void updateItem(Item item, boolean empty) {
                         super.updateItem(item, empty);
-                        if (item != null) {
+                        if (item == null || empty) {
+                            setDisable(true);
+                            setGraphic(null);
+                        } else {
+                            setDisable(false);
                             setText(item.getName());
                         }
                     }
@@ -101,11 +141,12 @@ public class GameController implements Initializable {
                 return cell;
             }
         });
+        inventory.addItem(solarpanel);
     }
 
-
-    public void updatePowerBars(){
-        double powerPercentage = power.getPower()/100;
+    public void updatePowerBars() {
+        double powerPercentage = power.getPower() / 100;
+        System.out.println(powerPercentage);
         powerProgressBar.setProgress(powerPercentage);
 
         /*if (powerPercentage == 0) {
@@ -144,97 +185,125 @@ public class GameController implements Initializable {
             CraftingRoom craftingSun = new CraftingRoom("foran et gult bord. Over bordet er der et skilt hvorpå der står \"solenergi\".", EnergyType.SOLAR, solarpanel);
 
             //Udgange fra start
-
             start.setExit(new Exit(coal, 100, 200, 700, 200, "øst"));
-            start.setExit(new Exit(workshop,100, 200, 0, 200, "vest"));
+            start.setExit(new Exit(workshop, 100, 200, 0, 200, "vest"));
 
             //Udgang fra kul
             coal.setExit(new Exit(start, 100, 200, 0, 200, "vest"));
 
             //Udgange fra værksted
-            workshop.setExit(new Exit(wind1,200,100,300,0, "nord"));
-            workshop.setExit(new Exit(water1,100, 200, 0, 200, "vest"));
-            workshop.setExit(new Exit(solar1,200,100,300,500, "syd"));
-            workshop.setExit(new Exit(start, 100,200,700,200, "øst"));
-            workshop.setExit(new Exit(craftingWind,200,100,525,0, "vindstation"));
-            workshop.setExit(new Exit(craftingSun,200,100,100,500, "solstation"));
-            workshop.setExit(new Exit(craftingWater,200,200,0,0, "vandstation"));
+            workshop.setExit(new Exit(wind1, 200, 100, 300, 0, "nord"));
+            workshop.setExit(new Exit(water1, 100, 200, 0, 200, "vest"));
+            workshop.setExit(new Exit(solar1, 200, 100, 300, 500, "syd"));
+            workshop.setExit(new Exit(start, 100, 200, 700, 200, "øst"));
+            workshop.setExit(new Exit(craftingWind, 200, 100, 525, 0, "vindstation"));
+            workshop.setExit(new Exit(craftingSun, 200, 100, 100, 500, "solstation"));
+            workshop.setExit(new Exit(craftingWater, 200, 200, 0, 0, "vandstation"));
 
-            craftingWind.setExit(new Exit(workshop,200,100,300,500, "ud"));
-            craftingSun.setExit(new Exit(workshop,200,100,300,500, "ud"));
-            craftingWater.setExit(new Exit(workshop,200,100,300,500, "ud"));
+            craftingWind.setExit(new Exit(workshop, 200, 100, 300, 500, "ud"));
+            craftingSun.setExit(new Exit(workshop, 200, 100, 300, 500, "ud"));
+            craftingWater.setExit(new Exit(workshop, 200, 100, 300, 500, "ud"));
 
             //Udgange fra vind1
-            wind1.setExit(new Exit(wind2,100,200,700,100, "øst"));
-            wind1.setExit(new Exit(wind3,200,100,250,0, "nord"));
-            wind1.setExit(new Exit(workshop, 200,100,250,500, "syd"));
-
-            //Udgang fra vind2
-            wind2.setExit(new Exit(wind1,100, 200, 0, 250, "vest"));
-
-            //Udgange fra vind3
-            wind3.setExit(new Exit(wind1,200,100,300,500, "syd"));
-            wind3.setExit(new Exit(wind4,100, 200, 0, 150, "vest"));
-
-            //Udgang fra vind4
-            wind4.setExit(new Exit(wind3,100, 200, 700, 200, "øst") );
-
-            //Udgange fra vand1
-            water1.setExit(new Exit(workshop,100,200,700,200, "øst"));
-            water1.setExit(new Exit(water2, 200,100,250,0, "nord"));
-
-            //Udgange fra vand2
-            water2.setExit(new Exit(water3,100,200,0,150, "vest"));
-            water2.setExit(new Exit(water1, 200,100,350,500, "syd"));
-
-            //udgange fra vand3
-            water3.setExit(new Exit(water2,100,200,700,200, "øst"));
-            water3.setExit(new Exit(water4, 200,100,300,500, "syd"));
-            water3.setExit(new Exit(water5, 200,100,250,0, "nord"));
-
-            //Udgang fra vand4
-            water4.setExit(new Exit(water3,200,100,300,0, "nord"));
-
-            //Udgang fra vand5
-            water5.setExit(new Exit(water3,200,100,250,500, "syd"));
-
-            //Udgange fra sol1
-            solar1.setExit(new Exit(workshop,200,100,300,0, "nord"));
-            solar1.setExit(new Exit(solar2,100,200,0,200, "vest"));
-            solar1.setExit(new Exit(solar3, 200,100,300,500, "syd"));
-
-            //Udgang fra sol2
-            solar2.setExit(new Exit(solar1,100,200,700,250, "øst"));
-
-            //Udgange fra sol3
-            solar3.setExit(new Exit(solar1,200,100,300,0, "nord"));
-           solar3.setExit(new Exit(solar4,100,200,0,250, "vest"));
-
-            //Udgang fra sol4
-            solar4.setExit(new Exit(solar3,100,200,700,250, "øst"));
-
+            wind1.setExit(new Exit(wind2, 100, 200, 700, 100, "øst"));
+            wind1.setExit(new Exit(wind3, 200, 100, 250, 0, "nord"));
+            wind1.setExit(new Exit(workshop, 200, 100, 250, 500, "syd"));
 
             solar2.setDropOff(new DropOff(150, 200, 50, 100, EnergyType.SOLAR));
+            //Udgang fra vind2
+            wind2.setExit(new Exit(wind1, 100, 200, 0, 250, "vest"));
 
+            //Udgange fra vind3
+            wind3.setExit(new Exit(wind1, 200, 100, 300, 500, "syd"));
+            wind3.setExit(new Exit(wind4, 100, 200, 0, 150, "vest"));
 
-//
-//        //vind items placering i rum
-//        wind1.addItem(allItems[0]);
-//        wind2.addItem(allItems[1]);
-//        wind4.addItem(allItems[2]);
-//
-//        //Vand items placering i rum
-//        water2.addItem(allItems[3]);
-//        water3.addItem(allItems[4]);
-//        water4.addItem(allItems[5]);
-//
-//        //Sol items placering i rum
-//        solar1.addItem(allItems[6]);
-//        solar2.addItem(allItems[7]);
-//        solar3.addItem(allItems[8]);
+            //Udgang fra vind4
+            wind4.setExit(new Exit(wind3, 100, 200, 700, 200, "øst"));
+
+            //Udgange fra vand1
+            water1.setExit(new Exit(workshop, 100, 200, 700, 200, "øst"));
+            water1.setExit(new Exit(water2, 200, 100, 250, 0, "nord"));
+
+            //Udgange fra vand2
+            water2.setExit(new Exit(water3, 100, 200, 0, 150, "vest"));
+            water2.setExit(new Exit(water1, 200, 100, 350, 500, "syd"));
+
+            //udgange fra vand3
+            water3.setExit(new Exit(water2, 100, 200, 700, 200, "øst"));
+            water3.setExit(new Exit(water4, 200, 100, 300, 500, "syd"));
+            water3.setExit(new Exit(water5, 200, 100, 250, 0, "nord"));
+
+            //Udgang fra vand4
+            water4.setExit(new Exit(water3, 200, 100, 300, 0, "nord"));
+
+            //Udgang fra vand5
+            water5.setExit(new Exit(water3, 200, 100, 250, 500, "syd"));
+
+            //Udgange fra sol1
+            solar1.setExit(new Exit(workshop, 200, 100, 300, 0, "nord"));
+            solar1.setExit(new Exit(solar2, 100, 200, 0, 200, "vest"));
+            solar1.setExit(new Exit(solar3, 200, 100, 300, 500, "syd"));
+
+            //Udgang fra sol2
+            solar2.setExit(new Exit(solar1, 100, 200, 700, 250, "øst"));
+
+            //Udgange fra sol3
+            solar3.setExit(new Exit(solar1, 200, 100, 300, 0, "nord"));
+            solar3.setExit(new Exit(solar4, 100, 200, 0, 250, "vest"));
+
+            //Udgang fra sol4
+            solar4.setExit(new Exit(solar3, 100, 200, 700, 250, "øst"));
 
             goRoom(start);
-            coal.addItem(allItems[0]);
+
+            //Load materials in rooms
+            wind1.addItem(allItems[0]);
+            wind2.addItem(allItems[1]);
+            wind4.addItem(allItems[2]);
+
+            water2.addItem(allItems[3]);
+            water3.addItem(allItems[4]);
+            water4.addItem(allItems[5]);
+
+            solar1.addItem(allItems[6]);
+            solar2.addItem(allItems[7]);
+            solar3.addItem(allItems[8]);
+
+            ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4, craftingWind, craftingSun, craftingWater));
+            for (Room room : rooms) {
+
+                for (Exit exit : room.getExits()) {
+                    exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            goRoom(exit.getRoom());
+                            if (exit.getDirection() == "vest") {
+                                minimapCircle.setLayoutX(minimapCircle.getLayoutX() - 37);
+                            } else if (exit.getDirection() == "øst") {
+                                minimapCircle.setLayoutX(minimapCircle.getLayoutX() + 37);
+                            } else if (exit.getDirection() == "nord") {
+                                minimapCircle.setLayoutY(minimapCircle.getLayoutY() - 39);
+                            } else if (exit.getDirection() == "syd") {
+                                minimapCircle.setLayoutY(minimapCircle.getLayoutY() + 39);
+                            }
+                        }
+                    });
+
+                    exit.hoverProperty().addListener((obs, oldVal, newVal) -> {
+                        if (newVal) {
+                            this.hoverLabel.setTranslateX(exit.getX() + 5);
+                            this.hoverLabel.setTranslateY(exit.getY() + exit.getHeight() / 2);
+                            this.hoverLabel.setVisible(true);
+                            this.hoverLabel.setText("Gå " + exit.getDirection());
+                            System.out.println("HOVER");
+                        } else {
+                            this.hoverLabel.setVisible(false);
+                            System.out.println("NOT HOVER");
+                        }
+                    });
+                }
+            }
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -281,12 +350,13 @@ public class GameController implements Initializable {
         }
         inventory.addItem(newItem);
         currentRoom.removeItem(newItem);
+        loadItems(currentRoom);
         print("Du har samlet " + newItem.getName() + " op");
         if (newItem instanceof Product) {
             power.removePower((Product) newItem, currentRoom);
+            updatePowerBars();
         }
     }
-
 
 
     private void printHelp() {
@@ -296,15 +366,15 @@ public class GameController implements Initializable {
         parser.showCommands();
     }
 
-    private void goRoom(Room nextRoom) throws IOException {
+    private void goRoom(Room nextRoom) {
         if (nextRoom == null) {
             System.out.println("Det er ikke muligt!");
         } else {
             this.currentRoom = nextRoom;
             this.roomBackground.setImage(nextRoom.getBackgroundImage());
-            initializeExits(nextRoom);
-            initializeItems(nextRoom);
-            initializeDropOff(nextRoom);
+            loadExits(nextRoom);
+            loadDropOffs(nextRoom);
+            loadItems(nextRoom);
 
             // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
             if (currentRoom instanceof CraftingRoom craftingRoom) {
@@ -313,7 +383,7 @@ public class GameController implements Initializable {
                 for (Iterator<Item> iterator = inventory.getItems().iterator(); iterator.hasNext(); ) {
                     Item item = iterator.next();
                     if (item.getEnergyType() == craftingRoom.getEnergyType() && item instanceof Material materialItem) {
-                        print("Du får en lys idé og lægger din/dit " + item.getName() + " på arbejdsbordet!");
+                        print("Du får en lys idé og klargøre material på arbejdsbordet!");
                         craftingRoom.placeItem(materialItem);
                         iterator.remove();
                     }
@@ -322,7 +392,7 @@ public class GameController implements Initializable {
         }
     }
 
-    private void initializeExits(Room nextRoom) throws IOException {
+    private void loadExits(Room nextRoom) {
         // Clear existing exits before adding new ones.
         pane.getChildren().removeIf(it -> it instanceof Exit);
 
@@ -330,66 +400,20 @@ public class GameController implements Initializable {
         ArrayList<Exit> exits = nextRoom.getExits();
 
         pane.getChildren().addAll(exits);
-        for (Exit exit : exits) {
-            exit.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    try {
-                        goRoom(exit.getRoom());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-            exit.hoverProperty().addListener((obs, oldVal, newVal) -> {
-                if (newVal) {
-                    this.hoverLabel.setTranslateX(exit.getX() + 5);
-                    this.hoverLabel.setTranslateY(exit.getY() + exit.getHeight() / 2);
-                    this.hoverLabel.setVisible(true);
-                    this.hoverLabel.setText("Gå " + exit.getDirection());
-                    System.out.println("HOVER");
-                } else {
-                    this.hoverLabel.setVisible(false);
-                    System.out.println("NOT HOVER");
-                }
-            });
-        }
     }
 
-    private void initializeItems(Room nextRoom) {
+    private void loadItems(Room nextRoom) {
         // Clear existing items before loading in new ones
         pane.getChildren().removeIf(it -> it instanceof Item);
 
         ArrayList<Item> items = nextRoom.getItems();
         System.out.print(items);
         pane.getChildren().addAll(items);
-        for (Item item : items) {
-            item.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    Item item = (Item) mouseEvent.getSource();
-                    pickupItem(item);
-                }
-            });
-
-            item.hoverProperty().addListener((obs, oldVal, newVal) -> {
-                if (newVal) {
-                    this.hoverLabel.setTranslateX(item.getX());
-                    this.hoverLabel.setTranslateY(item.getY());
-                    this.hoverLabel.setVisible(true);
-                    hoverLabel.setText(item.getName());
-                    hoverLabel.toFront();
-                    System.out.println("HOVER");
-                } else {
-                    this.hoverLabel.setVisible(false);
-                    System.out.println("NOT HOVER");
-                }
-            });
-        }
     }
 
-    private void initializeDropOff(Room nextRoom){
+    private void loadDropOffs(Room nextRoom) {
+        pane.getChildren().removeIf(it -> it instanceof DropOff);
+
 
         ArrayList<DropOff> dropOffs = nextRoom.getDropOffs();
         System.out.println(dropOffs);
@@ -399,60 +423,68 @@ public class GameController implements Initializable {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     DropOff dropOff = (DropOff) mouseEvent.getSource();
-                    placeProduct();
+                    placeProduct(dropOff);
                 }
             });
         }
     }
 
-    public void placeProduct(){
-        try {
-            Item productName = null;
-            if (currentRoom.getDropOffEffect() != null) {
-                for (Object item : inventoryListView.getItems()) {
-                    if (item instanceof Product) {
-                        productName = (Item) item;
-                    }
+    public void placeProduct(DropOff dropOff) {
+        Product product = null;
+        for (Item item : inventory.getItems()) {
+            if (item instanceof Product) {
+                if (dropOff.getEnergyType() == item.getEnergyType()) {
+                    product = (Product) item;
                 }
-                System.out.println(productName);
-                Item product = null;
-
-
-                for (int i = 0; i < allItems.length; i++) {
-                    if (allItems[i].getName().equals(productName.toString())) {
-                        product = allItems[i];
-                    }
-                }
-                if (product == null) {
-                    System.out.println("Genstanden blev ikke genkendt");
-                } else if (product instanceof Material) {
-                    System.out.println("Du kan ikke sætte materialer, kun produkter");
-                } else if (!inventory.getItems().contains(product)) {
-                    System.out.println("Du har ikke det nævnte produkt i dit inventar");
-                } else {
-                    inventory.removeItem(product);
-                    currentRoom.addItem(product);
-                    System.out.println("Du har sat " + product.getName() + " i det nuværende rum");
-                    power.addPower((Product) product, currentRoom);
-                }
-            } else {
-                System.out.println("Der er ikke noget sted at placere produkter i dette rum");
             }
-           /* for (Object item : inventoryListView.getItems()) {
-                if (item instanceof Product) {
-                    power.addPower((Product) inventoryListView.getSelectionModel().getSelectedItem(), currentRoom);
-                    inventory.removeItem((Item) item);
-                    currentRoom.addItem((Item) item);
-                    updatePowerBars();
-                    System.out.println("PRODUKT PLACERET");
-                    //consoleLabel.setText("Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.");
-                    return;
-                }
-            }*/
-        } catch (NullPointerException e) {
-            System.out.println("PRODUKT IKKE VALGT");
         }
-        System.out.println("Ikke registreret");
+        if (product != null) {
+            System.out.println(product);
+            System.out.println(dropOff);
+
+        inventory.removeItem(product);
+        product.setX(((dropOff.getX() + dropOff.getWidth()) / 2) - product.getFitWidth() / 4);
+        product.setY((dropOff.getY() + dropOff.getHeight()) / 2);
+
+        currentRoom.addItem(product);
+        loadItems(currentRoom);
+        System.out.println("Du har sat " + product.getName() + " i det nuværende rum");
+        power.addPower(product, currentRoom);
+        updatePowerBars();
+        }
+
+//            Item productName = null;
+//            if (currentRoom.getDropOffEffect() != null) {
+//                for (Object item : inventoryListView.getItems()) {
+//                    if (item instanceof Product) {
+//                        productName = (Item) item;
+//                    }
+//                }
+//                System.out.println(productName);
+//                Item product = null;
+//
+//
+//                for (int i = 0; i < allItems.length; i++) {
+//                    if (allItems[i].getName().equals(productName.toString())) {
+//                        product = allItems[i];
+//                    }
+//                }
+//                if (product == null) {
+//                    System.out.println("Genstanden blev ikke genkendt");
+//                } else if (product instanceof Material) {
+//                    System.out.println("Du kan ikke sætte materialer, kun produkter");
+//                } else if (!inventory.getItems().contains(product)) {
+//                    System.out.println("Du har ikke det nævnte produkt i dit inventar");
+//                } else {
+//                    inventory.removeItem(product);
+//                    currentRoom.addItem(product);
+//                    System.out.println("Du har sat " + product.getName() + " i det nuværende rum");
+//                    power.addPower((Product) product, currentRoom);
+//                }
+//            }
+//        } catch (NullPointerException e) {
+//            System.out.println("PRODUKT IKKE VALGT");
+//        }
     }
 
     private void craft(Command command) {

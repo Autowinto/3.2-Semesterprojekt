@@ -16,6 +16,7 @@ public abstract class Item extends ImageView {
         this.weight = weight;
         this.energyType = energyType;
     }
+
     public Item(String name, double weight, EnergyType energyType, double posX, double posY) {
         this.name = name;
         this.weight = weight;
@@ -36,6 +37,7 @@ public abstract class Item extends ImageView {
     }
 
     public double getWeight() {
+        double weight = 0;
         return this.weight;
     }
 
