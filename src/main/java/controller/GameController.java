@@ -1,5 +1,6 @@
 package worldofzuul.controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -440,7 +441,7 @@ public class GameController implements Initializable {
                 int widthDiff = 115;
                 System.out.println(inventory.getItems().size());
                 int i = ((CraftingRoom) currentRoom).getPlacedItems().size();
-                ObservableList<Item> oldInv = inventory.getItems();
+                ObservableList<Item> oldInv = FXCollections.observableArrayList(inventory.getItems());
                 for (Item item : oldInv) {
                     if (item instanceof Material && item.getEnergyType() == currentRoom.getEnergyType()) {
                         System.out.println("YOINK");
