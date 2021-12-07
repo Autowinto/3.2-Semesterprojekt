@@ -38,7 +38,10 @@
                         <Pane prefHeight="199.0" prefWidth="409.0">
                            <children>
                               <ProgressBar fx:id="powerProgressBar" layoutX="104.0" layoutY="176.0" prefWidth="200.0" progress="0.0" />
-                              <ImageView fx:id="powerImageView" fitHeight="110.0" fitWidth="200.0" layoutX="104.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="powerImageView" fitHeight="110.0" fitWidth="197.0" layoutX="149.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Scener/pære0.png" />
+                                 </image></ImageView>
                               <Label fx:id="consoleLabel" layoutX="5.0" layoutY="6.0" text="Label" wrapText="true">
                                  <font>
                                     <Font size="15.0" />
