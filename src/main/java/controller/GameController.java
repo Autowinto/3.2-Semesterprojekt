@@ -59,8 +59,15 @@ public class GameController implements Initializable {
     @FXML
     private ImageView powerImageView;
 
-    private Image image1 = new Image("/Scener/img.png");
-    private Image image2 = new Image("/Scener/ve-omstilling169.png");
+    private Image pære0 = new Image("/Scener/img.png");
+    private Image pære1 = new Image("/Scener/pære1.jpg");
+    private Image pære2 = new Image("/Scener/pære2.jpg");
+    private Image pære3 = new Image("/Scener/pære3.jpg");
+    private Image pære4 = new Image("/Scener/pære4.jpg");
+    private Image pære5 = new Image("/Scener/pære5.jpg");
+    private Image pære6 = new Image("/Scener/pære6.jpg");
+    private Image pære7 = new Image("/Scener/pære7.jpg");
+    private Image pære8 = new Image("/Scener/pære8.jpg");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -163,11 +170,25 @@ public class GameController implements Initializable {
         double powerPercentage = power.getPower()/100;
         powerProgressBar.setProgress(powerPercentage);
 
-        /*if (powerPercentage == 0) {
-            powerImageView.setImage(image2);
+        if (powerPercentage == 0.0) {
+            powerImageView.setImage(pære0);
+        } else if (powerPercentage <= 12.5){
+            powerImageView.setImage(pære1);
+        } else if (powerPercentage <= 25.0){
+            powerImageView.setImage(pære2);
+        } else if (powerPercentage <= 37.5){
+            powerImageView.setImage(pære3);
+        } else if (powerPercentage <= 50.0){
+            powerImageView.setImage(pære4);
+        } else if (powerPercentage <= 75.0){
+            powerImageView.setImage(pære5);
+        } else if (powerPercentage <= 87.5){
+            powerImageView.setImage(pære6);
+        } else if (powerPercentage < 95.0){
+            powerImageView.setImage(pære7);
         } else {
-            powerImageView.setImage(image1);
-        }*/
+            powerImageView.setImage(pære8);
+        }
     }
 
     private void createRooms() {
