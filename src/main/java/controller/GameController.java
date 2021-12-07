@@ -175,19 +175,19 @@ public class GameController implements Initializable {
 
         if (powerPercentage == 0.0) {
             powerImageView.setImage(pære0);
-        } else if (powerPercentage <= 12.5){
+        } else if (powerPercentage <= 0.125){
             powerImageView.setImage(pære1);
-        } else if (powerPercentage <= 25.0){
+        } else if (powerPercentage <= 0.25){
             powerImageView.setImage(pære2);
-        } else if (powerPercentage <= 37.5){
+        } else if (powerPercentage <= 0.375){
             powerImageView.setImage(pære3);
-        } else if (powerPercentage <= 50.0){
+        } else if (powerPercentage <= 0.50){
             powerImageView.setImage(pære4);
-        } else if (powerPercentage <= 75.0){
+        } else if (powerPercentage <= 0.75){
             powerImageView.setImage(pære5);
-        } else if (powerPercentage <= 87.5){
+        } else if (powerPercentage <= 0.875){
             powerImageView.setImage(pære6);
-        } else if (powerPercentage < 95.0){
+        } else if (powerPercentage < 0.95){
             powerImageView.setImage(pære7);
         } else {
             powerImageView.setImage(pære8);
