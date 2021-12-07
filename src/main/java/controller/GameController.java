@@ -75,17 +75,17 @@ public class GameController implements Initializable {
         try {
             allItems = new Item[]{
                     //Items
-                    new Material("generator", EnergyType.WIND, 200, 200, "/item_placeholder.png"),
-                    new Material("vinger", EnergyType.WIND,200,200,"/item_placeholder.png"),
-                    new Material("tårn", EnergyType.WIND,200,200,"/item_placeholder.png"),
-                    new Material("turbine", EnergyType.WATER,200,200,"/item_placeholder.png"),
-                    new Material("vandrør", EnergyType.WATER,200,200,"/item_placeholder.png"),
-                    new Material("kabel", EnergyType.WATER,200,200,"/item_placeholder.png"),
-                    new Material("solpanel", EnergyType.SOLAR,200,200,"/item_placeholder.png"),
-                    new Material("inverter", EnergyType.SOLAR,200,200,"/item_placeholder.png"),
-                    new Material("stativ", EnergyType.SOLAR,200,200,"/item_placeholder.png"),
+                    new Material("vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Generator.png"),
+                    new Material("vinger", EnergyType.WIND,200,200,"/Scener/Vinger.png"),
+                    new Material("tårn", EnergyType.WIND,200,200,"/Scener/Tårn.png"),
+                    new Material("turbine", EnergyType.WATER,200,200,"/Scener/Turbine.png"),
+                    new Material("vandrør", EnergyType.WATER,200,200,"/Scener/Vandrør.png"),
+                    new Material("vandgenerator", EnergyType.WATER,200,200,"/Scener/Generator.png"),
+                    new Material("solpanel", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png"),
+                    new Material("inverter", EnergyType.SOLAR,200,200,"/Scener/Inverter.png"),
+                    new Material("stativ", EnergyType.SOLAR,200,200,"/Scener/Stativ.png"),
                     //Products
-                    new Product("vindmølle", EnergyType.WIND), 
+                    new Product("vindmølle", EnergyType.WIND),
                     new Product("vandmølle", EnergyType.WATER),
                     new Product("solcelle", EnergyType.SOLAR)};
             windmill = (Product) allItems[9];
