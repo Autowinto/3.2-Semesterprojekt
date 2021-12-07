@@ -88,15 +88,15 @@ public class GameController implements Initializable {
             allItems = new Item[]{
                     //Items
 
-                    new Material("vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Generator.png"),
-                    new Material("vinger", EnergyType.WIND,200,200,"/Scener/Vinger.png"),
-                    new Material("tårn", EnergyType.WIND,200,200,"/Scener/Tårn.png"),
-                    new Material("turbine", EnergyType.WATER,200,200,"/Scener/Turbine.png"),
-                    new Material("vandrør", EnergyType.WATER,200,200,"/Scener/Vandrør.png"),
-                    new Material("vandgenerator", EnergyType.WATER,200,200,"/Scener/Generator.png"),
-                    new Material("solpanel", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png"),
-                    new Material("inverter", EnergyType.SOLAR,200,200,"/Scener/Inverter.png"),
-                    new Material("glas", EnergyType.SOLAR,200,200,"/Scener/Glas.png"),
+                    new Material("vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Generator.png","Beskrivelse af vindgenerator"),
+                    new Material("vinger", EnergyType.WIND,200,200,"/Scener/Vinger.png","Beskrivelse af vinger"),
+                    new Material("tårn", EnergyType.WIND,200,200,"/Scener/Tårn.png","Beskrivelse af tårn"),
+                    new Material("turbine", EnergyType.WATER,200,200,"/Scener/Turbine.png","Beskrivelse af turbine"),
+                    new Material("vandrør", EnergyType.WATER,200,200,"/Scener/Vandrør.png","Beskrivelse af vandrør"),
+                    new Material("vandgenerator", EnergyType.WATER,200,200,"/Scener/Generator.png","Beskrivelse af vandgenerator"),
+                    new Material("solpanel", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png","Beskrivelse af solpanel"),
+                    new Material("inverter", EnergyType.SOLAR,200,200,"/Scener/Inverter.png","Beskrivelse af inverter"),
+                    new Material("glas", EnergyType.SOLAR,200,200,"/Scener/Glas.png","Beskrivelse af glas"),
 
                     //Products
                     new Product("vindmølle", EnergyType.WIND),
@@ -123,6 +123,12 @@ public class GameController implements Initializable {
                         hoverLabel.setText(item.getName());
                         hoverLabel.toFront();
                         System.out.println("HOVER");
+                        if (!item.getHoveredOver()) {
+                            item.setHoveredOver();
+                            tutorialTextField = 2;
+                            tutorialText.setVisible(true);
+                            tutorialText.setText(item.getDescription());
+                        }
                     } else {
                         this.hoverLabel.setVisible(false);
                         System.out.println("NOT HOVER");
