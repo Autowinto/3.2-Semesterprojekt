@@ -15,7 +15,6 @@ public class Material extends Item {
         super(name, 0.5, energyType, description);
         this.setX(posX);
         this.setY(posY);
-
         super.loadImage(imagePath);
     }
 

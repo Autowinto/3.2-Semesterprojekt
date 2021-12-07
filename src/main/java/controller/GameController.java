@@ -99,9 +99,9 @@ public class GameController implements Initializable {
                     new Material("glas", EnergyType.SOLAR,200,200,"/Scener/Glas.png","Beskrivelse af glas"),
 
                     //Products
-                    new Product("vindmølle", EnergyType.WIND),
-                    new Product("vandmølle", EnergyType.WATER),
-                    new Product("solcelle", EnergyType.SOLAR)};
+                    new Product("vindmølle", EnergyType.WIND,100,100,"/Scener/Vindkraft.png"),
+                    new Product("vandmølle", EnergyType.WATER,100,100,"/Scener/Vandkraft.png"),
+                    new Product("solcelle", EnergyType.SOLAR,100,100,"/Scener/Solkraft.png")};
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
@@ -315,6 +315,11 @@ public class GameController implements Initializable {
             solar2.addItem(allItems[7]);
             solar3.addItem(allItems[8]);
 
+            craftingWind.addItem(allItems[9]);
+            craftingWater.addItem(allItems[10]);
+            craftingSun.addItem(allItems[11]);
+
+
             ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4,craftingWater,craftingSun,craftingWind));
 for (Room room : rooms) {
 
@@ -428,9 +433,14 @@ for (Room room : rooms) {
                         print("Du får en lys idé og klargøre material på arbejdsbordet!");
                         craftingRoom.placeItem(materialItem);
                         iterator.remove();
+
                     }
+
                 }
+
             }
+
+
         }
     }
 
