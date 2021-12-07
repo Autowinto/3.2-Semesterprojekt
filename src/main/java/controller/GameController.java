@@ -437,13 +437,14 @@ public class GameController implements Initializable {
 
                 // Vi bruger en iterator for at undgå en ConcurrentModificationException
 
-                int widthDiff = 50;
+                int widthDiff = 115;
                 System.out.println(inventory.getItems().size());
                 int i = ((CraftingRoom) currentRoom).getPlacedItems().size();
+                ObservableList<Item> oldInv = inventory.getItems();
                 for (Item item : oldInv) {
                     if (item instanceof Material && item.getEnergyType() == currentRoom.getEnergyType()) {
                         System.out.println("YOINK");
-                        item.setX(50 + (widthDiff * (i + 1)));
+                        item.setX(100 + (widthDiff * i));
                         item.setY(420);
                         item.setMouseTransparent(true);
                         craftingRoom.placeItem((Material) item);
