@@ -9,7 +9,7 @@ public class CraftingRoom extends Room {
     private ArrayList<Material> placedItems = new ArrayList<>();
 
     public CraftingRoom(String description, EnergyType energyType, Product craftingResult) throws IOException {
-        super(description, "");
+        super(description, "/Scener/Arbejdsbord.png");
         //this.recipe = (ArrayList<Material>) Arrays.asList(recipe);
         this.energyType = energyType;
         this.craftingResult = craftingResult;

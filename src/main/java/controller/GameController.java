@@ -62,7 +62,7 @@ public class GameController implements Initializable {
     @FXML
     private ImageView powerImageView;
 
-    private Image pære0 = new Image("/Scener/img.png");
+    private Image pære0 = new Image("/Scener/pære0.png");
     private Image pære1 = new Image("/Scener/pære1.jpg");
     private Image pære2 = new Image("/Scener/pære2.jpg");
     private Image pære3 = new Image("/Scener/pære3.jpg");
