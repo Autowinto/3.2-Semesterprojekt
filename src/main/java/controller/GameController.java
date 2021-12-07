@@ -177,6 +177,7 @@ public class GameController implements Initializable {
                             setText(null);
                         } else {
                             setDisable(false);
+                            //setGraphic(item);
                             setText(item.getName());
                         }
                     }
