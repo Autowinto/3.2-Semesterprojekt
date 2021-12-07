@@ -6,10 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -24,6 +27,7 @@ import javafx.util.Callback;
 import worldofzuul.model.*;
 
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -72,6 +76,11 @@ public class GameController implements Initializable {
     private Image pære7 = new Image("/Scener/pære7.jpg");
     private Image pære8 = new Image("/Scener/pære8.jpg");
 
+    @FXML
+    Pane root;
+    private Stage stage;
+    private Scene scene;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         System.out.println("START GAME");
@@ -81,6 +90,17 @@ public class GameController implements Initializable {
         initializeInventory();
         printWelcome();
         updatePowerBars();
+    }
+
+    public void endGame (ActionEvent event){
+        try {
+            root = FXMLLoader.load(GameController.class.getResource("/End.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     private void createItems() {
