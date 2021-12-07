@@ -309,7 +309,7 @@ public class GameController implements Initializable {
             solar2.addItem(allItems[7]);
             solar3.addItem(allItems[8]);
 
-            ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4));
+            ArrayList<Room> rooms = new ArrayList<Room>(Arrays.asList(start, coal, workshop, wind1, wind2, wind3, wind4, water1, water2, water3, water4, water5, solar1, solar2, solar3, solar4,craftingWater,craftingSun,craftingWind));
 for (Room room : rooms) {
 
     for (Exit exit : room.getExits()) {
