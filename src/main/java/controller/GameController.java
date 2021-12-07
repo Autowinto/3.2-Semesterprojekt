@@ -92,10 +92,10 @@ public class GameController implements Initializable {
                     new Material("tårn", EnergyType.WIND,200,200,"/item_placeholder.png"),
                     new Material("turbine", EnergyType.WATER,200,200,"/item_placeholder.png"),
                     new Material("vandrør", EnergyType.WATER,200,200,"/item_placeholder.png"),
-                    new Material("kabel", EnergyType.WATER,200,200,"/item_placeholder.png"),
+                    new Material("generator", EnergyType.WATER,200,200,"/item_placeholder.png"),
                     new Material("solpanel", EnergyType.SOLAR,200,200,"/item_placeholder.png"),
                     new Material("inverter", EnergyType.SOLAR,200,200,"/item_placeholder.png"),
-                    new Material("stativ", EnergyType.SOLAR,200,200,"/item_placeholder.png"),
+                    new Material("glas", EnergyType.SOLAR,200,200,"/item_placeholder.png"),
                     //Products
                     new Product("vindmølle", EnergyType.WIND), 
                     new Product("vandmølle", EnergyType.WATER),
