@@ -50,6 +50,7 @@ public abstract class Item extends ImageView {
     }
 
     public double getWeight() {
+        double weight = 0;
         return this.weight;
     }
 

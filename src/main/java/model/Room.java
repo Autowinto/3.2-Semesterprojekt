@@ -1,19 +1,9 @@
 package worldofzuul.model;
 
-import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Rectangle;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.beans.Visibility;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.HashMap;
 
 public class Room {
     private String description;
@@ -22,12 +12,14 @@ public class Room {
     private EnergyType energyType;
     private ArrayList<Exit> exits;
     private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<DropOff> dropOffs;
     private Image image;
 
     public Room(String description, String imagePath) throws IOException {
         this.description = description;
         this.image = loadImage(imagePath);
         exits = new ArrayList<Exit>();
+        dropOffs = new ArrayList<>();
     }
 
     public Room(String description, EnergyType energyType, String dropOffEffect, String dropOffText, String imagePath) throws IOException {
@@ -37,6 +29,7 @@ public class Room {
         this.dropOffText = dropOffText;
         this.image = loadImage(imagePath);
         exits = new ArrayList<>();
+        dropOffs = new ArrayList<>();
     }
 
     private Image loadImage(String path) throws IOException {
@@ -51,6 +44,10 @@ public class Room {
 
     public void setExit(Exit exit) {
         exits.add(exit);
+    }
+
+    public void setDropOff(DropOff dropOff) {
+        dropOffs.add(dropOff);
     }
 
 //    public String getLongDescription() {
@@ -102,6 +99,10 @@ public class Room {
         return this.exits;
     }
 
+    public ArrayList<DropOff> getDropOffs(){
+        return this.dropOffs;
+    }
+
     //Samle ting op fra rummet
     public Item getItem(String itemName) {
         for (int i = 0; i < items.size(); i++) {
@@ -118,7 +119,6 @@ public class Room {
 
     public void removeItem(Item item) {
         items.remove(item);
-        item.setVisible(false);
     }
 
     public void addItem(Item newitem) {
