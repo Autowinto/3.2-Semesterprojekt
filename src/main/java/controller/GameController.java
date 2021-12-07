@@ -174,6 +174,7 @@ public class GameController implements Initializable {
                         if (item == null || empty) {
                             setDisable(true);
                             setGraphic(null);
+                            setText(null);
                         } else {
                             setDisable(false);
                             setText(item.getName());
