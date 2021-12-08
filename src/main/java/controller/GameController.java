@@ -113,14 +113,14 @@ public class GameController implements Initializable {
                     new Material("Turbine", EnergyType.WATER, 200, 200, "/Scener/Turbine.png", "- Tryk på firkanten for at fjerne den -\nEn turbine bevæger sig og roterer en generator når vandet løber igennem vandrøret"),
                     new Material("Vandrør", EnergyType.WATER, 200, 200, "/Scener/Vandrør.png", "- Tryk på firkanten for at fjerne den -\nVandrøret koncentrerer vandets bevægelses igennem en turbine til at lave strøm"),
                     new Material("Vandgenerator", EnergyType.WATER, 200, 200, "/Scener/Vandgenerator.png", "- Tryk på firkanten for at fjerne den -\nEn vandgenerator genererer elektricitet når turbinen bevæger sig med vand fra vandrøret"),
-                    new Material("Solpanel", EnergyType.SOLAR, 200, 200, "/Scener/Solpanel.png", "- Tryk på firkanten for at fjerne den -\nEn solcelle opfanger solens stråler og omdanner dem til strøm til en omformer"),
-                    new Material("Inverter", EnergyType.SOLAR, 200, 200, "/Scener/Inverter.png", "- Tryk på firkanten for at fjerne den -\nEn omformer omdanner solcellernes strøm til brugbar energi"),
+                    new Material("Solcelle", EnergyType.SOLAR, 200, 200, "/Scener/Solpanel.png", "- Tryk på firkanten for at fjerne den -\nEn solcelle opfanger solens stråler og omdanner dem til strøm til en omformer"),
+                    new Material("Omformer", EnergyType.SOLAR, 200, 200, "/Scener/Inverter.png", "- Tryk på firkanten for at fjerne den -\nEn omformer omdanner solcellernes strøm til brugbar energi"),
                     new Material("Glas", EnergyType.SOLAR, 200, 200, "/Scener/Glas.png", "- Tryk på firkanten for at fjerne den -\nGlasset beskytter solceller for farlige genstande"),
 
                     //Products
                     new Product("Vindmølle", EnergyType.WIND, 100, 100, "/Scener/Vindkraft.png", "- Tryk på firkanten for at fjerne den -\nVindmøller producerer strøm når vinden blæser. Det må ikke blæse alt for meget, men heller ikke for lidt"),
                     new Product("Vandmølle", EnergyType.WATER, 100, 100, "/Scener/Vandkraft.png", "- Tryk på firkanten for at fjerne den -\nVandkraftværker producerer strøm når vandet løber hurtigt igennem turbinen"),
-                    new Product("Solcelle", EnergyType.SOLAR, 400, 300, "/Scener/Solkraft.png", "- Tryk på firkanten for at fjerne den -\nSolpaneler producerer strøm når solen skinner meget på solpanelet"),
+                    new Product("Solpanel", EnergyType.SOLAR, 400, 300, "/Scener/Solkraft.png", "- Tryk på firkanten for at fjerne den -\nSolpaneler producerer strøm når solen skinner meget på solpanelet"),
             };
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
@@ -440,6 +440,7 @@ public class GameController implements Initializable {
             loadExits(nextRoom);
             loadDropOffs(nextRoom);
             loadCraftButton(nextRoom);
+
             pane.getChildren().removeIf(node -> node instanceof ImageView);
 
             // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
@@ -604,7 +605,10 @@ public class GameController implements Initializable {
 
             pane.getChildren().removeIf(it -> it instanceof Material);
             craftingRoom.clearPlacedItems();
-            pane.getChildren().add(product);
+
+            craftingRoom.placeItem(product);
+            loadItems(craftingRoom);
+
             print("Du har bygget en " + craftingRoom.getCraftingResult().getName().toLowerCase());
             return;
         }
