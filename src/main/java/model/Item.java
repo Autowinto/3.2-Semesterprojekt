@@ -35,8 +35,8 @@ public abstract class Item extends ImageView {
     }
 
     protected void loadImage(String path) throws IOException {
-        Image testImage = new Image(getClass().getResourceAsStream(path));
-        this.setImage(testImage);
+        Image image = new Image(getClass().getResourceAsStream(path));
+        this.setImage(image);
         this.setFitHeight(100);
         this.setFitWidth(100);
     }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class CraftingRoom extends Room {
     private final Product craftingResult;
     private EnergyType energyType;
-    private ArrayList<Material> placedItems = new ArrayList<>();
+    private ArrayList<Item> placedItems = new ArrayList<>();
 
     public CraftingRoom(String description, EnergyType energyType, Product craftingResult) throws IOException {
         super(description, "/Scener/Arbejdsbord.png");
@@ -15,7 +15,7 @@ public class CraftingRoom extends Room {
         this.craftingResult = craftingResult;
     }
 
-    public ArrayList<Material> getPlacedItems() {
+    public ArrayList<Item> getPlacedItems() {
         return placedItems;
     }
 
@@ -38,12 +38,15 @@ public class CraftingRoom extends Room {
         return string;
     }
 
-    public void placeItem(Material item) {
+    public void placeItem(Item item) {
         placedItems.add(item);
+    }
+
+    public void clearPlacedItems(){
+        placedItems.clear();
     }
 
     public EnergyType getEnergyType() {
         return this.energyType;
     }
-
 }
