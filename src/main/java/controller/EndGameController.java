@@ -24,10 +24,8 @@ public class EndGameController implements Initializable {
     private Stage stage;
     private Scene scene;
 
-    private Power power = new Power();
-
     public void changeEndGameLabel(){
-        endGameLabel.setText("Du fik opnået " + power.getPower() + "% ud af 100%");
+        endGameLabel.setText("Du fik opnået " + Power.getPower()+ "% ud af 100%");
     }
 
     public void restartGame(ActionEvent event){
@@ -36,6 +34,7 @@ public class EndGameController implements Initializable {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);
+            Power.resetPower();
         } catch (Exception e) {
             System.out.println(e);
         }
