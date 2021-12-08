@@ -3,14 +3,14 @@ package worldofzuul.model;
 public class Power {
     private static double power;
 
-    public void addPower(Product product, Room currentRoom) {
+    public static void addPower(Product product, Room currentRoom) {
         if (product.getEnergyType() == currentRoom.getEnergyType()) {
             if (currentRoom.getDropOffEffect() == "best") {
-                this.power += 33.3;
+                power += 33.3;
             } else if (currentRoom.getDropOffEffect() == "middle") {
-                this.power += 20.0;
+                power += 20.0;
             } else {
-                this.power += 10.0;
+                power += 10.0;
             }
             System.out.println(currentRoom.getDropOffText());
         } else {
@@ -18,14 +18,14 @@ public class Power {
         }
     }
 
-    public void removePower(Product product, Room currentRoom) {
+    public static void removePower(Product product, Room currentRoom) {
         if (product.getEnergyType() == currentRoom.getEnergyType()) {
             if (currentRoom.getDropOffEffect() == "best") {
-                this.power -= 33.3;
+                power -= 33.3;
             } else if (currentRoom.getDropOffEffect() == "middle") {
-                this.power -= 20.0;
+                power -= 20.0;
             } else {
-                this.power -= 10.0;
+                power -= 10.0;
             }
         }
     }

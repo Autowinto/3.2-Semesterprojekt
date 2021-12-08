@@ -13,17 +13,17 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuul.controller.GameController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="worldofzuul.controller.GameController">
    <children>
+      <ImageView fx:id="roomBackground" fitHeight="602.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Scener/Start.png" />
+         </image>
+      </ImageView>
       <VBox prefHeight="800.0" prefWidth="800.0">
          <children>
-            <Pane prefHeight="800.0" prefWidth="800.0">
+            <Pane fx:id="pane" prefHeight="800.0" prefWidth="800.0">
                <children>
-                  <ImageView fx:id="roomBackground" fitHeight="602.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Scener/Start.png" />
-                     </image>
-                  </ImageView>
                   <HBox layoutY="602.0" prefHeight="199.0" prefWidth="800.0">
                      <children>
                         <Pane prefHeight="199.0" prefWidth="198.0" style="-fx-background-color: DARKGREY;">
@@ -66,7 +66,6 @@
                         <Font size="20.0" />
                      </font>
                   </TextArea>
-                  <Button mnemonicParsing="false" onAction="#endGame" prefHeight="27.0" prefWidth="82.0" text="Afslut spil" />
                </children>
             </Pane>
          </children>
@@ -76,5 +75,6 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
+      <Button mnemonicParsing="false" onAction="#endGame" prefHeight="27.0" prefWidth="82.0" text="Afslut spil" />
    </children>
 </Pane>
