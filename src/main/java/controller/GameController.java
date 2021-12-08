@@ -233,14 +233,14 @@ public class GameController implements Initializable {
 
             water1 = new Room("udenfor i et område, hvor du ser et vandfald", EnergyType.WATER, "best", "Din vandmølle genererer en rigtig god mængde energi\nda der er en masse energi fra vandet der falder.", "/Scener/Vand_1.png");
             water2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af", "/Scener/Vand_2.png");
-            water3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området", EnergyType.WATER, "middle", "Din vandmølle genererer en god mængde energi\nmen det er ikke optimalt, da en flod ikke er hvor der er mest energi.", "/Scener/Vand_3.png");
+            water3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området", EnergyType.WATER, "middle", "Din vandmølle genererer en god mængde energi\nmen det er ikke optimalt, da en flod ikke er \nhvor der er mest energi.", "/Scener/Vand_3.png");
             water4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet", "/Scener/Vand_4.png");
-            water5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod", EnergyType.WATER, "worst", "Din vandmølle genererer lidt energi\nmen det er ikke optimalt, da der ikke er meget energi i stilleliggende vand.", "/Scener/Vand_5.png");
+            water5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod", EnergyType.WATER, "worst", "Din vandmølle genererer lidt energi\nmen det er ikke optimalt, da der ikke er meget \nenergi i stilleliggende vand.", "/Scener/Vand_5.png");
 
             solar1 = new Room("udenfor i et varmt område med meget sollys", "/Scener/Sol_1.png");
             solar2 = new Room("på en flad mark med meget sol", EnergyType.SOLAR, "middle", "Din solcelle genererer en god mængde energi\nmen det er ikke optimalt, da en solcelle helst skal ligge på skrå.", "/Scener/Sol_2.png");
             solar3 = new Room("i en skov, hvor træerne dækker for solen", EnergyType.SOLAR, "worst", "Din solcelle genererer lidt energi\nmen det er ikke optimalt, da træerne skygger for solen.", "/Scener/Sol_3.png");
-            solar4 = new Room("i et område med en bakke, hvor der er meget sol", EnergyType.SOLAR, "best", "Din solcelle genererer en rigtig god mængde energi\nda der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ", "/Scener/Sol_4.png");
+            solar4 = new Room("i et område med en bakke, hvor der er meget sol", EnergyType.SOLAR, "best", "Din solcelle genererer en rigtig god mængde energi\nda der er en masse sol og den kan ligge med ca.\n45 graders skråning på bakken. ", "/Scener/Sol_4.png");
 
             CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord. Over bordet er der et skilt hvorpå der står \"vindenergi\".", EnergyType.WIND, windmill);
             CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord. Over bordet er der et skilt hvorpå der står \"vandenergi\".", EnergyType.WATER, watermill);
