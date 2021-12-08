@@ -107,20 +107,21 @@ public class GameController implements Initializable {
         try {
             allItems = new Item[]{
                     //Items
-                    new Material("Vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Vindgenerator.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vindgenerator"),
-                    new Material("Vinger", EnergyType.WIND,200,200,"/Scener/Vinger.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vinger"),
-                    new Material("Tårn", EnergyType.WIND,200,200,"/Scener/Tårn.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af tårn"),
-                    new Material("Turbine", EnergyType.WATER,200,200,"/Scener/Turbine.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af turbine"),
-                    new Material("Vandrør", EnergyType.WATER,200,200,"/Scener/Vandrør.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vandrør"),
-                    new Material("Vandgenerator", EnergyType.WATER,200,200,"/Scener/Vandgenerator.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vandgenerator"),
-                    new Material("Solcelle", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af solpanel"),
-                    new Material("Inverter", EnergyType.SOLAR,200,200,"/Scener/Inverter.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af inverter"),
-                    new Material("Glas", EnergyType.SOLAR,200,200,"/Scener/Glas.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af glas"),
+                    new Material("Vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Vindgenerator.png", "- Tryk på firkanten for at fjerne den -\nGeneratoren kan bruges til at genererer elektricitet. Den kan kobles sammen med vinger og et tårn"),
+                    new Material("Vinger", EnergyType.WIND, 200, 200, "/Scener/Vinger.png", "- Tryk på firkanten for at fjerne den -\nVinger roterer når vinden blæser. Kan kobles til en generator og sættes på et tårn"),
+                    new Material("Tårn", EnergyType.WIND, 200, 200, "/Scener/Tårn.png", "- Tryk på firkanten for at fjerne den -\nTårnet er højt og hjælper vingerne og generatoren med at fange vinden"),
+                    new Material("Turbine", EnergyType.WATER, 200, 200, "/Scener/Turbine.png", "- Tryk på firkanten for at fjerne den -\nEn turbine bevæger sig og roterer en generator når vandet løber igennem vandrøret"),
+                    new Material("Vandrør", EnergyType.WATER, 200, 200, "/Scener/Vandrør.png", "- Tryk på firkanten for at fjerne den -\nVandrøret koncentrerer vandets bevægelses igennem en turbine til at lave strøm"),
+                    new Material("Vandgenerator", EnergyType.WATER, 200, 200, "/Scener/Vandgenerator.png", "- Tryk på firkanten for at fjerne den -\nEn vandgenerator genererer elektricitet når turbinen bevæger sig med vand fra vandrøret"),
+                    new Material("Solcelle", EnergyType.SOLAR, 200, 200, "/Scener/Solpanel.png", "- Tryk på firkanten for at fjerne den -\nEn solcelle opfanger solens stråler og omdanner dem til strøm til en omformer"),
+                    new Material("Omformer", EnergyType.SOLAR, 200, 200, "/Scener/Inverter.png", "- Tryk på firkanten for at fjerne den -\nEn omformer omdanner solcellernes strøm til brugbar energi"),
+                    new Material("Glas", EnergyType.SOLAR, 200, 200, "/Scener/Glas.png", "- Tryk på firkanten for at fjerne den -\nGlasset beskytter solceller for farlige genstande"),
 
                     //Products
-                    new Product("Vindmølle", EnergyType.WIND,100,100,"/Scener/Vindkraft.png"),
-                    new Product("Vandmølle", EnergyType.WATER,100,100,"/Scener/Vandkraft.png"),
-                    new Product("Solpanel", EnergyType.SOLAR, 400, 300,"/Scener/Solkraft.png")};
+                    new Product("Vindmølle", EnergyType.WIND, 100, 100, "/Scener/Vindkraft.png", "- Tryk på firkanten for at fjerne den -\nVindmøller producerer strøm når vinden blæser. Det må ikke blæse alt for meget, men heller ikke for lidt"),
+                    new Product("Vandmølle", EnergyType.WATER, 100, 100, "/Scener/Vandkraft.png", "- Tryk på firkanten for at fjerne den -\nVandkraftværker producerer strøm når vandet løber hurtigt igennem turbinen"),
+                    new Product("Solpanel", EnergyType.SOLAR, 400, 300, "/Scener/Solkraft.png", "- Tryk på firkanten for at fjerne den -\nSolpaneler producerer strøm når solen skinner meget på solpanelet"),
+            };
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
@@ -226,20 +227,20 @@ public class GameController implements Initializable {
             workshop = new Room("i et værksted med tre forskellige arbejdsborde. Der er 3 døre der fører udenfor", "/Scener/Værksted.png");
 
             wind1 = new Room("udenfor i et område, hvor du kan mærke det blæser", "/Scener/Vind_1.png");
-            wind2 = new Room("udenfor i et område, hvor der er en mild vind. Du ser nogle træer der giver læ for vinden", EnergyType.WIND, "middle", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da den milde vind og træerne.", "/Scener/Vind_2.png");
-            wind3 = new Room("udenfor i et område, hvor det blæser. Du ser ikke noget der dækker for vinden", EnergyType.WIND, "best", "Din vindmølle genererer en rigtig god mængde energi, da det blæser og der ikke er noget som dækker.", "/Scener/Vind_3.png");
-            wind4 = new Room("udenfor i et område, hvor det er en meget stærk vind", EnergyType.WIND, "worst", "Din vindmølle genererer en god mængde energi, men det er ikke optimalt, da vinden er for stærk.", "/Scener/Vind_4.png");
+            wind2 = new Room("udenfor i et område, hvor der er en mild vind. Du ser nogle træer der giver læ for vinden", EnergyType.WIND, "middle", "Din vindmølle genererer en god mængde energi,\nmen det er ikke optimalt, da der er en mild vind og træer.", "/Scener/Vind_2.png");
+            wind3 = new Room("udenfor i et område, hvor det blæser. Du ser ikke noget der dækker for vinden", EnergyType.WIND, "best", "Din vindmølle genererer en rigtig god mængde energi\nda det blæser og der ikke er noget som dækker.", "/Scener/Vind_3.png");
+            wind4 = new Room("udenfor i et område, hvor det er en meget stærk vind", EnergyType.WIND, "worst", "Din vindmølle genererer en god mængde energi\nmen det er ikke optimalt, da vinden er for stærk.", "/Scener/Vind_4.png");
 
-            water1 = new Room("udenfor i et område, hvor du ser et vandfald", EnergyType.WATER, "best", "Din vandmølle genererer en rigtig god mængde energi, da der er en masse energi fra vandet der falder.", "/Scener/Vand_1.png");
+            water1 = new Room("udenfor i et område, hvor du ser et vandfald", EnergyType.WATER, "best", "Din vandmølle genererer en rigtig god mængde energi\nda der er en masse energi fra vandet der falder.", "/Scener/Vand_1.png");
             water2 = new Room("udenfor i et område, hvor du ser en bakke du kan gå op af", "/Scener/Vand_2.png");
-            water3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området", EnergyType.WATER, "middle", "Din vandmølle genererer en god mængde energi, men det er ikke optimalt, da en flod ikke er hvor der er mest energi.", "/Scener/Vand_3.png");
+            water3 = new Room("oppe på bakken, hvor du ser en flod gå gennem området", EnergyType.WATER, "middle", "Din vandmølle genererer en god mængde energi\nmen det er ikke optimalt, da en flod ikke er hvor der er mest energi.", "/Scener/Vand_3.png");
             water4 = new Room("oppe på bakken, hvor du ser floden gå ned til vandfaldet", "/Scener/Vand_4.png");
-            water5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod", EnergyType.WATER, "worst", "Din vandmølle genererer lidt energi, men det er ikke optimalt, da der ikke er meget energi i stilleliggende vand.", "/Scener/Vand_5.png");
+            water5 = new Room("oppe på bakken, hvor du ser en sø, der munder ud i en flod", EnergyType.WATER, "worst", "Din vandmølle genererer lidt energi\nmen det er ikke optimalt, da der ikke er meget energi i stilleliggende vand.", "/Scener/Vand_5.png");
 
             solar1 = new Room("udenfor i et varmt område med meget sollys", "/Scener/Sol_1.png");
-            solar2 = new Room("på en flad mark med meget sol", EnergyType.SOLAR, "middle", "Din solcelle genererer en god mængde energi, men det er ikke optimalt, da en solcelle helst skal ligge på skrå.", "/Scener/Sol_2.png");
-            solar3 = new Room("i en skov, hvor træerne dækker for solen", EnergyType.SOLAR, "worst", "Din solcelle genererer lidt energi, men det er ikke optimalt, da træerne skygger for solen.", "/Scener/Sol_3.png");
-            solar4 = new Room("i et område med en bakke, hvor der er meget sol", EnergyType.SOLAR, "best", "Din solcelle genererer en rigtig god mængde energi, da der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ", "/Scener/Sol_4.png");
+            solar2 = new Room("på en flad mark med meget sol", EnergyType.SOLAR, "middle", "Din solcelle genererer en god mængde energi\nmen det er ikke optimalt, da en solcelle helst skal ligge på skrå.", "/Scener/Sol_2.png");
+            solar3 = new Room("i en skov, hvor træerne dækker for solen", EnergyType.SOLAR, "worst", "Din solcelle genererer lidt energi\nmen det er ikke optimalt, da træerne skygger for solen.", "/Scener/Sol_3.png");
+            solar4 = new Room("i et område med en bakke, hvor der er meget sol", EnergyType.SOLAR, "best", "Din solcelle genererer en rigtig god mængde energi\nda der er en masse sol og den kan ligge med ca. 45 graders skråning på bakken. ", "/Scener/Sol_4.png");
 
             CraftingRoom craftingWind = new CraftingRoom("foran et grønt bord. Over bordet er der et skilt hvorpå der står \"vindenergi\".", EnergyType.WIND, windmill);
             CraftingRoom craftingWater = new CraftingRoom("foran et blåt bord. Over bordet er der et skilt hvorpå der står \"vandenergi\".", EnergyType.WATER, watermill);
@@ -559,6 +560,7 @@ public class GameController implements Initializable {
         System.out.println("Du har sat " + product.getName().toLowerCase() + " i det nuværende rum");
         power.addPower(product, currentRoom);
         updatePowerBars();
+        print(currentRoom.getDropOffText());
         }
 
 //            Item productName = null;
