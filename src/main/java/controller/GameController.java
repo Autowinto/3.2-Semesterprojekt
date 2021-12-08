@@ -107,15 +107,15 @@ public class GameController implements Initializable {
         try {
             allItems = new Item[]{
                     //Items
-                    new Material("vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Vindgenerator.png","Beskrivelse af vindgenerator"),
-                    new Material("vinger", EnergyType.WIND,200,200,"/Scener/Vinger.png","Beskrivelse af vinger"),
-                    new Material("tårn", EnergyType.WIND,200,200,"/Scener/Tårn.png","Beskrivelse af tårn"),
-                    new Material("turbine", EnergyType.WATER,200,200,"/Scener/Turbine.png","Beskrivelse af turbine"),
-                    new Material("vandrør", EnergyType.WATER,200,200,"/Scener/Vandrør.png","Beskrivelse af vandrør"),
-                    new Material("vandgenerator", EnergyType.WATER,200,200,"/Scener/Vandgenerator.png","Beskrivelse af vandgenerator"),
-                    new Material("solpanel", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png","Beskrivelse af solpanel"),
-                    new Material("inverter", EnergyType.SOLAR,200,200,"/Scener/Inverter.png","Beskrivelse af inverter"),
-                    new Material("glas", EnergyType.SOLAR,200,200,"/Scener/Glas.png","Beskrivelse af glas"),
+                    new Material("vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Vindgenerator.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vindgenerator"),
+                    new Material("vinger", EnergyType.WIND,200,200,"/Scener/Vinger.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vinger"),
+                    new Material("tårn", EnergyType.WIND,200,200,"/Scener/Tårn.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af tårn"),
+                    new Material("turbine", EnergyType.WATER,200,200,"/Scener/Turbine.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af turbine"),
+                    new Material("vandrør", EnergyType.WATER,200,200,"/Scener/Vandrør.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vandrør"),
+                    new Material("vandgenerator", EnergyType.WATER,200,200,"/Scener/Vandgenerator.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vandgenerator"),
+                    new Material("solpanel", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af solpanel"),
+                    new Material("inverter", EnergyType.SOLAR,200,200,"/Scener/Inverter.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af inverter"),
+                    new Material("glas", EnergyType.SOLAR,200,200,"/Scener/Glas.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af glas"),
 
                     //Products
                     new Product("vindmølle", EnergyType.WIND,100,100,"/Scener/Vindkraft.png"),
@@ -620,7 +620,7 @@ public class GameController implements Initializable {
     public void setTutorialText() {
         if (tutorialTextField == 0) {
             tutorialText.setText("2/3 - Tryk for at se næste tip\n" +
-                    "Du skal rundt i forskellige rum og samle materialer op, som du kan bygge med. Dette foregår via. værkstedsborde i lokalet til venstre, hvor du kan lave produkter, som sættes på drop-off punkter rundt omkring.");
+                    "Du skal rundt i forskellige rum og samle materialer op, som du kan bygge med. Dette foregår via. værkstedsborde i lokalet til venstre, hvor du kan lave produkter, som sættes på placeringspunkter rundt omkring.");
             tutorialTextField += 1;
         }
         else if (tutorialTextField == 1) {
