@@ -1,7 +1,7 @@
 package worldofzuul.model;
 
 public class Power {
-    private double power;
+    private static double power;
 
     public void addPower(Product product, Room currentRoom) {
         if (product.getEnergyType() == currentRoom.getEnergyType()) {
@@ -30,7 +30,11 @@ public class Power {
         }
     }
 
-    public double getPower() {
-        return Math.ceil(this.power);
+    public static void resetPower(){
+        power = 0;
+    }
+
+    public static double getPower() {
+        return Math.ceil(power);
     }
 }
