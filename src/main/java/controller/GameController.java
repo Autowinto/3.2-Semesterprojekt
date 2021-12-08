@@ -439,9 +439,18 @@ public class GameController implements Initializable {
             loadExits(nextRoom);
             loadDropOffs(nextRoom);
             loadCraftButton(nextRoom);
+            pane.getChildren().removeIf(node -> node instanceof ImageView);
 
             // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
             if (currentRoom instanceof CraftingRoom craftingRoom) {
+
+
+                Image image = ((CraftingRoom) currentRoom).getCraftingResult().getImage();
+                ImageView product = new ImageView(image);
+                product.setX(100);
+                product.setY(100);
+                pane.getChildren().add(product);
+
 
                 // Vi bruger en iterator for at undgå en ConcurrentModificationException
 
