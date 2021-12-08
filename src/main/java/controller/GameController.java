@@ -439,6 +439,7 @@ public class GameController implements Initializable {
             loadExits(nextRoom);
             loadDropOffs(nextRoom);
             loadCraftButton(nextRoom);
+
             pane.getChildren().removeIf(node -> node instanceof ImageView);
 
             // If the room you're entering is a CraftingRoom, check the energyType and take any materials of that type.
@@ -602,7 +603,10 @@ public class GameController implements Initializable {
 
             pane.getChildren().removeIf(it -> it instanceof Material);
             craftingRoom.clearPlacedItems();
-            pane.getChildren().add(product);
+
+            craftingRoom.placeItem(product);
+            loadItems(craftingRoom);
+
             print("Du har bygget en " + craftingRoom.getCraftingResult().getName().toLowerCase());
             return;
         }

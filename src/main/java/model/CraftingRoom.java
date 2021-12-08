@@ -7,6 +7,7 @@ public class CraftingRoom extends Room {
     private final Product craftingResult;
     private EnergyType energyType;
     private ArrayList<Item> placedItems = new ArrayList<>();
+    private ArrayList<Item> items = new ArrayList<>();
 
     public CraftingRoom(String description, EnergyType energyType, Product craftingResult) throws IOException {
         super(description, "/Scener/Arbejdsbord.png");
@@ -40,6 +41,10 @@ public class CraftingRoom extends Room {
 
     public void placeItem(Item item) {
         placedItems.add(item);
+    }
+    
+    public void removeItem(Item item) {
+        placedItems.remove(item);
     }
 
     public void clearPlacedItems(){
