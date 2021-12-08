@@ -503,8 +503,8 @@ public class GameController implements Initializable {
             System.out.println(dropOff);
 
         inventory.removeItem(product);
-        product.setX(((dropOff.getX() + dropOff.getWidth()) / 2) - product.getFitWidth() / 4);
-        product.setY((dropOff.getY() + dropOff.getHeight()) / 2);
+        product.setX(dropOff.getX());
+        product.setY(dropOff.getY());
 
         currentRoom.addItem(product);
         loadItems(currentRoom);
