@@ -113,14 +113,14 @@ public class GameController implements Initializable {
                     new Material("Turbine", EnergyType.WATER,200,200,"/Scener/Turbine.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af turbine"),
                     new Material("Vandrør", EnergyType.WATER,200,200,"/Scener/Vandrør.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vandrør"),
                     new Material("Vandgenerator", EnergyType.WATER,200,200,"/Scener/Vandgenerator.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vandgenerator"),
-                    new Material("Solpanel", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af solpanel"),
+                    new Material("Solcelle", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af solpanel"),
                     new Material("Inverter", EnergyType.SOLAR,200,200,"/Scener/Inverter.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af inverter"),
                     new Material("Glas", EnergyType.SOLAR,200,200,"/Scener/Glas.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af glas"),
 
                     //Products
                     new Product("Vindmølle", EnergyType.WIND,100,100,"/Scener/Vindkraft.png"),
                     new Product("Vandmølle", EnergyType.WATER,100,100,"/Scener/Vandkraft.png"),
-                    new Product("Solcelle", EnergyType.SOLAR, 400, 300,"/Scener/Solkraft.png")};
+                    new Product("Solpanel", EnergyType.SOLAR, 400, 300,"/Scener/Solkraft.png")};
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
