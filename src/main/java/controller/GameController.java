@@ -107,20 +107,20 @@ public class GameController implements Initializable {
         try {
             allItems = new Item[]{
                     //Items
-                    new Material("vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Vindgenerator.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vindgenerator"),
-                    new Material("vinger", EnergyType.WIND,200,200,"/Scener/Vinger.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vinger"),
-                    new Material("tårn", EnergyType.WIND,200,200,"/Scener/Tårn.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af tårn"),
-                    new Material("turbine", EnergyType.WATER,200,200,"/Scener/Turbine.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af turbine"),
-                    new Material("vandrør", EnergyType.WATER,200,200,"/Scener/Vandrør.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vandrør"),
-                    new Material("vandgenerator", EnergyType.WATER,200,200,"/Scener/Vandgenerator.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vandgenerator"),
-                    new Material("solpanel", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af solpanel"),
-                    new Material("inverter", EnergyType.SOLAR,200,200,"/Scener/Inverter.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af inverter"),
-                    new Material("glas", EnergyType.SOLAR,200,200,"/Scener/Glas.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af glas"),
+                    new Material("Vindgenerator", EnergyType.WIND, 200, 200, "/Scener/Vindgenerator.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vindgenerator"),
+                    new Material("Vinger", EnergyType.WIND,200,200,"/Scener/Vinger.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vinger"),
+                    new Material("Tårn", EnergyType.WIND,200,200,"/Scener/Tårn.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af tårn"),
+                    new Material("Turbine", EnergyType.WATER,200,200,"/Scener/Turbine.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af turbine"),
+                    new Material("Vandrør", EnergyType.WATER,200,200,"/Scener/Vandrør.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vandrør"),
+                    new Material("Vandgenerator", EnergyType.WATER,200,200,"/Scener/Vandgenerator.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af vandgenerator"),
+                    new Material("Solpanel", EnergyType.SOLAR,200,200,"/Scener/Solpanel.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af solpanel"),
+                    new Material("Inverter", EnergyType.SOLAR,200,200,"/Scener/Inverter.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af inverter"),
+                    new Material("Glas", EnergyType.SOLAR,200,200,"/Scener/Glas.png","- Tryk på firkanten for at fjerne den -\nBeskrivelse af glas"),
 
                     //Products
-                    new Product("vindmølle", EnergyType.WIND,100,100,"/Scener/Vindkraft.png"),
-                    new Product("vandmølle", EnergyType.WATER,100,100,"/Scener/Vandkraft.png"),
-                    new Product("solcelle", EnergyType.SOLAR, 400, 300,"/Scener/Solkraft.png")};
+                    new Product("Vindmølle", EnergyType.WIND,100,100,"/Scener/Vindkraft.png"),
+                    new Product("Vandmølle", EnergyType.WATER,100,100,"/Scener/Vandkraft.png"),
+                    new Product("Solcelle", EnergyType.SOLAR, 400, 300,"/Scener/Solkraft.png")};
             windmill = (Product) allItems[9];
             watermill = (Product) allItems[10];
             solarpanel = (Product) allItems[11];
@@ -416,7 +416,7 @@ public class GameController implements Initializable {
         inventory.addItem(newItem);
         currentRoom.removeItem(newItem);
         loadItems(currentRoom);
-        print("Du har samlet " + newItem.getName() + " op");
+        print("Du har samlet " + newItem.getName().toLowerCase() + " op");
         if (newItem instanceof Product && !(currentRoom instanceof CraftingRoom)) {
             power.removePower((Product) newItem, currentRoom);
             updatePowerBars();
@@ -546,7 +546,7 @@ public class GameController implements Initializable {
 
         currentRoom.addItem(product);
         loadItems(currentRoom);
-        System.out.println("Du har sat " + product.getName() + " i det nuværende rum");
+        System.out.println("Du har sat " + product.getName().toLowerCase() + " i det nuværende rum");
         power.addPower(product, currentRoom);
         updatePowerBars();
         }
@@ -594,10 +594,10 @@ public class GameController implements Initializable {
             pane.getChildren().removeIf(it -> it instanceof Material);
             craftingRoom.clearPlacedItems();
             pane.getChildren().add(product);
-            print("Du har bygget en " + craftingRoom.getCraftingResult().getName());
+            print("Du har bygget en " + craftingRoom.getCraftingResult().getName().toLowerCase());
             return;
         }
-        print("Du mangler noget før du kan bygge en " + craftingRoom.getCraftingResult().getName());;
+        print("Du mangler noget før du kan bygge en " + craftingRoom.getCraftingResult().getName().toLowerCase());;
     }
 
     private boolean quit(Command command) {
