@@ -18,7 +18,7 @@ public class DropOff extends Rectangle {
         this.setY(posY);
         this.energyType = energyType;
         this.setFill(Color.TRANSPARENT);
-        this.setStroke(Color.BLACK);
+        this.setStroke(Color.TRANSPARENT);
     }
 
 
