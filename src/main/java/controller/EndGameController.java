@@ -25,7 +25,7 @@ public class EndGameController implements Initializable {
     private Scene scene;
 
     public void changeEndGameLabel(){
-        endGameLabel.setText("Du fik opnået " + Power.getPower()+ "% ud af 100%");
+        endGameLabel.setText("Du fik opnået " + (int)Power.getPower()+ "% ud af 100%");
     }
 
     public void restartGame(ActionEvent event){
