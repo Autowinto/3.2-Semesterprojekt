@@ -1,0 +1,2 @@
+Kør main i Main.java for at starte programmet.
+Eksternt bibliotek JavaFX påkrævet.

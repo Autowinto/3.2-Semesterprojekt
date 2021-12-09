@@ -2,9 +2,6 @@ package worldofzuul.model;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
-
-import java.io.IOException;
 
 public abstract class Item extends ImageView {
     private String name;
@@ -13,12 +10,6 @@ public abstract class Item extends ImageView {
     private String description;
     private Boolean hoveredOver = false;
 
-    public Item(String name, double weight, EnergyType energyType) {
-        this.name = name;
-        this.weight = weight;
-        this.energyType = energyType;
-    }
-
     public Item(String name, double weight, EnergyType energyType, String description) {
         this.name = name;
         this.weight = weight;
@@ -26,15 +17,7 @@ public abstract class Item extends ImageView {
         this.description = description;
     }
 
-    public Item(String name, double weight, EnergyType energyType, double posX, double posY) {
-        this.name = name;
-        this.weight = weight;
-        this.energyType = energyType;
-        this.setX(posX);
-        this.setY(posY);
-    }
-
-    protected void loadImage(String path) throws IOException {
+    protected void loadImage(String path) {
         Image image = new Image(getClass().getResourceAsStream(path));
         this.setImage(image);
         this.setFitHeight(100);
@@ -50,7 +33,6 @@ public abstract class Item extends ImageView {
     }
 
     public double getWeight() {
-        double weight = 0;
         return this.weight;
     }
 

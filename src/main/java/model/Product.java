@@ -1,8 +1,5 @@
 package worldofzuul.model;
 
-import worldofzuul.model.EnergyType;
-import worldofzuul.model.Item;
-
 import java.io.IOException;
 
 public class Product extends Item {

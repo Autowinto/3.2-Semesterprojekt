@@ -3,8 +3,6 @@ package worldofzuul.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-
 public class Inventory {
     private ObservableList<Item> items = FXCollections.observableArrayList();
     private double weightLimit;
