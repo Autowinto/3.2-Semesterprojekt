@@ -500,7 +500,7 @@ public class GameController implements Initializable {
 
         currentRoom.addItem(product);
         loadItems(currentRoom);
-        power.addPower(product, currentRoom);
+        Power.addPower(product, currentRoom);
         updatePowerBars();
         print(currentRoom.getDropOffText());
         }
